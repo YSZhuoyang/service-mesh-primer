@@ -12,7 +12,7 @@ var req = {
         Msg: "hello"
     }
 };
-var resMsg = fetch("http://localhost", req).then(res => {
+var resMsg = fetch("http://localhost:8000/service/1", req).then(res => {
     if (!res.ok) {
         console.error("Error received ...");
         return;
