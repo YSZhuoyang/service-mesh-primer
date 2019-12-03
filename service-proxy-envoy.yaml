@@ -20,13 +20,15 @@ static_resources:
               - "*"
               routes:
               - match:
-                  prefix: "/service"
+                  prefix: "/"
                 route:
                   cluster: local_service
+                  timeout:
+                    seconds: 60
           http_filters:
           - name: envoy.grpc_json_transcoder
             config:
-              proto_descriptor: "/tmp/Contracts/greet.proto"
+              proto_descriptor: "/etc/Contracts/greet.pb"
               services: ["Greet.Greeter"]
               print_options:
                 add_whitespace: true
@@ -52,7 +54,7 @@ static_resources:
                 port_value: 8080
 
 admin:
-  access_log_path: "/dev/null"
+  access_log_path: "/tmp/admin_access.log"
   address:
     socket_address:
       address: 0.0.0.0

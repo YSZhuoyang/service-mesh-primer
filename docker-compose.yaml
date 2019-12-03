@@ -21,6 +21,7 @@ services:
       dockerfile: Dockerfile-service
     volumes:
       - ./service-proxy-envoy.yaml:/etc/service-proxy-envoy.yaml
+      - ./server/Contracts/greet.pb:/etc/Contracts/greet.pb
     networks:
       envoymesh:
         aliases:
@@ -36,7 +37,7 @@ services:
       dockerfile: Dockerfile-service
     volumes:
       - ./service-proxy-envoy.yaml:/etc/service-proxy-envoy.yaml
-      - ./Contracts:/tmp/Contracts
+      - ./server/Contracts/greet.pb:/etc/Contracts/greet.pb
     networks:
       envoymesh:
         aliases:
