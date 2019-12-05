@@ -1,6 +1,6 @@
 # API-Gateway-Primer
 
-This is a primer project bootstraping a tiny api gateway using envoy transcoding HTTP+JSON into gRPC+Protobuf.
+Bootstrapping a tiny api gateway using envoy transcoding HTTP+JSON into gRPC+Protobuf.
 
                    gateway           sidecar proxy  service
         http json   |--|  grpc protobuf  |--|        |--|
