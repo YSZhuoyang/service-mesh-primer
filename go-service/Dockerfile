@@ -1,11 +1,5 @@
-# Start from a Debian image with the latest version of Go installed
-# and a workspace (GOPATH) configured at /go.
 FROM golang:1.13
-
 WORKDIR /go/server
-
-# Copy the local package files to the container's workspace.
-ADD . .
 
 # install protobuf compiler
 RUN apt update && \
@@ -18,6 +12,7 @@ RUN PROTOC_ZIP=protoc-3.10.0-linux-x86_64.zip && \
 
 # Install envoy
 RUN apt update && apt -y install \
+  apt-utils \
   software-properties-common \
   curl \
   ca-certificates \
@@ -28,13 +23,10 @@ RUN add-apt-repository "deb [arch=amd64] https://dl.bintray.com/tetrate/getenvoy
   $(lsb_release -cs) stable"
 RUN apt update && apt install -y getenvoy-envoy
 
-# Clone googleapis
-RUN cd ../ && git clone https://github.com/googleapis/googleapis
-
-# Install go dependencies and build
-RUN make get
+# Build src
+COPY ./ ./
 RUN make all
 
-# Run the exec file when image is deployed.
+# Start service with envoy sidecar
 RUN chmod u+x ./start_service.sh
 ENTRYPOINT ./start_service.sh

@@ -1,3 +1,6 @@
-[submodule "server/Contracts/googleapis"]
-	path = server/Contracts/googleapis
+[submodule "gateway/contracts/googleapis"]
+	path = gateway/contracts/googleapis
+	url = https://github.com/googleapis/googleapis
+[submodule "go-service/contracts/googleapis"]
+	path = go-service/contracts/googleapis
 	url = https://github.com/googleapis/googleapis
