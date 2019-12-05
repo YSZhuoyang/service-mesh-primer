@@ -1,21 +1,27 @@
 # API-Gateway-Primer
 
-This is a primer project developing a small api gateway using envoy and gRPC.
+This is a primer project bootstraping a tiny api gateway using envoy transcoding HTTP+JSON into gRPC+Protobuf.
 
-### Build
+                   gateway           sidecar proxy  service
+        http json   |--|  grpc protobuf  |--|        |--|
+       ------------>|  |---------------->|  |------->|  |
+                    |--|                 |--|        |--|
+
+## Build
 
 1. Pull submodules for the googleapis:
 
     `git submodule update --recursive`
 
-2. Generate protobuf descriptor file:
+2. Generate api source code and build:
 
-    `cd server/Contracts && protoc -I ./googleapis -I. --include_imports --include_source_info --descriptor_set_out=greet.pb *.proto`
+    `make all`
 
-3. Build server source project:
+3. Launch services locally (envoy must be installed):
 
-    `cd server && dotnet build`
+    `chmod u+x ./launch_local.sh`
+    `./launch_local.sh`
 
-4. Launch services with docker-compose:
+## Test
 
-    `docker-compose up --build`
+    `cd test && chmod u+x ./test.sh && ./test.sh`

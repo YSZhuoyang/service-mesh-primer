@@ -2,17 +2,15 @@ syntax = "proto3";
 
 option csharp_namespace = "server";
 
-package Greet;
+package contracts;
 
-// import "google/api/annotations.proto";
+import "google/api/annotations.proto";
 
-// The greeting service definition.
 service Greeter {
-  // Sends a greeting
-  rpc SayHello (HelloRequest) returns (HelloReply) {
-    // option (google.api.http) = {
-    //     post: "/service/1/Greet.Greeter/SayHello"
-    // };
+  rpc SayHello(HelloRequest) returns(HelloReply) {
+    option (google.api.http) = {
+      post: "/greet/hello"
+    };
   };
 }
 
