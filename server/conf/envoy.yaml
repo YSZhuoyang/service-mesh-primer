@@ -25,7 +25,7 @@ static_resources:
           http_filters:
           - name: envoy.grpc_json_transcoder
             config:
-              proto_descriptor: "sample/msglib/person.pb"
+              proto_descriptor: "contracts/person.pb"
               services: ["sample.msglib.PersonRegistry"]
               print_options:
                 add_whitespace: true

@@ -4,7 +4,8 @@ import (
 	"fmt"
 	"net"
 
-	"envoy-grpc-json/sample/msglib"
+	msglib "envoy-grpc-json/contracts"
+
 	"google.golang.org/grpc"
 )
 

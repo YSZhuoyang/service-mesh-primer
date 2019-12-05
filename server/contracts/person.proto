@@ -1,7 +1,7 @@
 syntax = "proto3";
 
 package sample.msglib;
-option go_package = "sample/msglib";
+option go_package = "contracts";
 
 import "google/api/annotations.proto";
 
