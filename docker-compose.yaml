@@ -16,7 +16,7 @@ services:
   go-service:
     build:
       context: .
-      dockerfile: ./go-service/Dockerfile-service
+      dockerfile: ./go-service/Dockerfile
     networks:
       envoymesh:
     expose:
