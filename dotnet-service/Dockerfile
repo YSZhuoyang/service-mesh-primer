@@ -1,15 +1,17 @@
-FROM mcr.microsoft.com/dotnet/core/sdk:3.0 AS build-env
+FROM mcr.microsoft.com/dotnet/core/sdk:3.1
+# AS build-env
 WORKDIR /app
 
 # Build src
-COPY ./server ./
-RUN dotnet restore
+ADD . .
+RUN dotnet build
+# RUN dotnet restore
 
 # Build release package
-RUN dotnet publish -c Release -o out
+# RUN dotnet publish -c Release -o out
 
 # Build runtime image
-FROM mcr.microsoft.com/dotnet/core/aspnet:3.0
+# FROM mcr.microsoft.com/dotnet/core/aspnet:3.0
 
 # Install envoy
 RUN apt update && apt -y install \
@@ -23,8 +25,8 @@ RUN add-apt-repository "deb [arch=amd64] https://dl.bintray.com/tetrate/getenvoy
   $(lsb_release -cs) stable"
 RUN apt update && apt install -y getenvoy-envoy
 
-WORKDIR /app
-COPY --from=build-env /app/out .
+# WORKDIR /app
+# COPY --from=build-env /app/out .
 
 # Start service with envoy sidecar
 ADD ./start_service.sh ./start_service.sh

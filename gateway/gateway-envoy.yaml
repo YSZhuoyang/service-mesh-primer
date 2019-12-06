@@ -28,18 +28,21 @@ static_resources:
                   prefix: "/contracts.Greeter"
                   grpc: {}
                 route:
-                  cluster: greeter-service
+                  cluster: go_service
                   timeout:
                     seconds: 60
-              # - match:
-              #     prefix: "/service/2"
-              #   route:
-              #     cluster: service2
+              - match:
+                  prefix: "/dotnet_service.Greeter2"
+                  grpc: {}
+                route:
+                  cluster: dotnet_service
+                  timeout:
+                    seconds: 60
           http_filters:
           - name: envoy.grpc_json_transcoder
             config:
               proto_descriptor: "contracts/desc.pb"
-              services: ["contracts.Greeter"] # to add ...
+              services: ["contracts.Greeter", "dotnet_service.Greeter2"] # to add ...
               print_options:
                 add_whitespace: true
                 always_print_primitive_fields: true
@@ -48,13 +51,13 @@ static_resources:
           - name: envoy.router
 
   clusters:
-  - name: greeter-service
+  - name: go_service
     connect_timeout: 1.25s
     type: strict_dns
     lb_policy: round_robin
     http2_protocol_options: {}
     load_assignment:
-      cluster_name: greeter-service
+      cluster_name: go_service
       endpoints:
       - lb_endpoints:
         - endpoint:
@@ -62,20 +65,20 @@ static_resources:
               socket_address:
                 address: 127.0.0.1
                 port_value: 81
-  # - name: service2
-  #   connect_timeout: 0.25s
-  #   type: strict_dns
-  #   lb_policy: round_robin
-  #   http2_protocol_options: {}
-  #   load_assignment:
-  #     cluster_name: service2
-  #     endpoints:
-  #     - lb_endpoints:
-  #       - endpoint:
-  #           address:
-  #             socket_address:
-  #               address: service2
-  #               port_value: 80
+  - name: dotnet_service
+    connect_timeout: 0.25s
+    type: strict_dns
+    lb_policy: round_robin
+    http2_protocol_options: {}
+    load_assignment:
+      cluster_name: dotnet_service
+      endpoints:
+      - lb_endpoints:
+        - endpoint:
+            address:
+              socket_address:
+                address: 127.0.0.1
+                port_value: 82
 
 admin:
   access_log_path: "/tmp/admin_access.log"

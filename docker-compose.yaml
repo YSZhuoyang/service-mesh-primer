@@ -22,14 +22,14 @@ services:
     expose:
       - "81"
 
-  # dotnet-service:
-  #   build:
-  #     context: .
-  #     dockerfile: ./dotnet-service/Dockerfile
-  #   networks:
-  #     envoymesh:
-  #   expose:
-  #     - "80"
+  dotnet-service:
+    build:
+      context: .
+      dockerfile: ./dotnet-service/Dockerfile
+    networks:
+      envoymesh:
+    expose:
+      - "82"
 
 networks:
   envoymesh: {}
