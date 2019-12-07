@@ -1,6 +1,6 @@
 # API-Gateway-Primer
 
-Bootstrapping a tiny api gateway using envoy transcoding HTTP+JSON into gRPC+Protobuf.
+Bootstrapping a tiny API gateway using envoy transcoding HTTP+JSON into gRPC+Protobuf.
 
                    gateway           sidecar proxy  service
         http json   |--|       grpc      |--|        |--|
@@ -12,17 +12,17 @@ Bootstrapping a tiny api gateway using envoy transcoding HTTP+JSON into gRPC+Pro
                                 -------->|  |------->|  |
                                          |--|        |--|
 
-## Build
+## Build & Run
 
-1. Pull submodules for the googleapis:
+1. Pull googleapis submodules for gRPC route annotation:
 
     `git submodule update --recursive`
 
-2. Generate api source code and build:
+2. Generate contract source code and build:
 
     `make all`
 
-3. Launch services locally (envoy must be installed):
+3. Launch services:
 
     `docker-compose up --build`
 
