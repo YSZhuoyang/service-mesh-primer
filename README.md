@@ -3,9 +3,14 @@
 Bootstrapping a tiny api gateway using envoy transcoding HTTP+JSON into gRPC+Protobuf.
 
                    gateway           sidecar proxy  service
-        http json   |--|  grpc protobuf  |--|        |--|
+        http json   |--|       grpc      |--|        |--|
        ------------>|  |---------------->|  |------->|  |
-                    |--|                 |--|        |--|
+                    |--|        |        |--|        |--|
+                                |
+                                |
+                                |        |--|        |--|
+                                -------->|  |------->|  |
+                                         |--|        |--|
 
 ## Build
 
@@ -19,8 +24,7 @@ Bootstrapping a tiny api gateway using envoy transcoding HTTP+JSON into gRPC+Pro
 
 3. Launch services locally (envoy must be installed):
 
-    `chmod u+x ./launch_local.sh`
-    `./launch_local.sh`
+    `docker-compose up --build`
 
 ## Test
 

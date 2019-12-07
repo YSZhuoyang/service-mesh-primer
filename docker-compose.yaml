@@ -2,34 +2,27 @@ version: "3.7"
 services:
   gateway-envoy:
     build:
-      context: .
-      dockerfile: ./gateway/Dockerfile
+      context: ./gateway
+      dockerfile: ./Dockerfile
     networks:
       - envoymesh
     expose:
       - "80"
       - "8001"
     ports:
-      - "8000:80"
+      - "80:80"
       - "8001:8001"
 
   go-service:
     build:
-      context: .
-      dockerfile: ./go-service/Dockerfile
+      context: ./go-service
+      dockerfile: ./Dockerfile
     networks:
       envoymesh:
     expose:
       - "81"
-
-  # dotnet-service:
-  #   build:
-  #     context: .
-  #     dockerfile: ./dotnet-service/Dockerfile
-  #   networks:
-  #     envoymesh:
-  #   expose:
-  #     - "80"
+    ports:
+      - "81:81"
 
 networks:
   envoymesh: {}
