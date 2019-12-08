@@ -2,12 +2,12 @@
 
 Bootstrapping a tiny API gateway using envoy transcoding HTTP+JSON into gRPC+Protobuf.
 
-                   gateway           sidecar proxy  service
+                   gateway           sidecar proxy  service1
         http json   |--|       grpc      |--|        |--|
        ------------>|  |---------------->|  |------->|  |
                     |--|        |        |--|        |--|
                                 |
-                                |
+                                |    sidecar proxy  service2
                                 |        |--|        |--|
                                 -------->|  |------->|  |
                                          |--|        |--|
