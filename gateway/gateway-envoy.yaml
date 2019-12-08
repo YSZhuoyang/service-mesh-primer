@@ -28,14 +28,7 @@ static_resources:
                   prefix: "/contracts.Greeter"
                   grpc: {}
                 route:
-                  cluster: go_service
-                  timeout:
-                    seconds: 60
-              - match:
-                  prefix: "/dotnet_service.Greeter2"
-                  grpc: {}
-                route:
-                  cluster: dotnet_service
+                  cluster: go-service
                   timeout:
                     seconds: 60
           http_filters:
@@ -51,34 +44,20 @@ static_resources:
           - name: envoy.router
 
   clusters:
-  - name: go_service
+  - name: go-service
     connect_timeout: 1.25s
     type: strict_dns
     lb_policy: round_robin
     http2_protocol_options: {}
     load_assignment:
-      cluster_name: go_service
+      cluster_name: go-service
       endpoints:
       - lb_endpoints:
         - endpoint:
             address:
               socket_address:
-                address: 127.0.0.1
+                address: go-service # Map to docker service address
                 port_value: 81
-  - name: dotnet_service
-    connect_timeout: 0.25s
-    type: strict_dns
-    lb_policy: round_robin
-    http2_protocol_options: {}
-    load_assignment:
-      cluster_name: dotnet_service
-      endpoints:
-      - lb_endpoints:
-        - endpoint:
-            address:
-              socket_address:
-                address: 127.0.0.1
-                port_value: 82
 
 admin:
   access_log_path: "/tmp/admin_access.log"

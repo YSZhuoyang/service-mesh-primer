@@ -17,7 +17,7 @@ RUN apt update && apt -y install \
   curl \
   ca-certificates \
   apt-transport-https \
-  gnupg2
+  gnupg2 make
 RUN curl -sL 'https://getenvoy.io/gpg' | apt-key add -
 RUN add-apt-repository "deb [arch=amd64] https://dl.bintray.com/tetrate/getenvoy-deb \
   $(lsb_release -cs) stable"
