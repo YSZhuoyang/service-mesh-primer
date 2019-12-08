@@ -4,13 +4,13 @@ option csharp_namespace = "dotnet_service";
 
 package dotnet_service;
 
-// import "google/api/annotations.proto";
+import "google/api/annotations.proto";
 
 service Greeter2 {
   rpc SayHello2(HelloRequest) returns(HelloReply) {
-    // option (google.api.http) = {
-    //   post: "/greet/hello"
-    // };
+    option (google.api.http) = {
+      post: "/greet2/hello"
+    };
   };
 }
 

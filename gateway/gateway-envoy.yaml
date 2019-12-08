@@ -31,11 +31,21 @@ static_resources:
                   cluster: go-service
                   timeout:
                     seconds: 60
+              - match:
+                  # Below prefix matches the outgoing gRPC route path, not incoming request route path
+                  # as the transcoder translates http request route to gRPC route
+                  prefix: "/dotnet_service.Greeter2"
+                  grpc: {}
+                route:
+                  cluster: dotnet-service
+                  timeout:
+                    seconds: 60
+
           http_filters:
           - name: envoy.grpc_json_transcoder
             config:
               proto_descriptor: "contracts/desc.pb"
-              services: ["contracts.Greeter", "dotnet_service.Greeter2"] # to add ...
+              services: ["contracts.Greeter", "dotnet_service.Greeter2"]
               print_options:
                 add_whitespace: true
                 always_print_primitive_fields: true
@@ -58,9 +68,23 @@ static_resources:
               socket_address:
                 address: go-service # Map to docker service address
                 port_value: 81
+  - name: dotnet-service
+    connect_timeout: 1.25s
+    type: strict_dns
+    lb_policy: round_robin
+    http2_protocol_options: {}
+    load_assignment:
+      cluster_name: dotnet-service
+      endpoints:
+      - lb_endpoints:
+        - endpoint:
+            address:
+              socket_address:
+                address: dotnet-service # Map to docker service address
+                port_value: 82
 
 admin:
-  access_log_path: "/tmp/admin_access.log"
+  access_log_path: /dev/stdout
   address:
     socket_address:
       address: 0.0.0.0

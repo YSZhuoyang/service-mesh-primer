@@ -24,5 +24,16 @@ services:
     ports:
       - "81:81"
 
+  dotnet-service:
+    build:
+      context: ./dotnet-service
+      dockerfile: ./Dockerfile
+    networks:
+      envoymesh:
+    expose:
+      - "82"
+    ports:
+      - "82:82"
+
 networks:
   envoymesh: {}

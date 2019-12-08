@@ -19,7 +19,7 @@ namespace dotnet_service
         {
             return Task.FromResult(new HelloReply
             {
-                Msg = "Hello " + request.Msg
+                Msg = "Reply to: " + request.Msg
             });
         }
     }
