@@ -16,7 +16,7 @@ Bootstrapping a tiny API gateway using envoy transcoding HTTP+JSON into gRPC+Pro
 
 1. Pull googleapis submodules for gRPC route annotation:
 
-    `git submodule update --recursive --remote --merge`
+    `git submodule update --init --recursive --remote --merge`
 
 2. Generate contract source code and build:
 
