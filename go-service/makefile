@@ -5,7 +5,7 @@ get:
 build:
 	export PATH=$$PATH:~/go/bin; \
 	cd contracts; \
-	protoc -I . -I ./googleapis --go_out=plugins=grpc:. ./greeter/*.proto
+	protoc -I . -I ./googleapis --go_out=plugins=grpc:. ./greeter-go/*.proto
 	go build -o server_exec
 
 all:
@@ -14,5 +14,4 @@ all:
 
 clean:
 	rm -f server_exec; \
-	cd contracts; \
-	rm -f *.pb*
+	rm -f ./contracts/*/*.pb*

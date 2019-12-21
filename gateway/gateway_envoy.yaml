@@ -25,7 +25,7 @@ static_resources:
               - match:
                   # Below prefix matches the outgoing gRPC route path, not incoming request route path
                   # as the transcoder translates http request route to gRPC route
-                  prefix: "/contracts.Greeter"
+                  prefix: "/go_service.Greeter"
                   grpc: {}
                 route:
                   cluster: go-service
@@ -34,7 +34,7 @@ static_resources:
               - match:
                   # Below prefix matches the outgoing gRPC route path, not incoming request route path
                   # as the transcoder translates http request route to gRPC route
-                  prefix: "/dotnet_service.Greeter2"
+                  prefix: "/dotnet_service.Greeter"
                   grpc: {}
                 route:
                   cluster: dotnet-service
@@ -45,7 +45,7 @@ static_resources:
           - name: envoy.grpc_json_transcoder
             config:
               proto_descriptor: "contracts/desc.pb"
-              services: ["contracts.Greeter", "dotnet_service.Greeter2"]
+              services: ["go_service.Greeter", "dotnet_service.Greeter"]
               print_options:
                 add_whitespace: true
                 always_print_primitive_fields: true

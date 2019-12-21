@@ -1,4 +1,4 @@
 #!/bin/sh
 
 dotnet run &
-envoy -c ./sidecar-envoy.yaml
+envoy -c ./sidecar_envoy.yaml

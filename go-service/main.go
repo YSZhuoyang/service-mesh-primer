@@ -5,7 +5,7 @@ import (
 	"log"
 	"net"
 
-	"go-service/contracts/greeter"
+	"go-service/contracts/greeter-go"
 	"go-service/handlers"
 	"go-service/util"
 	"google.golang.org/grpc"

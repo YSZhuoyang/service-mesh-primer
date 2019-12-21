@@ -1,13 +1,11 @@
 syntax = "proto3";
 
-option csharp_namespace = "dotnet_service";
-
 package dotnet_service;
 
 import "google/api/annotations.proto";
 
-service Greeter2 {
-  rpc SayHello2(HelloRequest) returns(HelloReply) {
+service Greeter {
+  rpc SayHello(HelloRequest) returns(HelloReply) {
     option (google.api.http) = {
       post: "/greet2/hello"
     };

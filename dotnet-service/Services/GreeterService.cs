@@ -5,9 +5,9 @@ using System.Threading.Tasks;
 using Grpc.Core;
 using Microsoft.Extensions.Logging;
 
-namespace dotnet_service
+namespace DotnetService
 {
-    public class GreeterService : Greeter2.Greeter2Base
+    public class GreeterService : Greeter.GreeterBase
     {
         private readonly ILogger<GreeterService> _logger;
         public GreeterService(ILogger<GreeterService> logger)
@@ -15,11 +15,11 @@ namespace dotnet_service
             _logger = logger;
         }
 
-        public override Task<HelloReply> SayHello2(HelloRequest request, ServerCallContext context)
+        public override Task<HelloReply> SayHello(HelloRequest request, ServerCallContext context)
         {
             return Task.FromResult(new HelloReply
             {
-                Msg = "Reply to: " + request.Msg
+                Msg = "Reply from dotnet service: " + request.Msg
             });
         }
     }

@@ -1,6 +1,6 @@
 package handlers
 
-import "go-service/contracts/greeter"
+import contracts "go-service/contracts/greeter-go"
 
 type Service struct {
 	contracts.UnimplementedGreeterServer

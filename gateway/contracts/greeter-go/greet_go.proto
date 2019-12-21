@@ -1,6 +1,8 @@
 syntax = "proto3";
 
-package contracts;
+package go_service;
+
+option go_package = "contracts";
 
 import "google/api/annotations.proto";
 
