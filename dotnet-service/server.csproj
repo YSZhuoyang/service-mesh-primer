@@ -5,7 +5,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Protobuf Include="contracts/greeter-dotnet/*.proto" GrpcServices="Server" />
+    <Protobuf Include="contracts/greeter-dotnet/*.proto" ProtoRoot="./contracts/greeter-dotnet; ./contracts/googleapis" GrpcServices="Server" />
   </ItemGroup>
 
   <ItemGroup>

@@ -15,7 +15,7 @@ RUN apt update && apt install -y getenvoy-envoy make
 
 # Build src
 ADD . .
-RUN make build
+RUN dotnet build
 
 # Start service with envoy sidecar
 ADD ./start_service.sh ./start_service.sh
