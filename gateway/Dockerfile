@@ -1,4 +1,4 @@
-FROM envoyproxy/envoy:latest
+FROM envoyproxy/envoy:v1.12.2
 
 RUN apt update && apt -q install -y curl make
 
@@ -15,5 +15,6 @@ ADD . .
 
 RUN make build
 
-RUN chmod u+x ./start_service.sh
-ENTRYPOINT ./start_service.sh
+# RUN chmod u+x ./start_service.sh
+# ENTRYPOINT ./start_service.sh
+ENTRYPOINT [ "envoy", "-c", "./gateway_envoy.yaml" ]
