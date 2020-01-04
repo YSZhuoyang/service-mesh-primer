@@ -15,6 +15,4 @@ ADD . .
 
 RUN make build
 
-# RUN chmod u+x ./start_service.sh
-# ENTRYPOINT ./start_service.sh
 ENTRYPOINT [ "envoy", "-c", "./gateway_envoy.yaml" ]
