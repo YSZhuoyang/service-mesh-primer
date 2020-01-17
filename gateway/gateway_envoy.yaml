@@ -11,7 +11,8 @@ static_resources:
           "@type": type.googleapis.com/envoy.config.filter.network.http_connection_manager.v2.HttpConnectionManager
           access_log:
           - name: envoy.file_access_log
-            config:
+            typed_config:
+              "@type": type.googleapis.com/envoy.config.accesslog.v2.FileAccessLog
               path: /dev/stdout
           stat_prefix: grpc_json
           codec_type: auto
@@ -43,7 +44,8 @@ static_resources:
 
           http_filters:
           - name: envoy.grpc_json_transcoder
-            config:
+            "@type": type.googleapis.com/envoy.config.filter.http.transcoder.v2.GrpcJsonTranscoder
+            typed_config:
               proto_descriptor: "contracts/desc.pb"
               services: ["go_service.Greeter", "dotnet_service.Greeter"]
               print_options:
