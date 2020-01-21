@@ -1,4 +1,4 @@
-FROM envoyproxy/envoy:v1.12.2
+FROM envoyproxy/envoy:v1.13.0
 
 RUN apt update && apt -q install -y curl make
 

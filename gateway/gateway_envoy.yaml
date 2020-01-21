@@ -44,7 +44,8 @@ static_resources:
 
           http_filters:
           - name: envoy.grpc_json_transcoder
-            config:
+            typed_config:
+              "@type": type.googleapis.com/envoy.config.filter.http.transcoder.v2.GrpcJsonTranscoder
               proto_descriptor: "contracts/desc.pb"
               services: ["go_service.Greeter", "dotnet_service.Greeter"]
               print_options:
