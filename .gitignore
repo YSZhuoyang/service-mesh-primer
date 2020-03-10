@@ -3,3 +3,5 @@ bin
 *.pb*
 .DS_Store
 server_exec
+
+node_modules
