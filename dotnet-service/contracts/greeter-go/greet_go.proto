@@ -12,6 +12,12 @@ service Greeter {
       post: "/greet/hello"
     };
   };
+
+  rpc GetLiveData(LiveDataRequest) returns(stream LiveDataReply) {
+    option (google.api.http) = {
+      get: "/greet/get-live-data"
+    };
+  };
 }
 
 message HelloRequest {
@@ -20,4 +26,10 @@ message HelloRequest {
 
 message HelloReply {
   string Msg = 1;
+}
+
+message LiveDataRequest {}
+
+message LiveDataReply {
+  int32 Data = 1;
 }
