@@ -13,11 +13,7 @@ service Greeter {
     };
   };
 
-  rpc GetLiveData(LiveDataRequest) returns(stream LiveDataReply) {
-    option (google.api.http) = {
-      get: "/greet/get-live-data"
-    };
-  };
+  rpc GetLiveData(LiveDataRequest) returns(stream LiveDataReply) {};
 }
 
 message HelloRequest {
