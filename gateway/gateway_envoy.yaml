@@ -22,12 +22,20 @@ static_resources:
             - name: backend
               domains:
               - "*"
+              cors:
+                allow_origin_string_match:
+                - safe_regex:
+                    google_re2: {}
+                    regex: \*
+                allow_methods: GET, PUT, DELETE, POST, OPTIONS
+                allow_headers: keep-alive,user-agent,cache-control,content-type,content-transfer-encoding,custom-header-1,x-accept-content-transfer-encoding,x-accept-response-streaming,x-user-agent,x-grpc-web,grpc-timeout
+                expose_headers: custom-header-1,grpc-status,grpc-message
               routes:
               - match:
                   # Below prefix matches the outgoing gRPC route path, not incoming request route path
                   # as the transcoder translates http request route to gRPC route
                   prefix: "/go_service.Greeter"
-                  grpc: {}
+                  # grpc: {} # Only allow grpc requests, which does not work with cors
                 route:
                   cluster: go-service
                   timeout:
@@ -36,13 +44,14 @@ static_resources:
                   # Below prefix matches the outgoing gRPC route path, not incoming request route path
                   # as the transcoder translates http request route to gRPC route
                   prefix: "/dotnet_service.Greeter"
-                  grpc: {}
+                  # grpc: {} # Only allow grpc requests, which does not work with cors
                 route:
                   cluster: dotnet-service
                   timeout:
                     seconds: 60
 
           http_filters:
+          # Note that envoy processes requests using filters in top down order
           - name: envoy.grpc_json_transcoder
             typed_config:
               "@type": type.googleapis.com/envoy.config.filter.http.transcoder.v2.GrpcJsonTranscoder
@@ -54,6 +63,8 @@ static_resources:
                 always_print_enums_as_ints: false
                 preserve_proto_field_names: false
           - name: envoy.grpc_web
+          - name: envoy.cors
+            typed_config: {}
           - name: envoy.router
 
   clusters:
