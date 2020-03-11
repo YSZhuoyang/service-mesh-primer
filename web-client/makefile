@@ -8,8 +8,9 @@ build:
 	export PATH=$$PATH:/usr/local/bin/protoc-gen-grpc-web; \
 	cd contracts; \
 	protoc -I . -I ./googleapis ./greeter-go/*.proto \
-	--js_out=import_style=commonjs:../public \
-	--grpc-web_out=import_style=commonjs,mode=grpcwebtext:../public
+	--js_out=import_style=commonjs:../src \
+	--grpc-web_out=import_style=commonjs,mode=grpcwebtext:../src
+	# Note: comment out annotation related lines
 
 clean:
 	rm -f ./public/*_pb.js
