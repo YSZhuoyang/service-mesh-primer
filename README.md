@@ -28,4 +28,4 @@ Bootstrapping a tiny API gateway using envoy transcoding HTTP+JSON into gRPC+Pro
 
 ## Test
 
-    `chmod u+x ./test.sh && ./test.sh`
+    chmod u+x ./test.sh && ./test.sh
