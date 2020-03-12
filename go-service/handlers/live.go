@@ -11,7 +11,7 @@ func (*Service) GetLiveData(req *contracts.LiveDataRequest, srv contracts.Greete
 		srv.Send(&contracts.LiveDataReply{
 			Data: (int32)(i),
 		})
-		time.Sleep(1000000)
+		time.Sleep(time.Second)
 	}
 
 	return nil

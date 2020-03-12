@@ -1,31 +1,23 @@
 syntax = "proto3";
 
-package go_service;
-
-option go_package = "contracts";
+package dotnet_service;
 
 import "google/api/annotations.proto";
 
 service Greeter {
   rpc SayHello(HelloRequest) returns(HelloReply) {
     option (google.api.http) = {
-      post: "/greet/hello"
+      post: "/greet2/hello"
     };
   };
-
-  rpc GetLiveData(LiveDataRequest) returns(stream LiveDataReply) {};
 }
 
+// The request message containing the user's name.
 message HelloRequest {
   string Msg = 1;
 }
 
+// The response message containing the greetings.
 message HelloReply {
   string Msg = 1;
-}
-
-message LiveDataRequest {}
-
-message LiveDataReply {
-  int32 Data = 1;
 }
