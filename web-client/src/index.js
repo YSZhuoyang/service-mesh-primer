@@ -1,11 +1,11 @@
-const { LiveDataRequest, HelloRequest, LiveDataReply } = require('./greeter-go/greet_go_pb.js');
+const { LiveDataRequest } = require('./greeter-go/greet_go_pb.js');
 const { GreeterClient } = require('./greeter-go/greet_go_grpc_web_pb.js');
 
-var echoService = new GreeterClient('http://localhost:80');
+const greeterClient = new GreeterClient('http://localhost:80');
 
 const getLiveData = () => {
     const req = new LiveDataRequest();
-    const stream = echoService.getLiveData(req, {});
+    const stream = greeterClient.getLiveData(req, {});
     stream.on('data', function (response) {
         console.log("Received: " + response.getData());
         document.getElementById("data").textContent = response.getData();
