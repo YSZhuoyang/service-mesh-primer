@@ -32,10 +32,10 @@ Bootstrapping a tiny API gateway using envoy which supports:
 
 ## Test
 
-* Test Http/1.1 & Http/2 with Curl
+- Test Http/1.1 & Http/2 with Curl
 
       chmod u+x ./test.sh && ./test.sh
 
-* Test server streaming with Web Client
+- Test server streaming with Web Client
 
   - Cd to `web-client/public` dir, open `index.html` and click `Get Live Data`.
