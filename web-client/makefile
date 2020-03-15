@@ -10,7 +10,8 @@ gen:
 	protoc -I . -I ./googleapis ./greeter-go/*.proto \
 	--js_out=import_style=commonjs:../src \
 	--grpc-web_out=import_style=commonjs,mode=grpcwebtext:../src
-	# Please remove imports for annotation which is unused from generated files (waiting for official fix)
+	ls -1 ./src/greeter-go/*.js | xargs sed -i "" '/annotations_pb/d'
+	# Remove imports for annotation which is unused from generated files (waiting for official fix)
 
 clean:
-	rm -f ./public/*_pb.js
+	rm -f ./src/**/*_pb.js

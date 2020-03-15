@@ -34,10 +34,4 @@ Bootstrapping a tiny API gateway using envoy transcoding HTTP+JSON into gRPC+Pro
 
 * Test server streaming with Web Client
 
-  1. Cd to `/web-client` and run:
-
-         make get
-         make gen # And follow instructions to remove the annotation imports from generated files
-         yarn build
-
-  2. Cd to `/public` folder, open `index.html` and click `Get Live Data`.
+  1. Cd to `web-client/public` dir, open `index.html` and click `Get Live Data`.
