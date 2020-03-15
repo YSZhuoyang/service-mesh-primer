@@ -1,6 +1,10 @@
 # API-Gateway-Primer
 
-Bootstrapping a tiny API gateway using envoy transcoding HTTP+JSON into gRPC+Protobuf, and streaming data to clients.
+Bootstrapping a tiny API gateway using envoy which supports:
+
+- Transcoding HTTP+JSON into gRPC+Protobuf
+- Streaming data to clients
+- Handling Http/1.1, Http/2 and gRPC
 
                    gateway           sidecar proxy  service1
         http json   |--|       grpc      |--|        |--|
@@ -34,4 +38,4 @@ Bootstrapping a tiny API gateway using envoy transcoding HTTP+JSON into gRPC+Pro
 
 * Test server streaming with Web Client
 
-  1. Cd to `web-client/public` dir, open `index.html` and click `Get Live Data`.
+  - Cd to `web-client/public` dir, open `index.html` and click `Get Live Data`.
