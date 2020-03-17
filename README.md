@@ -3,7 +3,7 @@
 Bootstrapping a tiny API gateway using envoy which supports:
 
 - Transcoding HTTP+JSON into gRPC+Protobuf
-- Streaming data to clients
+- Server push, streaming data to clients
 - Handling Http/1.1, Http/2 and gRPC
 
                    gateway           sidecar proxy  service1
