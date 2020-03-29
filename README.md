@@ -1,6 +1,6 @@
-# API-Gateway-Primer
+# Gateway-Primer
 
-Bootstrapping a tiny API gateway using envoy which supports:
+Bootstrapping a tiny gateway using envoy which supports:
 
 - Transcoding HTTP+JSON into gRPC+Protobuf
 - Server push, streaming data to clients
