@@ -1,7 +1,7 @@
 package handlers
 
 import (
-	contracts "go-service/contracts/greeter-go"
+	contracts "go-service/contracts/greeter-go/greeter_go"
 	"time"
 )
 

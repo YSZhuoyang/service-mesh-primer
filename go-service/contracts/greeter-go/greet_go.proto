@@ -2,7 +2,7 @@ syntax = "proto3";
 
 package go_service;
 
-option go_package = "contracts";
+option go_package = "greeter-go/greeter_go";
 
 import "google/api/annotations.proto";
 

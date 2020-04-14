@@ -3,7 +3,7 @@ package handlers
 import (
 	"context"
 
-	contracts "go-service/contracts/greeter-go"
+	contracts "go-service/contracts/greeter-go/greeter_go"
 )
 
 // SayHello - Scrape Bing news meta data
