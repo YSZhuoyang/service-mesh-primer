@@ -1,0 +1,121 @@
+apiVersion: networking.istio.io/v1alpha3
+kind: Gateway
+metadata:
+  name: stock-discovery-ingress-gateway
+spec:
+  selector:
+    istio: ingressgateway # use Istio default gateway implementation
+  servers:
+  - port:
+      number: 443
+      name: https
+      protocol: HTTPS
+    tls:
+      mode: SIMPLE
+      credentialName: ingressgateway-certs
+    hosts:
+    - "*"
+    # - "stock-discovery-oyu.space"
+
+---
+
+apiVersion: networking.istio.io/v1alpha3
+kind: VirtualService
+metadata:
+  name: stock-discovery-gateway
+spec:
+  hosts:
+  # - "news-analysis.default.svc.cluster.local"
+  - "go-service.default.svc.cluster.local"
+  - "stock-discovery-oyu.space"
+  gateways:
+  - stock-discovery-ingress-gateway
+  - mesh
+  http:
+  # - match:
+  #   - uri: # HTTP
+  #       prefix: /api/news
+  #   - uri: # GRPC
+  #       prefix: /news_analysis.NewsAnalyst
+  #   route:
+  #   - destination:
+  #       port:
+  #         number: 82
+  #       host: news-analysis.default.svc.cluster.local
+  #   corsPolicy:
+  #     allowOrigin:
+  #     - "*"
+  #     allowMethods:
+  #     - POST
+  #     - GET
+  #     allowHeaders:
+  #     - authorization
+  #     - keep-alive
+  #     - user-agent
+  #     - cache-control
+  #     - content-type
+  #     - content-transfer-encoding
+  #     - x-accept-content-transfer-encoding
+  #     - x-accept-response-streaming
+  #     - x-user-agent
+  #     - x-grpc-web
+  #     expose_headers:
+  #     - grpc-status
+  #     - grpc-message
+  #     - x-envoy-upstream-service-time
+
+  - match:
+    - uri: # HTTP
+        prefix: /greet
+    - uri: # GRPC
+        prefix: /go_service.Greeter
+    route:
+    - destination:
+        port:
+          number: 81
+        host: go-service.default.svc.cluster.local
+    corsPolicy:
+      allowOrigin:
+      - "*"
+      allowMethods:
+      - POST
+      - GET
+      allowHeaders:
+      - authorization
+      - keep-alive
+      - user-agent
+      - cache-control
+      - content-type
+      - content-transfer-encoding
+      - x-accept-content-transfer-encoding
+      - x-accept-response-streaming
+      - x-user-agent
+      - x-grpc-web
+      expose_headers:
+      - grpc-status
+      - grpc-message
+      - x-envoy-upstream-service-time
+
+---
+
+apiVersion: networking.istio.io/v1alpha3
+kind: DestinationRule
+metadata:
+  name: go-service-destination
+spec:
+  host: go-service.default.svc.cluster.local # interpreted as news-analysis.default.svc.cluster.local
+  trafficPolicy:
+    loadBalancer:
+      simple: LEAST_CONN
+
+# ---
+
+# apiVersion: networking.istio.io/v1alpha3
+# kind: DestinationRule
+# metadata:
+#   name: go-service
+# spec:
+#   host: go-service # interpreted as go-service.default.svc.cluster.local
+#   trafficPolicy:
+#     loadBalancer:
+#       simple: LEAST_CONN

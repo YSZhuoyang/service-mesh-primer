@@ -1,0 +1,30 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: go-service
+  name: go-service
+spec:
+  selector:
+    matchLabels:
+      app: go-service
+
+  template:
+    metadata:
+      labels:
+        app: go-service
+      annotations:
+        sidecar.istio.io/userVolume: '[{ "name": "proto-descriptor", "configMap": { "name": "proto-descriptor", "items": [{ "key": "desc.pb", "path": "desc.pb" }] } }]'
+        sidecar.istio.io/userVolumeMount: '[{ "name": "proto-descriptor", "mountPath": "/etc/envoy" }]'
+        # sidecar.istio.io/userVolume: '[{ "name": "proto-descriptor", "hostPath": { "path": "~/Documents/desc.pb", "type": "File" } }]'
+        # sidecar.istio.io/userVolumeMount: '[{ "name": "proto-descriptor", "mountPath": "/etc/envoy" }]'
+    spec:
+      containers:
+      - image: oscary/go-service
+        name: go-service
+        ports:
+        - containerPort: 8080
+        resources:
+          limits:
+            cpu: 500m
+            memory: 512Mi
