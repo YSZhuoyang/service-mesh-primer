@@ -1,7 +1,7 @@
 const { LiveDataRequest } = require('./greeter-go/greet_go_pb.js');
 const { GreeterClient } = require('./greeter-go/greet_go_grpc_web_pb.js');
 
-const greeterClient = new GreeterClient('http://localhost:80');
+const greeterClient = new GreeterClient('http://127.0.0.1:80');
 
 const getLiveData = () => {
     const req = new LiveDataRequest();

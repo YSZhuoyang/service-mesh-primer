@@ -7,3 +7,6 @@
 [submodule "web-client/contracts/googleapis"]
 	path = web-client/contracts/googleapis
 	url = https://github.com/googleapis/googleapis.git
+[submodule "deploy/contracts/googleapis"]
+	path = deploy/contracts/googleapis
+	url = https://github.com/googleapis/googleapis.git
