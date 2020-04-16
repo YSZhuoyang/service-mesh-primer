@@ -1,4 +1,4 @@
-# Gateway-Primer
+# Service-Mesh-Primer
 
 Bootstrapping a tiny service mesh with istio which supports:
 
@@ -16,11 +16,11 @@ Bootstrapping a tiny service mesh with istio which supports:
                                 -------->|  |------->|  |
                                          |--|        |--|
 
-## Build locally
+## Build
 
    `make all`
 
-## Run locally on Kubernetes
+## Deploy locally on Kubernetes
 
 1. Pull googleapis submodules for gRPC route annotation:
 
