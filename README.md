@@ -1,34 +1,41 @@
 # Gateway-Primer
 
-Bootstrapping a tiny gateway using envoy which supports:
+Bootstrapping a tiny service mesh with istio which supports:
 
 - Transcoding HTTP+JSON into gRPC+Protobuf
 - Server push, streaming data to clients
 - Handling Http/1.1, Http/2 and gRPC
 
-                   gateway           sidecar proxy  service1
-        http json   |--|       grpc      |--|        |--|
+                   gateway             sidecar     service1
+        http json   |--|                 |--|  grpc  |--|
        ------------>|  |---------------->|  |------->|  |
                     |--|        |        |--|        |--|
                                 |
-                                |    sidecar proxy  service2
-                                |        |--|        |--|
+                                |      sidecar     service2
+                                |        |--|  grpc  |--|
                                 -------->|  |------->|  |
                                          |--|        |--|
 
-## Build & Run
+## Build locally
+
+   `make all`
+
+## Run locally on Kubernetes
 
 1. Pull googleapis submodules for gRPC route annotation:
 
     `git submodule update --init --recursive --remote --merge`
 
-2. Generate contract source code and build:
+2. Generate contract descriptor which can be mounted to istio envoy sidecars:
 
-    `make all`
+    `cd contracts && make build`
+    `kubectl create configmap proto-descriptor --from-file=desc.pb`
 
-3. Launch services:
+3. Launch istio & services:
 
-    `docker-compose up --build`
+    `istioctl manifest apply --set values.global.proxy.accessLogFile="/dev/stdout"`
+    `kubectl label namespace default istio-injection=enabled`
+    `kubectl apply -f ./kube`
 
 ## Test
 

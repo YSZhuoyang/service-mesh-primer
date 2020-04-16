@@ -7,15 +7,11 @@ spec:
     istio: ingressgateway # use Istio default gateway implementation
   servers:
   - port:
-      number: 443
-      name: https
-      protocol: HTTPS
-    tls:
-      mode: SIMPLE
-      credentialName: ingressgateway-certs
+      number: 80
+      name: http
+      protocol: HTTP
     hosts:
     - "*"
-    # - "stock-discovery-oyu.space"
 
 ---
 
@@ -25,44 +21,44 @@ metadata:
   name: stock-discovery-gateway
 spec:
   hosts:
-  # - "news-analysis.default.svc.cluster.local"
+  - "127.0.0.1"
   - "go-service.default.svc.cluster.local"
-  - "stock-discovery-oyu.space"
+  - "dotnet-service.default.svc.cluster.local"
   gateways:
   - stock-discovery-ingress-gateway
   - mesh
   http:
-  # - match:
-  #   - uri: # HTTP
-  #       prefix: /api/news
-  #   - uri: # GRPC
-  #       prefix: /news_analysis.NewsAnalyst
-  #   route:
-  #   - destination:
-  #       port:
-  #         number: 82
-  #       host: news-analysis.default.svc.cluster.local
-  #   corsPolicy:
-  #     allowOrigin:
-  #     - "*"
-  #     allowMethods:
-  #     - POST
-  #     - GET
-  #     allowHeaders:
-  #     - authorization
-  #     - keep-alive
-  #     - user-agent
-  #     - cache-control
-  #     - content-type
-  #     - content-transfer-encoding
-  #     - x-accept-content-transfer-encoding
-  #     - x-accept-response-streaming
-  #     - x-user-agent
-  #     - x-grpc-web
-  #     expose_headers:
-  #     - grpc-status
-  #     - grpc-message
-  #     - x-envoy-upstream-service-time
+  - match:
+    - uri: # HTTP
+        prefix: /greet2
+    - uri: # GRPC
+        prefix: /dotnet-service.Greeter
+    route:
+    - destination:
+        port:
+          number: 82
+        host: dotnet-service.default.svc.cluster.local
+    corsPolicy:
+      allowOrigin:
+      - "*"
+      allowMethods:
+      - POST
+      - GET
+      allowHeaders:
+      - authorization
+      - keep-alive
+      - user-agent
+      - cache-control
+      - content-type
+      - content-transfer-encoding
+      - x-accept-content-transfer-encoding
+      - x-accept-response-streaming
+      - x-user-agent
+      - x-grpc-web
+      expose_headers:
+      - grpc-status
+      - grpc-message
+      - x-envoy-upstream-service-time
 
   - match:
     - uri: # HTTP
@@ -103,19 +99,19 @@ kind: DestinationRule
 metadata:
   name: go-service-destination
 spec:
-  host: go-service.default.svc.cluster.local # interpreted as news-analysis.default.svc.cluster.local
+  host: go-service.default.svc.cluster.local
   trafficPolicy:
     loadBalancer:
       simple: LEAST_CONN
 
-# ---
+---
 
-# apiVersion: networking.istio.io/v1alpha3
-# kind: DestinationRule
-# metadata:
-#   name: go-service
-# spec:
-#   host: go-service # interpreted as go-service.default.svc.cluster.local
-#   trafficPolicy:
-#     loadBalancer:
-#       simple: LEAST_CONN
+apiVersion: networking.istio.io/v1alpha3
+kind: DestinationRule
+metadata:
+  name: dotnet-service-destination
+spec:
+  host: dotnet-service.default.svc.cluster.local # interpreted as dotnet-service.default.svc.cluster.local
+  trafficPolicy:
+    loadBalancer:
+      simple: LEAST_CONN
