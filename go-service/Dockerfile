@@ -4,8 +4,9 @@ WORKDIR /go/server
 # install protobuf compiler
 RUN apt update && \
     apt -y install apt-utils unzip
-RUN PROTOC_ZIP=protoc-3.11.4-linux-x86_64.zip && \
-    curl -OL https://github.com/protocolbuffers/protobuf/releases/download/v3.11.4/protoc-3.11.4-linux-x86_64.zip && \
+RUN PROTOC_VER=3.12.2 && \
+    PROTOC_ZIP=protoc-${PROTOC_VER}-linux-x86_64.zip && \
+    curl -OL https://github.com/protocolbuffers/protobuf/releases/download/v${PROTOC_VER}/${PROTOC_ZIP} && \
     unzip -o $PROTOC_ZIP -d /usr/local bin/protoc && \
     unzip -o $PROTOC_ZIP -d /usr/local 'include/*' && \
     rm -f $PROTOC_ZIP
