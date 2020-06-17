@@ -5,6 +5,7 @@ Bootstrapping a tiny service mesh with istio which supports:
 - Transcoding HTTP+JSON into gRPC+Protobuf
 - Server push, streaming data to clients
 - Handling Http/1.1, Http/2 and gRPC
+- Secure services with Istio sidecar mTLS (similar to [Azure Container Group TLS](https://docs.microsoft.com/en-us/azure/container-instances/container-instances-container-group-ssl))
 
                    gateway             sidecar     service1
         http json   |--|                 |--|  grpc  |--|
