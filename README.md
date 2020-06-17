@@ -34,7 +34,7 @@ Bootstrapping a tiny service mesh with istio which supports:
 3. Launch istio & services:
 
        cd deploy
-       istioctl install --set values.global.proxy.accessLogFile="/dev/stdout" --set values.grafana.enabled=true
+       istioctl install --set values.meshConfig.accessLogFile="/dev/stdout" --set values.grafana.enabled=true
        kubectl label namespace default istio-injection=enabled
        kubectl apply -f ./kube
 

@@ -39,8 +39,8 @@ spec:
           number: 82
         host: dotnet-service.default.svc.cluster.local
     corsPolicy:
-      allowOrigin:
-      - "*"
+      allowOrigins:
+      - regex: \*
       allowMethods:
       - POST
       - GET
@@ -55,10 +55,6 @@ spec:
       - x-accept-response-streaming
       - x-user-agent
       - x-grpc-web
-      expose_headers:
-      - grpc-status
-      - grpc-message
-      - x-envoy-upstream-service-time
 
   - match:
     - uri: # HTTP
@@ -71,8 +67,8 @@ spec:
           number: 81
         host: go-service.default.svc.cluster.local
     corsPolicy:
-      allowOrigin:
-      - "*"
+      allowOrigins:
+      - regex: \*
       allowMethods:
       - POST
       - GET
@@ -87,10 +83,6 @@ spec:
       - x-accept-response-streaming
       - x-user-agent
       - x-grpc-web
-      expose_headers:
-      - grpc-status
-      - grpc-message
-      - x-envoy-upstream-service-time
 
 ---
 
