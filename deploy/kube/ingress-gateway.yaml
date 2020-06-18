@@ -55,6 +55,12 @@ spec:
       - x-accept-response-streaming
       - x-user-agent
       - x-grpc-web
+      exposeHeaders:
+      - grpc-status
+      - grpc-message
+      - grpc-encoding
+      - grpc-accept-encoding
+      - x-envoy-upstream-service-time
 
   - match:
     - uri: # HTTP
@@ -83,6 +89,12 @@ spec:
       - x-accept-response-streaming
       - x-user-agent
       - x-grpc-web
+      exposeHeaders:
+      - grpc-status
+      - grpc-message
+      - grpc-encoding
+      - grpc-accept-encoding
+      - x-envoy-upstream-service-time
 
 ---
 
