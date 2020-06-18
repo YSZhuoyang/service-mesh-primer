@@ -19,20 +19,21 @@ Bootstrapping a tiny service mesh with istio which supports:
 
 ## Build
 
-    make all
-
-## Deploy locally on Kubernetes with Istio
-
 1. Pull googleapis submodules for gRPC route annotation:
 
        git submodule update --init --recursive --remote --merge
 
-2. Generate contract descriptor which can be mounted to istio envoy sidecars:
+2. Build source code and docker images
 
-       cd deploy && make build
-       cd contracts && kubectl create configmap proto-descriptor --from-file=desc.pb
+       make all
 
-3. Launch istio & services:
+## Deploy locally on Kubernetes with Istio
+
+1. Generate contract descriptor mounted to istio envoy sidecars (for gRPC transcoding):
+
+       cd deploy/contracts && kubectl create configmap proto-descriptor --from-file=desc.pb
+
+2. Launch istio & services:
 
        cd deploy
        istioctl install --set values.meshConfig.accessLogFile="/dev/stdout" --set values.grafana.enabled=true

@@ -1,8 +1,8 @@
 
 services:
 	cd deploy && make build
-	cd go-service && make all
-	cd dotnet-service && dotnet build
+	cd go-service && make all && docker build -t go-service .
+	cd dotnet-service && dotnet build && docker build -t dotnet-service .
 
 client:
 	cd web-client && \

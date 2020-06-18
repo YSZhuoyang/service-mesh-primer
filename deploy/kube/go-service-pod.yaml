@@ -18,8 +18,9 @@ spec:
         sidecar.istio.io/userVolumeMount: '[{ "name": "proto-descriptor", "mountPath": "/etc/envoy" }]'
     spec:
       containers:
-      - image: oscary/go-service
+      - image: go-service
         name: go-service
+        imagePullPolicy: Never
         ports:
         - containerPort: 8080
         resources:
