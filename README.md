@@ -5,7 +5,7 @@ Bootstrapping a tiny service mesh with istio which supports:
 - Transcoding HTTP+JSON into gRPC+Protobuf
 - Server push, streaming data to clients
 - Handling Http/1.1, Http/2 and gRPC
-- Secure services with Istio sidecar mTLS (similar to [Azure Container Group TLS](https://docs.microsoft.com/en-us/azure/container-instances/container-instances-container-group-ssl))
+- Secure services with Istio sidecar [mTLS](https://istio.io/latest/docs/concepts/security/) (similar to [Azure Container Group TLS](https://docs.microsoft.com/en-us/azure/container-instances/container-instances-container-group-ssl))
 
                    gateway             sidecar     service1
         http json   |--|                 |--|  grpc  |--|
@@ -27,13 +27,17 @@ Bootstrapping a tiny service mesh with istio which supports:
 
        make all
 
-## Deploy locally on Kubernetes with Istio
+## Deploy locally on Kubernetes with [Istio](https://istio.io/)
 
-1. Generate contract descriptor mounted to istio envoy sidecars (for gRPC transcoding):
+1. Install Istio (with homebrew):
+
+       brew install istioctl
+
+2. Generate contract descriptor mounted to istio envoy sidecars (for gRPC transcoding):
 
        cd deploy/contracts && kubectl create configmap proto-descriptor --from-file=desc.pb
 
-2. Launch istio & services:
+3. Launch istio & services:
 
        cd deploy
        istioctl install --set values.meshConfig.accessLogFile="/dev/stdout" --set values.grafana.enabled=true
