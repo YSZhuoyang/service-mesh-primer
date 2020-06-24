@@ -107,6 +107,8 @@ spec:
   trafficPolicy:
     loadBalancer:
       simple: LEAST_CONN
+    tls:
+      mode: ISTIO_MUTUAL
 
 ---
 
@@ -119,3 +121,5 @@ spec:
   trafficPolicy:
     loadBalancer:
       simple: LEAST_CONN
+    tls:
+      mode: ISTIO_MUTUAL

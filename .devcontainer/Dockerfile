@@ -62,16 +62,6 @@ RUN apt update \
     && echo $USERNAME ALL=\(root\) NOPASSWD:ALL > /etc/sudoers.d/$USERNAME \
     && chmod 0440 /etc/sudoers.d/$USERNAME
 
-# Install envoy
-RUN apt update && apt -y install \
-    curl \
-    apt-transport-https \
-    ca-certificates \
-    gnupg2 \
-    && curl -sL 'https://getenvoy.io/gpg' | apt-key add - \
-    && add-apt-repository "deb [arch=amd64] https://dl.bintray.com/tetrate/getenvoy-deb $(lsb_release -cs) stable" \
-    && apt update && apt install -y getenvoy-envoy
-
 # Install Register Microsoft key and feed for .NET Core
 RUN wget -qO- https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor > microsoft.asc.gpg \
     && mv microsoft.asc.gpg /etc/apt/trusted.gpg.d/
