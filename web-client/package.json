@@ -9,11 +9,11 @@
   },
   "dependencies": {
     "google-protobuf": "^3.12.2",
-    "grpc-web": "^1.1.0"
+    "grpc-web": "^1.2.0"
   },
   "devDependencies": {
     "webpack": "^4.43.0",
-    "webpack-cli": "^3.3.11"
+    "webpack-cli": "^3.3.12"
   },
   "author": "Oscar Yu",
   "license": "ISC"

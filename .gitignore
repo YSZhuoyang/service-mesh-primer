@@ -4,6 +4,6 @@ node_modules
 *.pb*
 *_pb.js
 web-client/public/index.js
-
-.DS_Store
+protoc-gen-grpc-web
 server_exec
+.DS_Store

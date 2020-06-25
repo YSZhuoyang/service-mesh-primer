@@ -1,11 +1,11 @@
 
 get:
-	wget https://github.com/grpc/grpc-web/releases/download/1.0.7/protoc-gen-grpc-web-1.0.7-darwin-x86_64 --no-check-certificate
-	mv protoc-gen-grpc-web-1.0.7-darwin-x86_64 /usr/local/bin/protoc-gen-grpc-web
-	chmod +x /usr/local/bin/protoc-gen-grpc-web
+	wget https://github.com/grpc/grpc-web/releases/download/1.2.0/protoc-gen-grpc-web-1.2.0-darwin-x86_64 --no-check-certificate
+	mv protoc-gen-grpc-web-1.2.0-darwin-x86_64 ./protoc-gen-grpc-web
+	chmod +x ./protoc-gen-grpc-web
 
 gen:
-	export PATH=$$PATH:/usr/local/bin/protoc-gen-grpc-web; \
+	export PATH=$$PATH:$$PWD; \
 	cd contracts; \
 	protoc -I . -I ./googleapis ./greeter-go/*.proto \
 	--js_out=import_style=commonjs:../src \
