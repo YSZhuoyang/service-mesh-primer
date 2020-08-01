@@ -39,16 +39,21 @@ Bootstrapping a tiny service mesh with istio which supports:
 
 3. Launch istio & services:
 
-       cd deploy
        istioctl install --set profile=demo --set values.meshConfig.accessLogFile="/dev/stdout"
        kubectl label namespace default istio-injection=enabled
-       kubectl apply -f ./kube
+       kubectl apply -f ./deploy/kube
 
 ## Test
 
 - Test Http/1.1 & Http/2 with Curl
 
       chmod u+x ./test.sh && ./test.sh
+
+- Test Grafana & Jaeger dashboard:
+
+      for i in `seq 1 250`; do ./test.sh; done; # The default Jaeger sampling rate is 1%
+      istioctl dashboard jaeger
+      istioctl dashboard grafana
 
 - Test server streaming with Web Client
 
