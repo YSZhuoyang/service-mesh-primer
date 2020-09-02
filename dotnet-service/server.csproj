@@ -5,12 +5,12 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Protobuf Include="contracts/greeter-dotnet/*.proto" ProtoRoot="./contracts/greeter-dotnet; ./contracts/googleapis" GrpcServices="Server" />
+    <Protobuf Include="contracts/greeter-dotnet/*.proto" ProtoRoot="contracts/greeter-dotnet" AdditionalImportDirs="contracts/googleapis" GrpcServices="Server" />
   </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="Google.Api.CommonProtos" Version="2.1.0" />
-    <PackageReference Include="Grpc.AspNetCore" Version="2.30.0" />
+    <PackageReference Include="Grpc.AspNetCore" Version="2.31.0" />
   </ItemGroup>
 
 </Project>

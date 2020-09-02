@@ -21,7 +21,7 @@ RUN apt update \
     && apt -y install --no-install-recommends apt-utils dialog 2>&1 \
     #
     # Verify git, process tools, lsb-release (common in install instructions for CLIs) installed
-    && apt -y install git iproute2 procps lsb-release make software-properties-common \
+    && apt -y install git iproute2 procps lsb-release make software-properties-common apt-transport-https \
     #
     # Install gocode-gomod
     && go get -x -d github.com/stamblerre/gocode 2>&1 \
@@ -63,12 +63,8 @@ RUN apt update \
     && chmod 0440 /etc/sudoers.d/$USERNAME
 
 # Install Register Microsoft key and feed for .NET Core
-RUN wget -qO- https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor > microsoft.asc.gpg \
-    && mv microsoft.asc.gpg /etc/apt/trusted.gpg.d/
-RUN wget -q https://packages.microsoft.com/config/debian/10/prod.list
-RUN mv prod.list /etc/apt/sources.list.d/microsoft-prod.list \
-    && chown root:root /etc/apt/trusted.gpg.d/microsoft.asc.gpg \
-    && chown root:root /etc/apt/sources.list.d/microsoft-prod.list
+RUN wget https://packages.microsoft.com/config/debian/10/packages-microsoft-prod.deb -O packages-microsoft-prod.deb \
+    && dpkg -i packages-microsoft-prod.deb
 
 # Install .NET Core SDK
 RUN apt update && apt -y install dotnet-sdk-3.1
