@@ -1,11 +1,11 @@
 # Service Mesh Primer
 
-Bootstrapping a tiny service mesh with istio which supports:
+A demo to bootstrap a tiny service mesh with istio which supports:
 
 - Transcoding HTTP+JSON into gRPC+Protobuf
 - Server push, streaming data to clients
 - Handling Http/1.1, Http/2 and gRPC
-- Secure services with Istio sidecar [mTLS](https://istio.io/latest/docs/concepts/security/) (similar to [Azure Container Group TLS](https://docs.microsoft.com/en-us/azure/container-instances/container-instances-container-group-ssl))
+- Securing services with Istio sidecar [mTLS](https://istio.io/latest/docs/concepts/security/) (similar to [Azure Container Group TLS](https://docs.microsoft.com/en-us/azure/container-instances/container-instances-container-group-ssl))
 
                    gateway             sidecar     service1
         http json   |--|                 |--|  grpc  |--|
@@ -23,7 +23,7 @@ Bootstrapping a tiny service mesh with istio which supports:
 
        git submodule update --init --recursive --remote --merge
 
-2. Build source code and docker images
+2. Build source code and docker images (make sure Docker is running):
 
        make all
 
