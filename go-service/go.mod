@@ -3,11 +3,11 @@ module go-service
 go 1.15
 
 require (
-	github.com/golang/protobuf v1.4.2
-	golang.org/x/net v0.0.0-20200822124328-c89045814202 // indirect
-	golang.org/x/sys v0.0.0-20200831180312-196b9ba8737a // indirect
-	golang.org/x/text v0.3.3 // indirect
-	google.golang.org/genproto v0.0.0-20200901141002-b3bf27a9dbd1
-	google.golang.org/grpc v1.31.1
+	github.com/golang/protobuf v1.4.3
+	golang.org/x/net v0.0.0-20201110031124-69a78807bb2b // indirect
+	golang.org/x/sys v0.0.0-20201119102817-f84b799fce68 // indirect
+	golang.org/x/text v0.3.4 // indirect
+	google.golang.org/genproto v0.0.0-20201119123407-9b1e624d6bc4
+	google.golang.org/grpc v1.33.2
 	google.golang.org/protobuf v1.25.0
 )
