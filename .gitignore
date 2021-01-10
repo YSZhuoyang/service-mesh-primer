@@ -1,6 +1,8 @@
 obj
 bin
 node_modules
+istio-*
+
 *.pb*
 *_pb.js
 web-client/public/index.js

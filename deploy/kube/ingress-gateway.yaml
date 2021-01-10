@@ -21,12 +21,9 @@ metadata:
   name: stock-discovery-gateway
 spec:
   hosts:
-  - "127.0.0.1"
-  - "go-service.default.svc.cluster.local"
-  - "dotnet-service.default.svc.cluster.local"
+  - "*"
   gateways:
   - stock-discovery-ingress-gateway
-  - mesh
   http:
   - match:
     - uri: # HTTP
@@ -40,27 +37,25 @@ spec:
         host: dotnet-service.default.svc.cluster.local
     corsPolicy:
       allowOrigins:
-      - regex: \*
+      - regex: ".*"
       allowMethods:
       - POST
       - GET
       allowHeaders:
-      - authorization
-      - keep-alive
-      - user-agent
-      - cache-control
-      - content-type
-      - content-transfer-encoding
-      - x-accept-content-transfer-encoding
-      - x-accept-response-streaming
-      - x-user-agent
-      - x-grpc-web
+      - Authorization
+      - User-Agent
+      - Content-Type
+      - Content-Transfer-Encoding
+      - X-Accept-Content-Transfer-Encoding
+      - X-Accept-Response-Streaming
+      - X-User-Agent
+      - X-Grpc-Web
       exposeHeaders:
       - grpc-status
       - grpc-message
       - grpc-encoding
       - grpc-accept-encoding
-      - x-envoy-upstream-service-time
+      - grpc-timeout
 
   - match:
     - uri: # HTTP
@@ -74,27 +69,25 @@ spec:
         host: go-service.default.svc.cluster.local
     corsPolicy:
       allowOrigins:
-      - regex: \*
+      - regex: ".*"
       allowMethods:
       - POST
       - GET
       allowHeaders:
-      - authorization
-      - keep-alive
-      - user-agent
-      - cache-control
-      - content-type
-      - content-transfer-encoding
-      - x-accept-content-transfer-encoding
-      - x-accept-response-streaming
-      - x-user-agent
-      - x-grpc-web
+      - Authorization
+      - User-Agent
+      - Content-Type
+      - Content-Transfer-Encoding
+      - X-Accept-Content-Transfer-Encoding
+      - X-Accept-Response-Streaming
+      - X-User-Agent
+      - X-Grpc-Web
       exposeHeaders:
       - grpc-status
       - grpc-message
       - grpc-encoding
       - grpc-accept-encoding
-      - x-envoy-upstream-service-time
+      - grpc-timeout
 
 ---
 
