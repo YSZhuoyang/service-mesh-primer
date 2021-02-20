@@ -14,6 +14,4 @@ func (*Service) GetLiveData(req *rpc.LiveDataRequest, srv rpc.Greeter_GetLiveDat
 		})
 		time.Sleep(time.Second)
 	}
-
-	return nil
 }
