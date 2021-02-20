@@ -1,12 +1,14 @@
 get:
-	go get -u google.golang.org/grpc
-	go get -u github.com/golang/protobuf/protoc-gen-go
-	go mod tidy
+	go get -u \
+		google.golang.org/grpc \
+		google.golang.org/protobuf/cmd/protoc-gen-go \
+        google.golang.org/grpc/cmd/protoc-gen-go-grpc
 
 build:
+	mkdir -p rpc
 	export PATH=$$PATH:~/go/bin; \
-	cd contracts; \
-	protoc -I . -I ./googleapis --go_out=plugins=grpc:. ./greeter-go/*.proto
+	protoc -I contracts/greeter-go -I contracts/googleapis \
+		--go_out=rpc --go_opt=paths=source_relative --go-grpc_out=rpc --go-grpc_opt=paths=source_relative contracts/greeter-go/*.proto
 	go build -o server_exec
 
 all:
@@ -14,5 +16,5 @@ all:
 	make build
 
 clean:
-	rm -f server_exec; \
-	rm -f ./contracts/*/*.pb*
+	rm -f server_exec
+	rm -f -r rpc

@@ -67,7 +67,7 @@ RUN wget https://packages.microsoft.com/config/debian/10/packages-microsoft-prod
     && dpkg -i packages-microsoft-prod.deb
 
 # Install .NET Core SDK
-RUN apt update && apt -y install dotnet-sdk-3.1
+RUN apt update && apt -y install dotnet-sdk-5.0
 
 # Upgrade and clean up
 RUN apt autoremove -y \

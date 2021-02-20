@@ -5,8 +5,8 @@ import (
 	"log"
 	"net"
 
-	contracts "go-service/contracts/greeter-go/greeter_go"
-	"go-service/handlers"
+	"go-service/rpc"
+	"go-service/server"
 	"go-service/util"
 
 	"google.golang.org/grpc"
@@ -20,7 +20,7 @@ const (
 func main() {
 	// Start GRPC server ...
 	grpcServer := grpc.NewServer()
-	contracts.RegisterGreeterServer(grpcServer, &handlers.Service{})
+	rpc.RegisterGreeterServer(grpcServer, &server.Service{})
 
 	connection, err := net.Listen(network, fmt.Sprintf(":%d", port))
 	util.CheckError(err)
