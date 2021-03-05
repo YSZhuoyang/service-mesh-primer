@@ -23,7 +23,6 @@ spec:
           services:
           - go_service.Greeter
           - dotnet_service.Greeter
-          # match_incoming_request_route: true # Required for CORS to work
           print_options:
             add_whitespace: true
             always_print_primitive_fields: true
@@ -34,9 +33,9 @@ spec:
       listener:
         filterChain:
           filter:
-            name: "envoy.http_connection_manager"
+            name: "envoy.filters.network.http_connection_manager"
             subFilter:
-              name: "envoy.router"
+              name: "envoy.filters.http.router"
     patch:
       operation: INSERT_BEFORE
       value:

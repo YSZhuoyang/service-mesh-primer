@@ -5,7 +5,7 @@ A demo to bootstrap a tiny service mesh with istio which supports:
 - Transcoding HTTP+JSON into gRPC+Protobuf
 - Server push, streaming data to clients
 - Handling Http/1.1, Http/2 and gRPC
-- Securing services with Istio sidecar [mTLS](https://istio.io/latest/docs/concepts/security/) (similar to [Azure Container Group TLS](https://docs.microsoft.com/en-us/azure/container-instances/container-instances-container-group-ssl))
+- Securing services with Istio sidecar [mTLS](https://istio.io/latest/docs/concepts/security/#mutual-tls-authentication)
 
                    gateway             sidecar     service1
         http json   |--|                 |--|  grpc  |--|
@@ -31,8 +31,8 @@ A demo to bootstrap a tiny service mesh with istio which supports:
 
 1. Install Istio (with homebrew):
 
-       curl -L https://istio.io/downloadIstio | ISTIO_VERSION=1.8.1 TARGET_ARCH=x86_64 sh -
-       cd istio-1.8.1 && export PATH=$PWD/bin:$PATH
+       curl -L https://istio.io/downloadIstio | ISTIO_VERSION=1.9.1 sh -
+       cd istio-1.9.1 && export PATH=$PWD/bin:$PATH
 
 2. Generate contract descriptor mounted to istio envoy sidecars (for gRPC transcoding):
 
