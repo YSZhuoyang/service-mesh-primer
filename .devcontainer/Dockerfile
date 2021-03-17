@@ -3,7 +3,9 @@
 # Licensed under the MIT License. See https://go.microsoft.com/fwlink/?linkid=2090316 for license information.
 #-------------------------------------------------------------------------------------------------------------
 
-FROM golang:1
+# [Choice] Go version: 1, 1.16, 1.15
+ARG VARIANT="1"
+FROM mcr.microsoft.com/vscode/devcontainers/go:0-${VARIANT}
 
 # Avoid warnings by switching to noninteractive
 ENV DEBIAN_FRONTEND=noninteractive
@@ -18,41 +20,10 @@ ARG USER_GID=$USER_UID
 
 # Configure apt, install packages and tools
 RUN apt update \
-    && apt -y install --no-install-recommends apt-utils dialog 2>&1 \
+    && apt -y install --no-install-recommends apt-utils unzip dialog 2>&1 \
     #
     # Verify git, process tools, lsb-release (common in install instructions for CLIs) installed
     && apt -y install git iproute2 procps lsb-release make software-properties-common apt-transport-https \
-    #
-    # Install gocode-gomod
-    && go get -x -d github.com/stamblerre/gocode 2>&1 \
-    && go build -o gocode-gomod github.com/stamblerre/gocode \
-    && mv gocode-gomod $GOPATH/bin/ \
-    #
-    # Install Go tools
-    && go get -u -v \
-        github.com/mdempsky/gocode \
-        github.com/uudashr/gopkgs/cmd/gopkgs \
-        github.com/ramya-rao-a/go-outline \
-        github.com/acroca/go-symbols \
-        github.com/godoctor/godoctor \
-        golang.org/x/tools/cmd/guru \
-        golang.org/x/tools/cmd/gorename \
-        github.com/rogpeppe/godef \
-        github.com/zmb3/gogetdoc \
-        github.com/haya14busa/goplay/cmd/goplay \
-        github.com/sqs/goreturns \
-        github.com/josharian/impl \
-        github.com/davidrjenni/reftools/cmd/fillstruct \
-        github.com/fatih/gomodifytags \
-        github.com/cweill/gotests/... \
-        golang.org/x/tools/cmd/goimports \
-        golang.org/x/lint/golint \
-        golang.org/x/tools/cmd/gopls \
-        github.com/alecthomas/gometalinter \
-        honnef.co/go/tools/... \
-        github.com/golangci/golangci-lint/cmd/golangci-lint \
-        github.com/mgechev/revive \
-        github.com/derekparker/delve/cmd/dlv 2>&1 \
     #
     # Create a non-root user to use if preferred - see https://aka.ms/vscode-remote/containers/non-root-user.
     && groupadd --gid $USER_GID $USERNAME \
@@ -62,12 +33,30 @@ RUN apt update \
     && echo $USERNAME ALL=\(root\) NOPASSWD:ALL > /etc/sudoers.d/$USERNAME \
     && chmod 0440 /etc/sudoers.d/$USERNAME
 
-# Install Register Microsoft key and feed for .NET Core
+# Install Register Microsoft key and feed for .NET
 RUN wget https://packages.microsoft.com/config/debian/10/packages-microsoft-prod.deb -O packages-microsoft-prod.deb \
     && dpkg -i packages-microsoft-prod.deb
 
-# Install .NET Core SDK
+# Install .NET SDK
 RUN apt update && apt -y install dotnet-sdk-5.0
+
+# Install Docker CLI & K8s
+RUN curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
+RUN add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable"
+RUN apt update && apt install -y docker-ce-cli kubectl
+
+# install protobuf compiler
+RUN PROTOC_VER=3.15.6 && \
+    PROTOC_ZIP=protoc-${PROTOC_VER}-linux-x86_64.zip && \
+    curl -OL https://github.com/protocolbuffers/protobuf/releases/download/v${PROTOC_VER}/${PROTOC_ZIP} && \
+    unzip -o $PROTOC_ZIP -d /usr/local bin/protoc && \
+    unzip -o $PROTOC_ZIP -d /usr/local 'include/*' && \
+    rm -f $PROTOC_ZIP
+
+# Install istioctl
+ARG ISTIO_VERSION="1.9.1"
+RUN curl -L https://istio.io/downloadIstio | ISTIO_VERSION=${ISTIO_VERSION} sh -
+ENV PATH="${PWD}/istio-${ISTIO_VERSION}/bin:${PATH}"
 
 # Upgrade and clean up
 RUN apt autoremove -y \

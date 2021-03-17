@@ -29,7 +29,7 @@ A demo to bootstrap a tiny service mesh with istio which supports:
 
 ## Deploy locally on Kubernetes with [Istio](https://istio.io/)
 
-1. Install Istio (with homebrew):
+1. Install Istio:
 
        curl -L https://istio.io/downloadIstio | ISTIO_VERSION=1.9.1 sh -
        cd istio-1.9.1 && export PATH=$PWD/bin:$PATH
