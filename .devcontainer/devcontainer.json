@@ -3,16 +3,14 @@
 {
 	"name": "Service-Mesh-Primer",
 	"build": {
-		"dockerfile": "Dockerfile",
-		"args": {
-			// Update the VARIANT arg to pick a version of Go: 1, 1.16, 1.15
-			"VARIANT": "1"
-		}
+		"dockerfile": "Dockerfile"
 	},
 	"runArgs": [ "--init", "--cap-add=SYS_PTRACE", "--security-opt", "seccomp=unconfined" ],
 	"mounts": [
 		// Connect host Docker daemon with Docker CLI in container to use the Docker CLI from inside the container. See https://aka.ms/vscode-remote/samples/docker-from-docker.
-		"source=/var/run/docker.sock,target=/var/run/docker.sock,type=bind"
+		"source=/var/run/docker.sock,target=/var/run/docker.sock,type=bind",
+		// Connect to host local kube server
+		"source=${localEnv:HOME}/.kube/config,target=/root/.kube/config,type=bind"
 	],
 
 	// Use 'settings' to set *default* container specific settings.json values on container create. 
@@ -35,7 +33,7 @@
 	// Uncomment the next line to have VS Code connect as an existing non-root user in the container. 
 	// On Linux, by default, the container user's UID/GID will be updated to match your local user. See
 	// https://aka.ms/vscode-remote/containers/non-root for details on adding a non-root user if none exist.
-	"remoteUser": "vscode",
+	// "remoteUser": "vscode",
 
 	// Add the IDs of extensions you want installed when the container is created in the array below.
 	"extensions": [
@@ -44,6 +42,7 @@
 		"k--kato.docomment",
 		"eamodio.gitlens",
 		"davidanson.vscode-markdownlint",
+		"ms-azuretools.vscode-docker",
 		"zxh404.vscode-proto3",
 		"redhat.vscode-yaml",
 		"visualstudioexptteam.vscodeintellicode"
