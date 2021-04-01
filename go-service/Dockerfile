@@ -13,6 +13,6 @@ RUN PROTOC_VER=3.15.6 && \
 
 # Build src
 COPY ./ ./
-RUN make all
+RUN make build-frozen
 
 ENTRYPOINT ./server_exec

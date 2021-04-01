@@ -7,15 +7,15 @@ A demo to bootstrap a tiny service mesh with istio which supports:
 - Handling Http/1.1, Http/2 and gRPC
 - Securing services with Istio sidecar [mTLS](https://istio.io/latest/docs/concepts/security/#mutual-tls-authentication)
 
-                   gateway             sidecar     service1
-        http json   |--|                 |--|  grpc  |--|
-       ------------>|  |---------------->|  |------->|  |
-                    |--|        |        |--|        |--|
-                                |
-                                |      sidecar     service2
-                                |        |--|  grpc  |--|
-                                -------->|  |------->|  |
-                                         |--|        |--|
+                     gateway             sidecar     service1
+      http(JSON)/grpc |--|                 |--|  grpc  |--|
+      --------------->|  |---------------->|  |------->|  |
+                      |--|        |        |--|        |--|
+                                  |
+                                  |      sidecar     service2
+                                  |        |--|  grpc  |--|
+                                  -------->|  |------->|  |
+                                           |--|        |--|
 
 ## Build
 
@@ -31,8 +31,8 @@ A demo to bootstrap a tiny service mesh with istio which supports:
 
 1. Install Istio:
 
-       curl -L https://istio.io/downloadIstio | ISTIO_VERSION=1.9.1 sh -
-       cd istio-1.9.1 && export PATH=$PWD/bin:$PATH
+       curl -L https://istio.io/downloadIstio | ISTIO_VERSION=1.9.2 sh -
+       cd istio-1.9.2 && export PATH=$PWD/bin:$PATH
 
 2. Generate contract descriptor mounted to istio envoy sidecars (for gRPC transcoding):
 
