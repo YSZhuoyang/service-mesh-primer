@@ -36,7 +36,7 @@ A demo to bootstrap a tiny service mesh with istio which supports:
 
 2. Generate contract descriptor mounted to istio envoy sidecars (for gRPC transcoding):
 
-       cd deploy/contracts && kubectl create configmap proto-descriptor --from-file=desc.pb
+       kubectl create configmap proto-descriptor --from-file=contracts/desc.pb
 
 3. Launch istio & services:
 

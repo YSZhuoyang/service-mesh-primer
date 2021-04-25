@@ -1,6 +1,5 @@
 
 build:
-	cd contracts; \
 	protoc \
 	-I ./greeter-go \
 	-I ./greeter-dotnet \

@@ -7,12 +7,12 @@ get:
 build:
 	mkdir -p rpc
 	export PATH=$$PATH:~/go/bin; \
-	protoc -I contracts/greeter-go -I contracts/googleapis \
-		--go_out=rpc --go_opt=paths=source_relative --go-grpc_out=rpc --go-grpc_opt=paths=source_relative contracts/greeter-go/*.proto
+	protoc -I ../contracts/greeter-go -I ../contracts/googleapis \
+		--go_out=rpc --go_opt=paths=source_relative --go-grpc_out=rpc --go-grpc_opt=paths=source_relative ../contracts/greeter-go/*.proto
 	go build -o server_exec
 
 build-frozen:
-	go build -mod=readonly
+	go build -mod=readonly -o server_exec
 
 all:
 	make get
