@@ -1,6 +1,6 @@
 
 services:
-	cd deploy && make build
+	cd contracts && make build
 	cd go-service && make all && docker build -t go-service .
 	cd dotnet-service && dotnet build && docker build -t dotnet-service .
 
