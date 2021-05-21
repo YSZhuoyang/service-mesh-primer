@@ -2,7 +2,8 @@
 services:
 	cd contracts && make build
 	cd go-service && make all && docker build -t go-service .
-	cp -r contracts ./dotnet-service && cd dotnet-service && docker build -t dotnet-service . && rm -r contracts
+	docker build -f dotnet-service/Dockerfile .
+
 
 client:
 	cd web-client && \

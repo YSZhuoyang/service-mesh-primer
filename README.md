@@ -46,7 +46,9 @@ A demo to bootstrap a tiny service mesh with istio which supports:
 
 ## Test
 
-- Test Http/1.1 & Http/2 with Curl
+Note: Change "127.0.0.1" to "host.docker.internal" to test within vscode dev container.
+
+- Test Http/1.1 & Http/2 with `curl` (change domain to `localhost` to run it in local machine instead of vscode dev container):
 
       ./test.sh
 
@@ -64,3 +66,7 @@ A demo to bootstrap a tiny service mesh with istio which supports:
 - Test server streaming with Web Client
 
   - Cd to `web-client/public` dir, open `index.html` and click `Get Live Data`.
+
+- Cleanup ISTIO resources
+
+      istioctl manifest generate | kubectl delete --ignore-not-found=true -f -
