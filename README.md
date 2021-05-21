@@ -40,21 +40,21 @@ A demo to bootstrap a tiny service mesh with istio which supports:
 
 3. Launch istio & services:
 
-       istioctl install --set profile=demo --set values.meshConfig.accessLogFile="/dev/stdout"
+       istioctl install -f kube/istio-install/config.yaml -y
        kubectl label namespace default istio-injection=enabled
-       kubectl apply -f ./deploy/kube
+       kubectl apply -f ./kube/deploy
 
 ## Test
 
 - Test Http/1.1 & Http/2 with Curl
 
-      chmod u+x ./test.sh && ./test.sh
+      ./test.sh
 
 - Test Grafana & Jaeger dashboard:
 
-      kubectl apply -f https://raw.githubusercontent.com/istio/istio/release-1.9/samples/addons/jaeger.yaml
-      kubectl apply -f https://raw.githubusercontent.com/istio/istio/release-1.9/samples/addons/prometheus.yaml
-      kubectl apply -f https://raw.githubusercontent.com/istio/istio/release-1.9/samples/addons/grafana.yaml
+      kubectl apply -f https://raw.githubusercontent.com/istio/istio/release-1.10/samples/addons/jaeger.yaml
+      kubectl apply -f https://raw.githubusercontent.com/istio/istio/release-1.10/samples/addons/prometheus.yaml
+      kubectl apply -f https://raw.githubusercontent.com/istio/istio/release-1.10/samples/addons/grafana.yaml
 
       for i in `seq 1 250`; do ./test.sh; done; # The default Jaeger sampling rate is 1%
 

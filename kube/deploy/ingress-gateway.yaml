@@ -1,7 +1,7 @@
 apiVersion: networking.istio.io/v1alpha3
 kind: Gateway
 metadata:
-  name: stock-discovery-ingress-gateway
+  name: istio-ingressgateway
 spec:
   selector:
     istio: ingressgateway # use Istio default gateway implementation
@@ -18,12 +18,12 @@ spec:
 apiVersion: networking.istio.io/v1alpha3
 kind: VirtualService
 metadata:
-  name: stock-discovery-gateway
+  name: istio-ingressgateway-router
 spec:
   hosts:
   - "*"
   gateways:
-  - stock-discovery-ingress-gateway
+  - istio-ingressgateway
   http:
   - match:
     - uri: # HTTP

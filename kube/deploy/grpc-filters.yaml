@@ -1,7 +1,7 @@
 apiVersion: networking.istio.io/v1alpha3
 kind: EnvoyFilter
 metadata:
-  name: stock-discovery-grpc-transcoder
+  name: grpc-filters
 spec:
   configPatches:
   - applyTo: HTTP_FILTER
