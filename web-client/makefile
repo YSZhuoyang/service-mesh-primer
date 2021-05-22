@@ -7,8 +7,8 @@ get:
 gen:
 	export PATH=$$PATH:$$PWD; \
 	protoc -I ../contracts -I ../contracts/googleapis ../contracts/greeter-go/*.proto \
-	--js_out=import_style=commonjs:./src \
-	--grpc-web_out=import_style=commonjs,mode=grpcwebtext:./src
+		--js_out=import_style=commonjs:./src \
+		--grpc-web_out=import_style=commonjs,mode=grpcwebtext:./src
 	ls -1 ./src/greeter-go/*.js | xargs sed -i "" '/annotations_pb/d'
 	# Remove imports for annotation which is unused from generated files (waiting for official fix)
 

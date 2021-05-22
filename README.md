@@ -40,13 +40,13 @@ A demo to bootstrap a tiny service mesh with istio which supports:
 
 3. Launch istio & services:
 
-       istioctl install -f kube/istio-install/config.yaml -y
+       istioctl install -f kube/istio/istio-operator.yaml -y
        kubectl label namespace default istio-injection=enabled
-       kubectl apply -f ./kube/deploy
+       kubectl apply -f ./kube/services
 
 ## Test
 
-Note: Change "127.0.0.1" to "host.docker.internal" to test within vscode dev container.
+Note: Change `127.0.0.1` to `host.docker.internal` to test within vscode dev container.
 
 - Test Http/1.1 & Http/2 with `curl` (change domain to `localhost` to run it in local machine instead of vscode dev container):
 
