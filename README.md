@@ -67,6 +67,10 @@ Note: Change `127.0.0.1` to `host.docker.internal` to test within vscode dev con
 
   - Cd to `web-client/public` dir, open `index.html` and click `Get Live Data`.
 
-- Cleanup ISTIO resources
+- Cleanup
 
       istioctl manifest generate | kubectl delete --ignore-not-found=true -f -
+      kubectl delete namespace istio-system
+      kubectl delete deployment --all
+      kubectl delete svc dotnet-service go-service
+      kubectl delete configmap proto-descriptor

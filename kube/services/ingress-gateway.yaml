@@ -1,4 +1,4 @@
-apiVersion: networking.istio.io/v1alpha3
+apiVersion: networking.istio.io/v1beta1
 kind: Gateway
 metadata:
   name: istio-ingressgateway
@@ -15,7 +15,7 @@ spec:
 
 ---
 
-apiVersion: networking.istio.io/v1alpha3
+apiVersion: networking.istio.io/v1beta1
 kind: VirtualService
 metadata:
   name: istio-ingressgateway-router
@@ -91,7 +91,7 @@ spec:
 
 ---
 
-apiVersion: networking.istio.io/v1alpha3
+apiVersion: networking.istio.io/v1beta1
 kind: DestinationRule
 metadata:
   name: go-service-destination
@@ -105,7 +105,7 @@ spec:
 
 ---
 
-apiVersion: networking.istio.io/v1alpha3
+apiVersion: networking.istio.io/v1beta1
 kind: DestinationRule
 metadata:
   name: dotnet-service-destination
