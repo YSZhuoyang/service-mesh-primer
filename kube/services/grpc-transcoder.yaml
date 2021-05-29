@@ -1,7 +1,7 @@
 apiVersion: networking.istio.io/v1alpha3
 kind: EnvoyFilter
 metadata:
-  name: grpc-filters
+  name: grpc-transcoder
 spec:
   configPatches:
   - applyTo: HTTP_FILTER
@@ -26,17 +26,3 @@ spec:
           print_options:
             add_whitespace: true
             always_print_primitive_fields: true
-
-  - applyTo: HTTP_FILTER
-    match:
-      context: SIDECAR_INBOUND
-      listener:
-        filterChain:
-          filter:
-            name: envoy.filters.network.http_connection_manager
-            subFilter:
-              name: envoy.filters.http.router
-    patch:
-      operation: INSERT_BEFORE
-      value:
-        name: envoy.filters.http.grpc_web

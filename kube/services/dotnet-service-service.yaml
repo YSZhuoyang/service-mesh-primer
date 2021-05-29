@@ -6,7 +6,7 @@ metadata:
   name: dotnet-service
 spec:
   ports:
-  - name: grpc-82
+  - name: grpc-web-82
     port: 82
     targetPort: 8080
   selector:
