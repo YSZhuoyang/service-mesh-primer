@@ -9,7 +9,7 @@ import "google/api/annotations.proto";
 service Greeter {
   rpc SayHello(HelloRequest) returns(HelloReply) {
     option (google.api.http) = {
-      post: "/greet/hello"
+      post: "/greet-go/hello"
     };
   };
 

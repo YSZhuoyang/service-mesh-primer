@@ -27,7 +27,7 @@ spec:
   http:
   - match:
     - uri: # HTTP
-        prefix: /greet2
+        prefix: /greet-dotnet
     - uri: # GRPC
         prefix: /dotnet-service.Greeter
     route:
@@ -59,7 +59,7 @@ spec:
 
   - match:
     - uri: # HTTP
-        prefix: /greet
+        prefix: /greet-go
     - uri: # GRPC
         prefix: /go_service.Greeter
     route:
@@ -110,7 +110,7 @@ kind: DestinationRule
 metadata:
   name: dotnet-service-destination
 spec:
-  host: dotnet-service.default.svc.cluster.local # interpreted as dotnet-service.default.svc.cluster.local
+  host: dotnet-service.default.svc.cluster.local
   trafficPolicy:
     loadBalancer:
       simple: LEAST_CONN

@@ -1,5 +1,7 @@
 # Service Mesh Primer
 
+[![Open in Visual Studio Code](https://open.vscode.dev/badges/open-in-vscode.svg)](https://open.vscode.dev/YSZhuoyang/service-mesh-primer)
+
 A demo to bootstrap a tiny service mesh with istio which supports:
 
 - Transcoding HTTP+JSON into gRPC+Protobuf
@@ -31,8 +33,8 @@ A demo to bootstrap a tiny service mesh with istio which supports:
 
 1. Install Istio:
 
-       curl -L https://istio.io/downloadIstio | ISTIO_VERSION=1.10.0 sh -
-       cd istio-1.10.0 && export PATH=$PWD/bin:$PATH
+       curl -L https://istio.io/downloadIstio | ISTIO_VERSION=1.11.0 sh -
+       cd istio-1.11.0 && export PATH=$PWD/bin:$PATH
 
 2. Generate contract descriptor mounted to istio envoy sidecars (for gRPC transcoding):
 
@@ -54,9 +56,9 @@ Note: Change `127.0.0.1` to `host.docker.internal` to test within vscode dev con
 
 - Test Grafana & Jaeger dashboard:
 
-      kubectl apply -f https://raw.githubusercontent.com/istio/istio/release-1.10/samples/addons/jaeger.yaml
-      kubectl apply -f https://raw.githubusercontent.com/istio/istio/release-1.10/samples/addons/prometheus.yaml
-      kubectl apply -f https://raw.githubusercontent.com/istio/istio/release-1.10/samples/addons/grafana.yaml
+      kubectl apply -f https://raw.githubusercontent.com/istio/istio/release-1.11/samples/addons/jaeger.yaml
+      kubectl apply -f https://raw.githubusercontent.com/istio/istio/release-1.11/samples/addons/prometheus.yaml
+      kubectl apply -f https://raw.githubusercontent.com/istio/istio/release-1.11/samples/addons/grafana.yaml
 
       for i in `seq 1 250`; do ./test.sh; done; # The default Jaeger sampling rate is 1%
 
@@ -71,6 +73,7 @@ Note: Change `127.0.0.1` to `host.docker.internal` to test within vscode dev con
 
       istioctl manifest generate | kubectl delete --ignore-not-found=true -f -
       kubectl delete namespace istio-system
+      kubectl label namespace default istio-injection-
       kubectl delete deployment --all
       kubectl delete svc dotnet-service go-service
       kubectl delete configmap proto-descriptor

@@ -21,6 +21,10 @@ RUN wget https://packages.microsoft.com/config/debian/10/packages-microsoft-prod
 # Install .NET SDK
 RUN apt update && apt -y install dotnet-sdk-5.0
 
+# Install Nodejs TLS
+RUN curl -fsSL https://deb.nodesource.com/setup_lts.x | bash - \
+    && apt install -y nodejs
+
 # Install Docker CLI
 RUN curl -fsSL https://download.docker.com/linux/debian/gpg | sudo gpg --dearmor -o /usr/share/keyrings/docker-archive-keyring.gpg
 RUN echo "deb [arch=amd64 signed-by=/usr/share/keyrings/docker-archive-keyring.gpg] https://download.docker.com/linux/debian \
@@ -33,7 +37,7 @@ RUN echo "deb [signed-by=/usr/share/keyrings/kubernetes-archive-keyring.gpg] htt
 RUN apt update && apt install -y kubectl
 
 # install protobuf compiler
-RUN PROTOC_VER=3.17.1 && \
+RUN PROTOC_VER=3.17.3 && \
     PROTOC_ZIP=protoc-${PROTOC_VER}-linux-x86_64.zip && \
     curl -OL https://github.com/protocolbuffers/protobuf/releases/download/v${PROTOC_VER}/${PROTOC_ZIP} && \
     unzip -o $PROTOC_ZIP -d /usr/local bin/protoc && \
@@ -41,12 +45,13 @@ RUN PROTOC_VER=3.17.1 && \
     rm -f $PROTOC_ZIP
 
 # Install istioctl
-ARG ISTIO_VERSION="1.10.0"
+ARG ISTIO_VERSION="1.11.0"
 RUN curl -L https://istio.io/downloadIstio | ISTIO_VERSION=${ISTIO_VERSION} sh -
 ENV PATH="${PWD}/istio-${ISTIO_VERSION}/bin:${PATH}"
 
 # Upgrade and clean up
 RUN apt upgrade -y && apt autoremove -y --purge && apt autoclean
 
+ENV OS=DEBIAN
 # Switch back to dialog for any ad-hoc use of apt
 ENV DEBIAN_FRONTEND=dialog
