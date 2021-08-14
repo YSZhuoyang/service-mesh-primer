@@ -48,9 +48,7 @@ A demo to bootstrap a tiny service mesh with istio which supports:
 
 ## Test
 
-Note: Change `127.0.0.1` to `host.docker.internal` to test within vscode dev container.
-
-- Test Http/1.1 & Http/2 with `curl` (change domain to `localhost` to run it in local machine instead of vscode dev container):
+- Test Http/1.1 & Http/2 requests:
 
       ./test.sh
 
@@ -65,9 +63,10 @@ Note: Change `127.0.0.1` to `host.docker.internal` to test within vscode dev con
       istioctl dashboard jaeger
       istioctl dashboard grafana
 
-- Test server streaming with Web Client
+- Test server streaming with a web client:
 
-  - Cd to `web-client/public` dir, open `index.html` and click `Get Live Data`.
+      cd web-client/public
+      # open `index.html` in a browser and click `Get Live Data` button.
 
 - Cleanup
 
