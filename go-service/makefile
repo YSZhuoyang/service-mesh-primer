@@ -1,12 +1,11 @@
-get:
-	go get -u \
-		google.golang.org/grpc \
-		google.golang.org/protobuf/cmd/protoc-gen-go \
-		google.golang.org/grpc/cmd/protoc-gen-go-grpc
+install:
+	go install google.golang.org/protobuf/cmd/protoc-gen-go@latest
+	go install google.golang.org/grpc/cmd/protoc-gen-go-grpc@latest
+	go get -u -d
 
 build:
 	mkdir -p rpc
-	export PATH=$$PATH:~/go/bin; \
+	export PATH=$$PATH:$$(go env GOPATH)/bin; \
 	protoc -I ../contracts/greeter-go -I ../contracts/googleapis \
 		--go_out=rpc --go_opt=paths=source_relative --go-grpc_out=rpc --go-grpc_opt=paths=source_relative ../contracts/greeter-go/*.proto
 	go build -o server_exec
@@ -16,7 +15,7 @@ build-frozen:
 	go build -mod=readonly -o server_exec
 
 all:
-	make get
+	make install
 	make build
 
 clean:

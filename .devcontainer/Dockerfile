@@ -45,7 +45,7 @@ RUN PROTOC_VER=3.17.3 && \
     rm -f $PROTOC_ZIP
 
 # Install istioctl
-ARG ISTIO_VERSION="1.11.0"
+ARG ISTIO_VERSION="1.11.1"
 RUN curl -L https://istio.io/downloadIstio | ISTIO_VERSION=${ISTIO_VERSION} sh -
 ENV PATH="${PWD}/istio-${ISTIO_VERSION}/bin:${PATH}"
 
