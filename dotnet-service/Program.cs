@@ -15,6 +15,10 @@ namespace DotnetService
         // For instructions on how to configure Kestrel and gRPC clients on macOS, visit https://go.microsoft.com/fwlink/?linkid=2099682
         public static IWebHostBuilder CreateHostBuilder(string[] args) =>
             WebHost.CreateDefaultBuilder(args)
+                .ConfigureKestrel(serverOption =>
+                {
+                    serverOption.AllowAlternateSchemes = true;
+                })
                 .UseStartup<Startup>();
     }
 }

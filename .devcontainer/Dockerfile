@@ -15,11 +15,12 @@ RUN apt update \
         apt-transport-https ca-certificates curl gnupg
 
 # Install Register Microsoft key and feed for .NET
-RUN wget https://packages.microsoft.com/config/debian/10/packages-microsoft-prod.deb -O packages-microsoft-prod.deb \
-    && dpkg -i packages-microsoft-prod.deb
+RUN wget https://packages.microsoft.com/config/debian/11/packages-microsoft-prod.deb -O packages-microsoft-prod.deb \
+    && dpkg -i packages-microsoft-prod.deb \
+    && rm packages-microsoft-prod.deb
 
 # Install .NET SDK
-RUN apt update && apt -y install dotnet-sdk-5.0
+RUN apt update && apt -y install dotnet-sdk-6.0
 
 # Install Nodejs TLS
 RUN curl -fsSL https://deb.nodesource.com/setup_lts.x | bash - \
@@ -37,7 +38,7 @@ RUN echo "deb [signed-by=/usr/share/keyrings/kubernetes-archive-keyring.gpg] htt
 RUN apt update && apt install -y kubectl
 
 # install protobuf compiler
-RUN PROTOC_VER=3.17.3 && \
+RUN PROTOC_VER=3.19.1 && \
     PROTOC_ZIP=protoc-${PROTOC_VER}-linux-x86_64.zip && \
     curl -OL https://github.com/protocolbuffers/protobuf/releases/download/v${PROTOC_VER}/${PROTOC_ZIP} && \
     unzip -o $PROTOC_ZIP -d /usr/local bin/protoc && \
@@ -45,7 +46,7 @@ RUN PROTOC_VER=3.17.3 && \
     rm -f $PROTOC_ZIP
 
 # Install istioctl
-ARG ISTIO_VERSION="1.11.1"
+ARG ISTIO_VERSION="1.12.1"
 RUN curl -L https://istio.io/downloadIstio | ISTIO_VERSION=${ISTIO_VERSION} sh -
 ENV PATH="${PWD}/istio-${ISTIO_VERSION}/bin:${PATH}"
 

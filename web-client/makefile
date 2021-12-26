@@ -5,8 +5,8 @@ ifeq ($(OS), DEBIAN)
 endif
 
 get:
-	wget https://github.com/grpc/grpc-web/releases/download/1.2.1/protoc-gen-grpc-web-1.2.1-$(PLATFORM) --no-check-certificate
-	mv protoc-gen-grpc-web-1.2.1-$(PLATFORM) ./protoc-gen-grpc-web
+	wget https://github.com/grpc/grpc-web/releases/download/1.3.0/protoc-gen-grpc-web-1.3.0-$(PLATFORM) --no-check-certificate
+	mv protoc-gen-grpc-web-1.3.0-$(PLATFORM) ./protoc-gen-grpc-web
 	chmod +x ./protoc-gen-grpc-web
 
 gen:
