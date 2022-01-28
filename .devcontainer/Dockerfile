@@ -38,7 +38,7 @@ RUN echo "deb [signed-by=/usr/share/keyrings/kubernetes-archive-keyring.gpg] htt
 RUN apt update && apt install -y kubectl
 
 # install protobuf compiler
-RUN PROTOC_VER=3.19.1 && \
+RUN PROTOC_VER=3.19.3 && \
     PROTOC_ZIP=protoc-${PROTOC_VER}-linux-x86_64.zip && \
     curl -OL https://github.com/protocolbuffers/protobuf/releases/download/v${PROTOC_VER}/${PROTOC_ZIP} && \
     unzip -o $PROTOC_ZIP -d /usr/local bin/protoc && \
@@ -46,7 +46,7 @@ RUN PROTOC_VER=3.19.1 && \
     rm -f $PROTOC_ZIP
 
 # Install istioctl
-ARG ISTIO_VERSION="1.12.1"
+ARG ISTIO_VERSION="1.12.2"
 RUN curl -L https://istio.io/downloadIstio | ISTIO_VERSION=${ISTIO_VERSION} sh -
 ENV PATH="${PWD}/istio-${ISTIO_VERSION}/bin:${PATH}"
 

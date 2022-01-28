@@ -8,11 +8,11 @@
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "dependencies": {
-    "google-protobuf": "^3.19.1",
+    "google-protobuf": "^3.19.3",
     "grpc-web": "^1.3.0"
   },
   "devDependencies": {
-    "webpack": "^5.65.0",
+    "webpack": "^5.66.0",
     "webpack-cli": "^4.9.1"
   },
   "author": "Oscar Yu",
