@@ -2,10 +2,12 @@ obj
 bin
 node_modules
 istio-1*
+.vscode/*.log
 
 *.pb*
 *_pb.js
 web-client/public/index.js
 protoc-gen-grpc-web
 server_exec
+dotnet-install.sh
 .DS_Store

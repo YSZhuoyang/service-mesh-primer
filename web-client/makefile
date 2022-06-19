@@ -1,12 +1,14 @@
 
 PLATFORM=darwin-x86_64
+GRPC_WEB_VERSION=1.3.1
+
 ifeq ($(OS), DEBIAN)
 	PLATFORM=linux-x86_64
 endif
 
 get:
-	wget https://github.com/grpc/grpc-web/releases/download/1.3.0/protoc-gen-grpc-web-1.3.0-$(PLATFORM) --no-check-certificate
-	mv protoc-gen-grpc-web-1.3.0-$(PLATFORM) ./protoc-gen-grpc-web
+	wget https://github.com/grpc/grpc-web/releases/download/${GRPC_WEB_VERSION}/protoc-gen-grpc-web-${GRPC_WEB_VERSION}-$(PLATFORM) --no-check-certificate
+	mv protoc-gen-grpc-web-${GRPC_WEB_VERSION}-$(PLATFORM) ./protoc-gen-grpc-web
 	chmod +x ./protoc-gen-grpc-web
 
 gen:

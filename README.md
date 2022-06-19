@@ -10,14 +10,14 @@ A demo to bootstrap a tiny service mesh with istio which supports:
 - Securing services with Istio sidecar [mTLS](https://istio.io/latest/docs/concepts/security/#mutual-tls-authentication)
 
                      gateway             sidecar     service1
-      http(JSON)/grpc |--|                 |--|  grpc  |--|
+      http(JSON)/grpc +--+                 +--+  grpc  +--+
       --------------->|  |---------------->|  |------->|  |
-                      |--|        |        |--|        |--|
+                      +--+        |        +--+        +--+
                                   |
                                   |      sidecar     service2
-                                  |        |--|  grpc  |--|
+                                  |        +--+  grpc  +--+
                                   -------->|  |------->|  |
-                                           |--|        |--|
+                                           +--+        +--+
 
 ## Build
 
@@ -33,8 +33,8 @@ A demo to bootstrap a tiny service mesh with istio which supports:
 
 1. Install Istio:
 
-       curl -L https://istio.io/downloadIstio | ISTIO_VERSION=1.12.2 sh -
-       cd istio-1.12.2 && export PATH=$PWD/bin:$PATH
+       curl -L https://istio.io/downloadIstio | ISTIO_VERSION=1.14.1 sh -
+       cd istio-1.14.1 && export PATH=$PWD/bin:$PATH
 
 2. Generate contract descriptor mounted to istio envoy sidecars (for gRPC transcoding):
 
@@ -54,9 +54,9 @@ A demo to bootstrap a tiny service mesh with istio which supports:
 
 - Test Grafana & Jaeger dashboard:
 
-      kubectl apply -f https://raw.githubusercontent.com/istio/istio/release-1.12/samples/addons/jaeger.yaml
-      kubectl apply -f https://raw.githubusercontent.com/istio/istio/release-1.12/samples/addons/prometheus.yaml
-      kubectl apply -f https://raw.githubusercontent.com/istio/istio/release-1.12/samples/addons/grafana.yaml
+      kubectl apply -f https://raw.githubusercontent.com/istio/istio/release-1.14/samples/addons/jaeger.yaml
+      kubectl apply -f https://raw.githubusercontent.com/istio/istio/release-1.14/samples/addons/prometheus.yaml
+      kubectl apply -f https://raw.githubusercontent.com/istio/istio/release-1.14/samples/addons/grafana.yaml
 
       for i in `seq 1 250`; do ./test.sh; done; # The default Jaeger sampling rate is 1%
 
