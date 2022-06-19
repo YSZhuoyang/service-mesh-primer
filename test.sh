@@ -1,8 +1,7 @@
 #!/bin/bash
 
-
 HOST=127.0.0.1
-if [ ${OS} = "DEBIAN" ]; then
+if [ "$(uname)" = "Linux" ]; then # Debian container
     HOST=host.docker.internal
 fi
 
