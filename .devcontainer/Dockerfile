@@ -29,14 +29,6 @@ RUN curl -fsSLo /usr/share/keyrings/kubernetes-archive-keyring.gpg https://packa
 RUN echo "deb [signed-by=/usr/share/keyrings/kubernetes-archive-keyring.gpg] https://apt.kubernetes.io/ kubernetes-xenial main" | tee /etc/apt/sources.list.d/kubernetes.list
 RUN apt update && apt install -y kubectl
 
-# install protobuf compiler
-RUN PROTOC_VER=21.1 && \
-    PROTOC_ZIP=protoc-${PROTOC_VER}-linux-aarch_64.zip && \
-    curl -OL https://github.com/protocolbuffers/protobuf/releases/download/v${PROTOC_VER}/${PROTOC_ZIP} && \
-    unzip -o $PROTOC_ZIP -d /usr/local bin/protoc && \
-    unzip -o $PROTOC_ZIP -d /usr/local 'include/*' && \
-    rm -f $PROTOC_ZIP
-
 # Install .NET SDK (available in arm64), see https://docs.microsoft.com/en-gb/dotnet/core/install/linux-scripted-manual#scripted-install
 RUN wget https://dot.net/v1/dotnet-install.sh \
     && chmod +x dotnet-install.sh \
@@ -48,6 +40,14 @@ ENV PATH=$PATH:/usr/local/bin/dotnet
 ARG ISTIO_VERSION=1.14.1
 RUN cd /usr && curl -L https://istio.io/downloadIstio | ISTIO_VERSION=${ISTIO_VERSION} sh -
 ENV PATH=$PATH:/usr/istio-${ISTIO_VERSION}/bin
+
+# install protobuf compiler
+RUN PROTOC_VER=21.2 && \
+    PROTOC_ZIP=protoc-${PROTOC_VER}-linux-aarch_64.zip && \
+    curl -OL https://github.com/protocolbuffers/protobuf/releases/download/v${PROTOC_VER}/${PROTOC_ZIP} && \
+    unzip -o $PROTOC_ZIP -d /usr/local bin/protoc && \
+    unzip -o $PROTOC_ZIP -d /usr/local 'include/*' && \
+    rm -f $PROTOC_ZIP
 
 # Upgrade and clean up
 RUN apt upgrade -y && apt autoremove -y --purge && apt autoclean
