@@ -37,12 +37,12 @@ RUN ln -s ~/.dotnet /usr/local/bin/dotnet
 ENV PATH=$PATH:/usr/local/bin/dotnet
 
 # Install istioctl
-ARG ISTIO_VERSION=1.14.1
+ARG ISTIO_VERSION=1.15.0
 RUN cd /usr && curl -L https://istio.io/downloadIstio | ISTIO_VERSION=${ISTIO_VERSION} sh -
 ENV PATH=$PATH:/usr/istio-${ISTIO_VERSION}/bin
 
 # install protobuf compiler
-RUN PROTOC_VER=21.2 && \
+RUN PROTOC_VER=21.5 && \
     PROTOC_ZIP=protoc-${PROTOC_VER}-linux-aarch_64.zip && \
     curl -OL https://github.com/protocolbuffers/protobuf/releases/download/v${PROTOC_VER}/${PROTOC_ZIP} && \
     unzip -o $PROTOC_ZIP -d /usr/local bin/protoc && \
