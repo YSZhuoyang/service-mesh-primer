@@ -4,10 +4,10 @@ node_modules
 istio-1*
 .vscode/*.log
 
-*.pb*
-*_pb.js
+desc.pb
 web-client/public/index.js
 protoc-gen-grpc-web
+protoc-gen-js
 server_exec
 dotnet-install.sh
 .DS_Store

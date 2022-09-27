@@ -42,7 +42,7 @@ RUN cd /usr && curl -L https://istio.io/downloadIstio | ISTIO_VERSION=${ISTIO_VE
 ENV PATH=$PATH:/usr/istio-${ISTIO_VERSION}/bin
 
 # install protobuf compiler
-RUN PROTOC_VER=21.5 && \
+RUN PROTOC_VER=21.6 && \
     PROTOC_ZIP=protoc-${PROTOC_VER}-linux-aarch_64.zip && \
     curl -OL https://github.com/protocolbuffers/protobuf/releases/download/v${PROTOC_VER}/${PROTOC_ZIP} && \
     unzip -o $PROTOC_ZIP -d /usr/local bin/protoc && \

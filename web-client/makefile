@@ -1,9 +1,9 @@
 
-PLATFORM=darwin-x86_64
-GRPC_WEB_VERSION=1.3.1
+PLATFORM=darwin-aarch64
+GRPC_WEB_VERSION=1.4.0
 
 ifeq (${OS}, DEBIAN)
-	PLATFORM=linux-x86_64
+	PLATFORM=linux-aarch64
 endif
 
 get:
