@@ -1,15 +1,30 @@
 
-PLATFORM=darwin-aarch64
-GRPC_WEB_VERSION=1.4.0
+GRPC_WEB_PLATFORM=darwin-aarch64
+GRPC_WEB_VERSION=1.4.2
+JS_PROTOC_PLATFORM=osx-aarch_64
+JS_PROTOC_VERSION=3.21.2
+
 
 ifeq (${OS}, DEBIAN)
-	PLATFORM=linux-aarch64
+	GRPC_WEB_PLATFORM=linux-aarch64
+	JS_PROTOC_PLATFORM=linux-aarch_64
 endif
 
-get:
-	wget https://github.com/grpc/grpc-web/releases/download/${GRPC_WEB_VERSION}/protoc-gen-grpc-web-${GRPC_WEB_VERSION}-${PLATFORM} --no-check-certificate
-	mv protoc-gen-grpc-web-${GRPC_WEB_VERSION}-${PLATFORM} ./protoc-gen-grpc-web
+get-protoc-gen-js:
+	wget https://github.com/protocolbuffers/protobuf-javascript/releases/download/v${JS_PROTOC_VERSION}/protobuf-javascript-${JS_PROTOC_VERSION}-${JS_PROTOC_PLATFORM}.zip --no-check-certificate
+	unzip protobuf-javascript-${JS_PROTOC_VERSION}-${JS_PROTOC_PLATFORM}.zip -d ./protoc-js
+	mv -f ./protoc-js/bin/protoc-gen-js .
+	rm -r ./protoc-js
+	rm protobuf-javascript-${JS_PROTOC_VERSION}-${JS_PROTOC_PLATFORM}.zip
+
+get-protoc-gen-web:
+	wget https://github.com/grpc/grpc-web/releases/download/${GRPC_WEB_VERSION}/protoc-gen-grpc-web-${GRPC_WEB_VERSION}-${GRPC_WEB_PLATFORM} --no-check-certificate
+	mv protoc-gen-grpc-web-${GRPC_WEB_VERSION}-${GRPC_WEB_PLATFORM} ./protoc-gen-grpc-web
 	chmod +x ./protoc-gen-grpc-web
+
+get:
+	make get-protoc-gen-js
+	make get-protoc-gen-web
 
 gen:
 	export PATH=$$PATH:$$PWD; \

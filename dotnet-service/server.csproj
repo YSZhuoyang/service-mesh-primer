@@ -10,8 +10,8 @@
 
   <ItemGroup>
     <PackageReference Include="Google.Api.CommonProtos" Version="2.6.0" />
-    <PackageReference Include="Grpc.AspNetCore" Version="2.48.0" />
-    <PackageReference Include="Grpc.AspNetCore.Server.Reflection" Version="2.48.0" />
+    <PackageReference Include="Grpc.AspNetCore" Version="2.49.0" />
+    <PackageReference Include="Grpc.AspNetCore.Server.Reflection" Version="2.49.0" />
   </ItemGroup>
 
 </Project>
