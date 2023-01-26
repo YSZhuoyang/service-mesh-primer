@@ -12,8 +12,8 @@
     "grpc-web": "^1.4.2"
   },
   "devDependencies": {
-    "webpack": "^5.74.0",
-    "webpack-cli": "^4.10.0"
+    "webpack": "^5.75.0",
+    "webpack-cli": "^5.0.1"
   },
   "author": "Oscar Yu",
   "license": "ISC"
