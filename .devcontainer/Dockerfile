@@ -18,7 +18,7 @@ RUN curl -fsSL https://deb.nodesource.com/setup_lts.x | bash - \
     && apt install -y nodejs
 
 # install protobuf compiler
-RUN PROTOC_VER=21.12 && \
+RUN PROTOC_VER=22.0 && \
     PROTOC_ZIP=protoc-${PROTOC_VER}-linux-aarch_64.zip && \
     curl -OL https://github.com/protocolbuffers/protobuf/releases/download/v${PROTOC_VER}/${PROTOC_ZIP} && \
     unzip -o $PROTOC_ZIP -d /usr/local bin/protoc && \
@@ -34,7 +34,7 @@ COPY copy-kube-config.sh /usr/local/share/
 RUN echo "source /usr/local/share/copy-kube-config.sh" | tee -a /home/vscode/.bashrc >> /home/vscode/.zshrc
 
 # Install istioctl
-ARG ISTIO_VERSION=1.16.1
+ARG ISTIO_VERSION=1.17.1
 RUN cd /usr && curl -L https://istio.io/downloadIstio | ISTIO_VERSION=${ISTIO_VERSION} sh -
 ENV PATH=$PATH:/usr/istio-${ISTIO_VERSION}/bin
 
