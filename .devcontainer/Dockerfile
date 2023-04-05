@@ -18,7 +18,7 @@ RUN curl -fsSL https://deb.nodesource.com/setup_lts.x | bash - \
     && apt install -y nodejs
 
 # install protobuf compiler
-RUN PROTOC_VER=22.0 && \
+RUN PROTOC_VER=22.2 && \
     PROTOC_ZIP=protoc-${PROTOC_VER}-linux-aarch_64.zip && \
     curl -OL https://github.com/protocolbuffers/protobuf/releases/download/v${PROTOC_VER}/${PROTOC_ZIP} && \
     unzip -o $PROTOC_ZIP -d /usr/local bin/protoc && \
