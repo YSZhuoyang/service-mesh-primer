@@ -6,7 +6,7 @@ spec:
   gatewayClassName: istio
   listeners:
   - name: http
-    # hostname: "*"
+    hostname: "127.0.0.1"
     port: 80
     protocol: HTTP
     allowedRoutes:
@@ -15,24 +15,24 @@ spec:
 
 ---
 
-# apiVersion: gateway.networking.k8s.io/v1
-# kind: Gateway
-# metadata:
-#   name: http-ingress-gateway
-# spec:
-#   gatewayClassName: istio
-#   listeners:
-#   - name: http
-#     hostname: "*"
-#     port: 83
-#     protocol: HTTP
-#     allowedRoutes:
-#       namespaces:
-#         from: Same
+apiVersion: gateway.networking.k8s.io/v1
+kind: Gateway
+metadata:
+  name: http-ingress-gateway
+spec:
+  gatewayClassName: istio
+  listeners:
+  - name: http
+    hostname: "127.0.0.1"
+    port: 83
+    protocol: HTTP
+    allowedRoutes:
+      namespaces:
+        from: Same
 
 ---
 
-apiVersion: gateway.networking.k8s.io/v1
+apiVersion: gateway.networking.k8s.io/v1alpha2
 kind: GRPCRoute
 metadata:
   name: grpc-route
@@ -40,17 +40,17 @@ spec:
   parentRefs:
   - name: ingress-gateway
   hostnames:
-  - "*"
+  - "127.0.0.1"
   rules:
   - matches:
-      method:
+    - method:
         service: go_service.Greeter
         method:  SayHello
     backendRefs:
     - name: go-service
       port: 81
   - matches:
-      method:
+    - method:
         service: dotnet_service.Greeter
         method:  SayHello
     backendRefs:
@@ -59,30 +59,30 @@ spec:
 
 ---
 
-# apiVersion: gateway.networking.k8s.io/v1
-# kind: HTTPRoute
-# metadata:
-#   name: http-route
-# spec:
-#   parentRefs:
-#   - name: http-ingress-gateway
-#   hostnames:
-#   - "*"
-#   rules:
-#   - matches:
-#     - path:
-#         type: PathPrefix
-#         value: /greet-go
-#     backendRefs:
-#     - name: go-service
-#       port: 81
-#   - matches:
-#     - path:
-#         type: PathPrefix
-#         value: /greet-dotnet
-#     backendRefs:
-#     - name: dotnet-service
-#       port: 82
+apiVersion: gateway.networking.k8s.io/v1
+kind: HTTPRoute
+metadata:
+  name: http-route
+spec:
+  parentRefs:
+  - name: http-ingress-gateway
+  hostnames:
+  - "127.0.0.1"
+  rules:
+  - matches:
+    - path:
+        type: PathPrefix
+        value: /greet-go
+    backendRefs:
+    - name: go-service
+      port: 81
+  - matches:
+    - path:
+        type: PathPrefix
+        value: /greet-dotnet
+    backendRefs:
+    - name: dotnet-service
+      port: 82
 
 ---
 

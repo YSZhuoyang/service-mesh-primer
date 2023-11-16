@@ -42,6 +42,7 @@ A demo to bootstrap a tiny service mesh with istio which supports:
 
 3. Launch istio & services:
 
+       kubectl apply -f https://github.com/kubernetes-sigs/gateway-api/releases/download/v1.0.0/experimental-install.yaml
        istioctl install -f kube/istio/istio-operator.yaml -y
        kubectl label namespace default istio-injection=enabled
        kubectl apply -f ./kube/services
@@ -74,5 +75,5 @@ A demo to bootstrap a tiny service mesh with istio which supports:
       kubectl delete namespace istio-system
       kubectl label namespace default istio-injection-
       kubectl delete deployment --all
-      kubectl delete svc dotnet-service go-service
+      kubectl delete svc dotnet-service go-service http-ingress-gateway-istio ingress-gateway-istio
       kubectl delete configmap proto-descriptor
