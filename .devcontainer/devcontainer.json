@@ -37,7 +37,8 @@
 			// Add the IDs of extensions you want installed when the container is created.
 			"extensions": [
 				"golang.Go",
-				"ms-dotnettools.csharp",
+				"ms-dotnettools.csdevkit",
+				"ms-dotnettools.vscodeintellicode-csharp",
 				"k--kato.docomment",
 				"eamodio.gitlens",
 				"yzhang.markdown-all-in-one",
@@ -60,11 +61,9 @@
 	// Comment out to connect as root instead. More info: https://aka.ms/vscode-remote/containers/non-root.
 	"remoteUser": "vscode",
 	"features": {
-		"ghcr.io/devcontainers/features/docker-from-docker:1": {
-			"version": "latest",
-			"moby": true
-		},
-		"ghcr.io/devcontainers/features/dotnet:1": {
+		"ghcr.io/devcontainers-contrib/features/protoc:1": {},
+		"ghcr.io/devcontainers/features/docker-outside-of-docker:1": {},
+		"ghcr.io/devcontainers/features/dotnet:2": {
 			"version": "6.0"
 		}
 	}
