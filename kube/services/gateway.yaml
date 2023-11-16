@@ -1,0 +1,206 @@
+apiVersion: gateway.networking.k8s.io/v1
+kind: Gateway
+metadata:
+  name: ingress-gateway
+spec:
+  gatewayClassName: istio
+  listeners:
+  - name: http
+    # hostname: "*"
+    port: 80
+    protocol: HTTP
+    allowedRoutes:
+      namespaces:
+        from: Same
+
+---
+
+# apiVersion: gateway.networking.k8s.io/v1
+# kind: Gateway
+# metadata:
+#   name: http-ingress-gateway
+# spec:
+#   gatewayClassName: istio
+#   listeners:
+#   - name: http
+#     hostname: "*"
+#     port: 83
+#     protocol: HTTP
+#     allowedRoutes:
+#       namespaces:
+#         from: Same
+
+---
+
+apiVersion: gateway.networking.k8s.io/v1
+kind: GRPCRoute
+metadata:
+  name: grpc-route
+spec:
+  parentRefs:
+  - name: ingress-gateway
+  hostnames:
+  - "*"
+  rules:
+  - matches:
+      method:
+        service: go_service.Greeter
+        method:  SayHello
+    backendRefs:
+    - name: go-service
+      port: 81
+  - matches:
+      method:
+        service: dotnet_service.Greeter
+        method:  SayHello
+    backendRefs:
+    - name: dotnet-service
+      port: 82
+
+---
+
+# apiVersion: gateway.networking.k8s.io/v1
+# kind: HTTPRoute
+# metadata:
+#   name: http-route
+# spec:
+#   parentRefs:
+#   - name: http-ingress-gateway
+#   hostnames:
+#   - "*"
+#   rules:
+#   - matches:
+#     - path:
+#         type: PathPrefix
+#         value: /greet-go
+#     backendRefs:
+#     - name: go-service
+#       port: 81
+#   - matches:
+#     - path:
+#         type: PathPrefix
+#         value: /greet-dotnet
+#     backendRefs:
+#     - name: dotnet-service
+#       port: 82
+
+---
+
+# apiVersion: networking.istio.io/v1beta1
+# kind: Gateway
+# metadata:
+#   name: istio-ingressgateway
+# spec:
+#   selector:
+#     istio: ingressgateway # use Istio default gateway implementation
+#   servers:
+#   - port:
+#       number: 80
+#       name: http
+#       protocol: HTTP
+#     hosts:
+#     - "*"
+
+---
+
+# apiVersion: networking.istio.io/v1beta1
+# kind: VirtualService
+# metadata:
+#   name: istio-ingressgateway-router
+# spec:
+#   hosts:
+#   - "*"
+#   gateways:
+#   - istio-ingressgateway
+#   http:
+#   - match:
+#     - uri: # HTTP
+#         prefix: /greet-dotnet
+#     - uri: # GRPC
+#         prefix: /dotnet-service.Greeter
+#     route:
+#     - destination:
+#         port:
+#           number: 82
+#         host: dotnet-service.default.svc.cluster.local
+#     corsPolicy:
+#       allowOrigins:
+#       - regex: ".*"
+#       allowMethods:
+#       - POST
+#       - GET
+#       allowHeaders:
+#       - Authorization
+#       - User-Agent
+#       - Content-Type
+#       - Content-Transfer-Encoding
+#       - X-Accept-Content-Transfer-Encoding
+#       - X-Accept-Response-Streaming
+#       - X-User-Agent
+#       - X-Grpc-Web
+#       exposeHeaders:
+#       - grpc-status
+#       - grpc-message
+#       - grpc-encoding
+#       - grpc-accept-encoding
+#       - grpc-timeout
+
+#   - match:
+#     - uri: # HTTP
+#         prefix: /greet-go
+#     - uri: # GRPC
+#         prefix: /go_service.Greeter
+#     route:
+#     - destination:
+#         port:
+#           number: 81
+#         host: go-service.default.svc.cluster.local
+#     corsPolicy:
+#       allowOrigins:
+#       - regex: ".*"
+#       allowMethods:
+#       - POST
+#       - GET
+#       allowHeaders:
+#       - Authorization
+#       - User-Agent
+#       - Content-Type
+#       - Content-Transfer-Encoding
+#       - X-Accept-Content-Transfer-Encoding
+#       - X-Accept-Response-Streaming
+#       - X-User-Agent
+#       - X-Grpc-Web
+#       exposeHeaders:
+#       - grpc-status
+#       - grpc-message
+#       - grpc-encoding
+#       - grpc-accept-encoding
+#       - grpc-timeout
+
+# ---
+
+# apiVersion: networking.istio.io/v1beta1
+# kind: DestinationRule
+# metadata:
+#   name: go-service-destination
+# spec:
+#   host: go-service.default.svc.cluster.local
+#   trafficPolicy:
+#     loadBalancer:
+#       simple: LEAST_CONN
+#     tls:
+#       mode: ISTIO_MUTUAL
+
+# ---
+
+# apiVersion: networking.istio.io/v1beta1
+# kind: DestinationRule
+# metadata:
+#   name: dotnet-service-destination
+# spec:
+#   host: dotnet-service.default.svc.cluster.local
+#   trafficPolicy:
+#     loadBalancer:
+#       simple: LEAST_CONN
+#     tls:
+#       mode: ISTIO_MUTUAL

@@ -12,12 +12,12 @@ spec:
         enabled: false
     ingressGateways:
       - name: istio-ingressgateway
-        enabled: true
-        k8s:
-          resources:
-            limits:
-              cpu: 500m
-              memory: 512Mi
+        enabled: false
+        # k8s:
+        #   resources:
+        #     limits:
+        #       cpu: 500m
+        #       memory: 512Mi
           # volumes:
           #   - name: proto-descriptor
           #     volumeSource:

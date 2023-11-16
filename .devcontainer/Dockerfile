@@ -24,10 +24,6 @@ RUN apt -y install --no-install-recommends \
 RUN echo 'deb [signed-by=/etc/apt/keyrings/kubernetes-apt-keyring.gpg] https://pkgs.k8s.io/core:/stable:/v1.28/deb/ /' | sudo tee /etc/apt/sources.list.d/kubernetes.list
 RUN apt update && apt install -y kubectl
 
-# Install Nodejs TLS
-RUN curl -fsSL https://deb.nodesource.com/setup_lts.x | bash - \
-    && apt install -y nodejs
-
 # Install istioctl
 ARG ISTIO_VERSION=1.20.0
 RUN cd /usr && curl -L https://istio.io/downloadIstio | ISTIO_VERSION=${ISTIO_VERSION} sh -
