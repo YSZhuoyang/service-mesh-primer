@@ -2,7 +2,8 @@ import { LiveDataRequest } from './greeter-go/greet_go_pb';
 import { GreeterClient } from './greeter-go/greet_go_grpc_web_pb';
 
 // Change "127.0.0.1" to "host.docker.internal" to run this script from vscode dev container
-const greeterClient = new GreeterClient('http://127.0.0.1:80');
+// Note: chrome does not accept self signed certificates for localhost, ERR_CERT_AUTHORITY_INVALID error will occur
+const greeterClient = new GreeterClient('https://127.0.0.1:443');
 
 const getLiveData = () => {
     const req = new LiveDataRequest();

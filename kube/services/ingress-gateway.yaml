@@ -13,6 +13,16 @@ spec:
     hosts:
     - "*"
 
+  - port:
+      number: 443
+      name: https
+      protocol: HTTPS
+    tls:
+      mode: SIMPLE
+      credentialName: ingressgateway-certs
+    hosts:
+    - "*"
+
 ---
 
 apiVersion: networking.istio.io/v1beta1
