@@ -71,6 +71,7 @@ A demo to bootstrap a tiny service mesh with istio which supports:
 - Cleanup
 
       istioctl manifest generate | kubectl delete --ignore-not-found=true -f -
+      istioctl tag remove default
       kubectl delete namespace istio-system
       kubectl label namespace default istio-injection-
       kubectl delete deployment --all

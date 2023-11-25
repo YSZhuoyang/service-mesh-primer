@@ -13,16 +13,16 @@ RUN apt update \
     && apt -y install git iproute2 procps lsb-release make software-properties-common gnupg
 
 # Install kubectl
-RUN apt -y install --no-install-recommends \
-        # apt-transport-https may be a dummy package; if so, you can skip that package
-        apt-transport-https \
-        ca-certificates \
-        curl \
-    && curl -fsSL https://pkgs.k8s.io/core:/stable:/v1.28/deb/Release.key | sudo gpg --dearmor -o /etc/apt/keyrings/kubernetes-apt-keyring.gpg
+# RUN apt -y install --no-install-recommends \
+#         # apt-transport-https may be a dummy package; if so, you can skip that package
+#         apt-transport-https \
+#         ca-certificates \
+#         curl \
+#     && curl -fsSL https://pkgs.k8s.io/core:/stable:/v1.28/deb/Release.key | sudo gpg --dearmor -o /etc/apt/keyrings/kubernetes-apt-keyring.gpg
 
 # This overwrites any existing configuration in /etc/apt/sources.list.d/kubernetes.list
-RUN echo 'deb [signed-by=/etc/apt/keyrings/kubernetes-apt-keyring.gpg] https://pkgs.k8s.io/core:/stable:/v1.28/deb/ /' | sudo tee /etc/apt/sources.list.d/kubernetes.list
-RUN apt update && apt install -y kubectl
+# RUN echo 'deb [signed-by=/etc/apt/keyrings/kubernetes-apt-keyring.gpg] https://pkgs.k8s.io/core:/stable:/v1.28/deb/ /' | sudo tee /etc/apt/sources.list.d/kubernetes.list
+# RUN apt update && apt install -y kubectl
 
 # Install Nodejs TLS
 RUN curl -fsSL https://deb.nodesource.com/setup_lts.x | bash - \

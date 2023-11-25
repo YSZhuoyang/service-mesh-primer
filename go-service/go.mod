@@ -1,6 +1,6 @@
 module go-service
 
-go 1.20
+go 1.21
 
 require (
 	google.golang.org/genproto/googleapis/api v0.0.0-20231106174013-bbf56f31fb17

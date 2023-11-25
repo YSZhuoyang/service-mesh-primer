@@ -12,15 +12,15 @@
 		}
 	},
 	"runArgs": [ "--init", "--cap-add=SYS_PTRACE", "--security-opt", "seccomp=unconfined" ],
-	"mounts": [
-		// Connect host Docker daemon with Docker CLI in container to use the Docker CLI from inside the container. See https://aka.ms/vscode-remote/samples/docker-from-docker.
-		// "source=/var/run/docker.sock,target=/var/run/docker-host.sock,type=bind",
-		// Connect to host local kube server
-		"source=${env:HOME}${env:USERPROFILE}/.kube,target=/usr/local/share/kube-localhost,type=bind"
-	],
-	"remoteEnv": {
-		"SYNC_LOCALHOST_KUBECONFIG": "true"
-	},
+	// "mounts": [
+	// 	// Connect host Docker daemon with Docker CLI in container to use the Docker CLI from inside the container. See https://aka.ms/vscode-remote/samples/docker-from-docker.
+	// 	// "source=/var/run/docker.sock,target=/var/run/docker-host.sock,type=bind",
+	// 	// Connect to host local kube server
+	// 	"source=${env:HOME}${env:USERPROFILE}/.kube,target=/usr/local/share/kube-localhost,type=bind"
+	// ],
+	// "remoteEnv": {
+	// 	"SYNC_LOCALHOST_KUBECONFIG": "true"
+	// },
 
 	// Configure tool-specific properties.
 	"customizations": {
@@ -63,8 +63,12 @@
 	"features": {
 		"ghcr.io/devcontainers-contrib/features/protoc:1": {},
 		"ghcr.io/devcontainers/features/docker-outside-of-docker:1": {},
+		"ghcr.io/devcontainers/features/kubectl-helm-minikube:1": {
+			"minikube": "none",
+			"helm": "none"
+		},
 		"ghcr.io/devcontainers/features/dotnet:2": {
-			"version": "6.0"
+			"version": "8.0"
 		}
 	}
 }
