@@ -29,7 +29,7 @@ RUN curl -fsSL https://deb.nodesource.com/setup_lts.x | bash - \
     && apt install -y nodejs
 
 # Install istioctl
-ARG ISTIO_VERSION=1.20.0
+ARG ISTIO_VERSION=1.21.1
 RUN cd /usr && curl -L https://istio.io/downloadIstio | ISTIO_VERSION=${ISTIO_VERSION} sh -
 ENV PATH=$PATH:/usr/istio-${ISTIO_VERSION}/bin
 
