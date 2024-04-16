@@ -12,3 +12,7 @@ curl -X POST -d '{"msg": "Hello dotnet service via HTTP/1.1"}' -H "Content-Type:
 # HTTP2
 curl --http2-prior-knowledge -X POST -d '{"msg": "Hello go service via HTTP/2"}' -H "Content-Type:application/json" http://${HOST}:80/greet-go/hello
 curl --http2-prior-knowledge -X POST -d '{"msg": "Hello dotnet service via HTTP/2"}' -H "Content-Type:application/json" http://${HOST}:80/greet-dotnet/hello
+
+# HTTPS
+curl --insecure -X POST -d '{"msg": "Hello go service via HTTPS"}' -H "Content-Type:application/json" https://${HOST}:443/greet-go/hello
+curl --insecure -X POST -d '{"msg": "Hello dotnet service via HTTPS"}' -H "Content-Type:application/json" https://${HOST}:443/greet-dotnet/hello

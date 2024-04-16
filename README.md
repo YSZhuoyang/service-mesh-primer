@@ -36,14 +36,21 @@ A demo to bootstrap a tiny service mesh with istio which supports:
        curl -L https://istio.io/downloadIstio | ISTIO_VERSION=1.21.1 sh -
        cd istio-1.21.1 && export PATH=$PWD/bin:$PATH
 
-2. Generate contract descriptor mounted to istio envoy sidecars (for gRPC transcoding):
+2. Deploy cert manager:
+   
+       kubectl apply -f https://github.com/jetstack/cert-manager/releases/download/v1.13.2/cert-manager.yaml
+
+3. Generate contract descriptor mounted to istio envoy sidecars (for gRPC transcoding):
 
        kubectl create configmap proto-descriptor --from-file=contracts/desc.pb
 
-3. Launch istio & services:
+4. Deploy istio:
 
        istioctl install -f kube/istio/istio-operator.yaml -y
        kubectl label namespace default istio-injection=enabled
+
+5. Configure istio infra and deploy services
+
        kubectl apply -f ./kube/services
 
 ## Test
@@ -77,3 +84,5 @@ A demo to bootstrap a tiny service mesh with istio which supports:
       kubectl delete deployment --all
       kubectl delete svc dotnet-service go-service
       kubectl delete configmap proto-descriptor
+      kubectl delete Issuers,ClusterIssuers,Certificates,CertificateRequests,Orders,Challenges --all --all-namespaces
+      kubectl delete --ignore-not-found=true -f https://github.com/jetstack/cert-manager/releases/download/v1.13.2/cert-manager.yaml
