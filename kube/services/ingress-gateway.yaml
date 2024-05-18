@@ -1,118 +1,213 @@
-apiVersion: networking.istio.io/v1beta1
+# apiVersion: networking.istio.io/v1
+# kind: Gateway
+# metadata:
+#   name: istio-ingressgateway
+# spec:
+#   selector:
+#     istio: ingressgateway # use Istio default gateway implementation
+#   servers:
+#   - port:
+#       number: 80
+#       name: http
+#       protocol: HTTP
+#     hosts:
+#     - "*"
+
+---
+
+apiVersion: gateway.networking.k8s.io/v1
 kind: Gateway
 metadata:
   name: istio-ingressgateway
+  # namespace: app-ingress
 spec:
-  selector:
-    istio: ingressgateway # use Istio default gateway implementation
-  servers:
-  - port:
-      number: 80
-      name: http
-      protocol: HTTP
-    hosts:
-    - "*"
+  gatewayClassName: istio
+  listeners:
+  - name: http
+    # hostname: "*"
+    port: 80
+    protocol: HTTP
+    allowedRoutes:
+      namespaces:
+        from: All
 
 ---
 
-apiVersion: networking.istio.io/v1beta1
-kind: VirtualService
+# Note: CORS must be implemented at application level, Gateway support is on the roadmap
+apiVersion: gateway.networking.k8s.io/v1
+kind: GRPCRoute
 metadata:
-  name: istio-ingressgateway-router
+  name: grpc-router
 spec:
-  hosts:
-  - "*"
-  gateways:
-  - istio-ingressgateway
-  http:
-  - match:
-    - uri: # HTTP
-        prefix: /greet-dotnet
-    - uri: # GRPC
-        prefix: /dotnet-service.Greeter
-    route:
-    - destination:
-        port:
-          number: 82
-        host: dotnet-service.default.svc.cluster.local
-    corsPolicy:
-      allowOrigins:
-      - regex: ".*"
-      allowMethods:
-      - POST
-      - GET
-      allowHeaders:
-      - Authorization
-      - User-Agent
-      - Content-Type
-      - Content-Transfer-Encoding
-      - X-Accept-Content-Transfer-Encoding
-      - X-Accept-Response-Streaming
-      - X-User-Agent
-      - X-Grpc-Web
-      exposeHeaders:
-      - grpc-status
-      - grpc-message
-      - grpc-encoding
-      - grpc-accept-encoding
-      - grpc-timeout
+  # hostnames:
+  # - "*."
+  parentRefs:
+  - name: istio-ingressgateway
+  rules:
+  - matches:
+    - method:
+        service: go_service.Greeter
+    # filters:
+    #   - type: ResponseHeaderModifier
+    #     responseHeaderModifier:
+    #       add:
+    #         - name: Access-Control-Allow-Origin
+    #           value: "*"
+    #         - name: Access-Control-Allow-Methods
+    #           value: POST, GET, HEAD, DELETE
+    #         - name: Access-Control-Allow-Headers
+    #           value: Accept, Content-Type, application/json, Content-Length, Accept-Encoding, X-CSRF-Token, XMLHttpRequest, x-user-agent, x-user-request, x-grpc-web, grpc-status, grpc-message
+    #         - name: Access-Control-Control-Expose-Headers
+    #           value: grpc-status, grpc-message
+    backendRefs:
+    - name: go-service
+      port: 81
 
-  - match:
-    - uri: # HTTP
-        prefix: /greet-go
-    - uri: # GRPC
-        prefix: /go_service.Greeter
-    route:
-    - destination:
-        port:
-          number: 81
-        host: go-service.default.svc.cluster.local
-    corsPolicy:
-      allowOrigins:
-      - regex: ".*"
-      allowMethods:
-      - POST
-      - GET
-      allowHeaders:
-      - Authorization
-      - User-Agent
-      - Content-Type
-      - Content-Transfer-Encoding
-      - X-Accept-Content-Transfer-Encoding
-      - X-Accept-Response-Streaming
-      - X-User-Agent
-      - X-Grpc-Web
-      exposeHeaders:
-      - grpc-status
-      - grpc-message
-      - grpc-encoding
-      - grpc-accept-encoding
-      - grpc-timeout
+  - matches:
+    - method:
+        service: dotnet_service.Greeter
+    backendRefs:
+    - name: dotnet-service
+      port: 82
 
 ---
 
-apiVersion: networking.istio.io/v1beta1
-kind: DestinationRule
+apiVersion: gateway.networking.k8s.io/v1
+kind: HTTPRoute
 metadata:
-  name: go-service-destination
+  name: http-router
 spec:
-  host: go-service.default.svc.cluster.local
-  trafficPolicy:
-    loadBalancer:
-      simple: LEAST_CONN
-    tls:
-      mode: ISTIO_MUTUAL
+  parentRefs:
+  - name: istio-ingressgateway
+  rules:
+  - matches:
+    - path:
+        type: PathPrefix
+        value: /greet-go
+    # filters:
+    #   - type: ResponseHeaderModifier
+    #     responseHeaderModifier:
+    #       add:
+    #         - name: Access-Control-Allow-Origin
+    #           value: "*"
+    #         - name: Access-Control-Allow-Methods
+    #           value: POST, GET, HEAD, DELETE
+    #         - name: Access-Control-Allow-Headers
+    #           value: Accept, Content-Type, application/json, Content-Length, Accept-Encoding, X-CSRF-Token, XMLHttpRequest, x-user-agent, x-user-request, x-grpc-web, grpc-status, grpc-message
+    #         - name: Access-Control-Control-Expose-Headers
+    #           value: grpc-status, grpc-message
+    backendRefs:
+      - name: go-service
+        port: 81
+
+  - matches:
+    - path:
+        type: PathPrefix
+        value: /greet-dotnet
+    backendRefs:
+      - name: dotnet-service
+        port: 82
 
 ---
 
-apiVersion: networking.istio.io/v1beta1
-kind: DestinationRule
-metadata:
-  name: dotnet-service-destination
-spec:
-  host: dotnet-service.default.svc.cluster.local
-  trafficPolicy:
-    loadBalancer:
-      simple: LEAST_CONN
-    tls:
-      mode: ISTIO_MUTUAL
+# apiVersion: networking.istio.io/v1
+# kind: VirtualService
+# metadata:
+#   name: istio-ingressgateway-router
+# spec:
+#   hosts:
+#   - "*"
+#   gateways:
+#   - istio-ingressgateway
+#   http:
+#   - match:
+#     - uri: # HTTP
+#         prefix: /greet-dotnet
+#     - uri: # GRPC
+#         prefix: /dotnet_service.Greeter
+#     route:
+#     - destination:
+#         port:
+#           number: 82
+#         host: dotnet-service.default.svc.cluster.local
+#     corsPolicy:
+#       allowOrigins:
+#       - regex: ".*"
+#       allowMethods:
+#       - POST
+#       - GET
+#       allowHeaders:
+#       - Authorization
+#       - User-Agent
+#       - Content-Type
+#       - Content-Transfer-Encoding
+#       - X-Accept-Content-Transfer-Encoding
+#       - X-Accept-Response-Streaming
+#       - X-User-Agent
+#       - X-Grpc-Web
+#       exposeHeaders:
+#       - grpc-status
+#       - grpc-message
+#       - grpc-encoding
+#       - grpc-accept-encoding
+#       - grpc-timeout
+
+#   - match:
+#     - uri: # HTTP
+#         prefix: /greet-go
+#     - uri: # GRPC
+#         prefix: /go_service.Greeter
+#     route:
+#     - destination:
+#         port:
+#           number: 81
+#         host: go-service.default.svc.cluster.local
+#     corsPolicy:
+#       allowOrigins:
+#       - regex: ".*"
+#       allowMethods:
+#       - POST
+#       - GET
+#       allowHeaders:
+#       - Authorization
+#       - User-Agent
+#       - Content-Type
+#       - Content-Transfer-Encoding
+#       - X-Accept-Content-Transfer-Encoding
+#       - X-Accept-Response-Streaming
+#       - X-User-Agent
+#       - X-Grpc-Web
+#       exposeHeaders:
+#       - grpc-status
+#       - grpc-message
+#       - grpc-encoding
+#       - grpc-accept-encoding
+#       - grpc-timeout
+
+# ---
+
+# apiVersion: networking.istio.io/v1
+# kind: DestinationRule
+# metadata:
+#   name: go-service-destination
+# spec:
+#   host: go-service.default.svc.cluster.local
+#   trafficPolicy:
+#     loadBalancer:
+#       simple: LEAST_CONN
+#     tls:
+#       mode: ISTIO_MUTUAL
+
+# ---
+
+# apiVersion: networking.istio.io/v1
+# kind: DestinationRule
+# metadata:
+#   name: dotnet-service-destination
+# spec:
+#   host: dotnet-service.default.svc.cluster.local
+#   trafficPolicy:
+#     loadBalancer:
+#       simple: LEAST_CONN
+#     tls:
+#       mode: ISTIO_MUTUAL

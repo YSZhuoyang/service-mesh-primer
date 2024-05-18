@@ -40,7 +40,11 @@ A demo to bootstrap a tiny service mesh with istio which supports:
 
        kubectl create configmap proto-descriptor --from-file=contracts/desc.pb
 
-3. Launch istio & services:
+3. Install kube gateway api:
+
+       kubectl apply -f https://github.com/kubernetes-sigs/gateway-api/releases/download/v1.1.0/standard-install.yaml
+
+4. Launch istio & services:
 
        istioctl install -f kube/istio/istio-operator.yaml -y
        kubectl label namespace default istio-injection=enabled
