@@ -46,8 +46,9 @@ A demo to bootstrap a tiny service mesh with istio which supports:
 
 4. Launch istio & services:
 
-       istioctl install -f kube/istio/istio-operator.yaml -y
-       kubectl label namespace default istio-injection=enabled
+       istioctl install -f kube/istio/istio-operator.yaml --skip-confirmation
+       <!-- kubectl label namespace default istio-injection=enabled -->
+       istioctl waypoint apply --enroll-namespace --wait
        kubectl apply -f ./kube/services
 
 ## Test
