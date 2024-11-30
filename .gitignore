@@ -11,3 +11,6 @@ protoc-gen-js
 server_exec
 dotnet-install.sh
 .DS_Store
+.yarn/
+.yarnrc.yml
+.pnp.*
