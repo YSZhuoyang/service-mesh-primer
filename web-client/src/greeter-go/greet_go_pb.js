@@ -141,7 +141,7 @@ proto.go_service.HelloRequest.prototype.toObject = function(opt_includeInstance)
  */
 proto.go_service.HelloRequest.toObject = function(includeInstance, msg) {
   var f, obj = {
-    msg: jspb.Message.getFieldWithDefault(msg, 1, "")
+msg: jspb.Message.getFieldWithDefault(msg, 1, "")
   };
 
   if (includeInstance) {
@@ -271,7 +271,7 @@ proto.go_service.HelloReply.prototype.toObject = function(opt_includeInstance) {
  */
 proto.go_service.HelloReply.toObject = function(includeInstance, msg) {
   var f, obj = {
-    msg: jspb.Message.getFieldWithDefault(msg, 1, "")
+msg: jspb.Message.getFieldWithDefault(msg, 1, "")
   };
 
   if (includeInstance) {
@@ -502,7 +502,7 @@ proto.go_service.LiveDataReply.prototype.toObject = function(opt_includeInstance
  */
 proto.go_service.LiveDataReply.toObject = function(includeInstance, msg) {
   var f, obj = {
-    data: jspb.Message.getFieldWithDefault(msg, 1, 0)
+data: jspb.Message.getFieldWithDefault(msg, 1, 0)
   };
 
   if (includeInstance) {
