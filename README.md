@@ -47,8 +47,11 @@ A demo to bootstrap a tiny service mesh with istio which supports:
 4. Launch istio & services:
 
        istioctl install -f kube/istio/istio-operator.yaml --skip-confirmation
-       <!-- kubectl label namespace default istio-injection=enabled -->
-       istioctl waypoint apply --enroll-namespace --wait
+       <!-- Add all services in default namespace into ambient mesh -->
+       kubectl label namespace default istio.io/dataplane-mode=ambient
+       <!-- Enroll all services in default namespace to use a waypoint, any requests using the ambient data plane mode, to any service running in this namespace, will be routed through the waypoint for L7 processing and policy enforcement -->
+       <!-- https://istio.io/latest/docs/ambient/usage/waypoint/#useawaypoint -->
+       istioctl waypoint apply -n default --enroll-namespace
        kubectl apply -f ./kube/services
 
 ## Test
@@ -78,7 +81,7 @@ A demo to bootstrap a tiny service mesh with istio which supports:
       istioctl manifest generate | kubectl delete --ignore-not-found=true -f -
       istioctl tag remove default
       kubectl delete namespace istio-system
-      kubectl label namespace default istio-injection-
+      kubectl label namespace default istio.io/dataplane-mode=ambient-
       kubectl delete deployment --all
       kubectl delete svc dotnet-service go-service
       kubectl delete configmap proto-descriptor
