@@ -3,7 +3,7 @@ install:
 	go install google.golang.org/grpc/cmd/protoc-gen-go-grpc@latest
 
 get:
-	go get -u -d
+	go get -u
 
 build:
 	mkdir -p rpc
