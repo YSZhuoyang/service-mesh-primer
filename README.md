@@ -42,7 +42,8 @@ A demo to bootstrap a tiny service mesh with istio which supports:
 
 3. Install kube gateway api:
 
-       kubectl apply -f https://github.com/kubernetes-sigs/gateway-api/releases/download/v1.3.0/standard-install.yaml
+       <!-- kubectl apply -f https://github.com/kubernetes-sigs/gateway-api/releases/download/v1.3.0/standard-install.yaml -->
+       kubectl apply -f https://github.com/kubernetes-sigs/gateway-api/releases/download/v1.3.0/experimental-install.yaml
 
 4. Launch istio & services:
 
@@ -62,9 +63,9 @@ A demo to bootstrap a tiny service mesh with istio which supports:
 
 - Test Grafana & Jaeger dashboard:
 
-      kubectl apply -f https://raw.githubusercontent.com/istio/istio/release-1.25/samples/addons/jaeger.yaml
-      kubectl apply -f https://raw.githubusercontent.com/istio/istio/release-1.25/samples/addons/prometheus.yaml
-      kubectl apply -f https://raw.githubusercontent.com/istio/istio/release-1.25/samples/addons/grafana.yaml
+      kubectl apply -f https://raw.githubusercontent.com/istio/istio/release-1.26/samples/addons/jaeger.yaml
+      kubectl apply -f https://raw.githubusercontent.com/istio/istio/release-1.26/samples/addons/prometheus.yaml
+      kubectl apply -f https://raw.githubusercontent.com/istio/istio/release-1.26/samples/addons/grafana.yaml
 
       for i in `seq 1 250`; do ./test.sh; done; # The default Jaeger sampling rate is 1%
 
@@ -78,10 +79,13 @@ A demo to bootstrap a tiny service mesh with istio which supports:
 
 - Cleanup
 
-      istioctl manifest generate | kubectl delete --ignore-not-found=true -f -
-      istioctl tag remove default
+      kubectl label namespace default istio.io/use-waypoint-
+      istioctl waypoint delete --all
+      kubectl label namespace default istio.io/dataplane-mode-
+      istioctl uninstall -y --purge
       kubectl delete namespace istio-system
-      kubectl label namespace default istio.io/dataplane-mode=ambient-
+      <!-- kubectl delete -f https://github.com/kubernetes-sigs/gateway-api/releases/download/v1.3.0/standard-install.yaml -->
+      kubectl delete -f https://github.com/kubernetes-sigs/gateway-api/releases/download/v1.3.0/experimental-install.yaml
       kubectl delete deployment --all
       kubectl delete svc dotnet-service go-service
       kubectl delete configmap proto-descriptor
