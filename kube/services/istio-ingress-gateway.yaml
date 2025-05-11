@@ -41,6 +41,7 @@ spec:
       allowMethods:
       - POST
       - GET
+      - HEAD
       allowHeaders:
       - Authorization
       - User-Agent
@@ -62,6 +63,8 @@ spec:
         prefix: /greet-go
     - uri: # GRPC
         prefix: /go_service.Greeter
+    - uri:
+        prefix: /grpc.reflection.v1.ServerReflection/ServerReflectionInfo
     route:
     - destination:
         port:
@@ -73,6 +76,7 @@ spec:
       allowMethods:
       - POST
       - GET
+      - HEAD
       allowHeaders:
       - Authorization
       - User-Agent

@@ -12,11 +12,9 @@ const getLiveData = () => {
         document.getElementById("data").textContent = response.getData();
     });
     stream.on('status', function (status) {
-        console.log("Received status code: " + status);
-        if (status.metadata) {
-            console.log("Received metadata");
-            console.log(status.metadata);
-        }
+        console.log("Received status code: " + status.code);
+        console.log("Received status details: " + status.details);
+        console.log("Received status metadata: " + status.metadata);
     });
     stream.on('error', function (err) {
         console.log('Error code: ' + err.code + ' "' + err.message + '"');
