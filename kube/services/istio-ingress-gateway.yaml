@@ -1,0 +1,118 @@
+apiVersion: networking.istio.io/v1
+kind: Gateway
+metadata:
+  name: istio-ingressgateway
+spec:
+  selector:
+    istio: ingressgateway # use Istio default gateway implementation
+  servers:
+  - port:
+      number: 80
+      name: http
+      protocol: HTTP
+    hosts:
+    - "*"
+
+---
+
+apiVersion: networking.istio.io/v1
+kind: VirtualService
+metadata:
+  name: istio-ingressgateway-router
+spec:
+  hosts:
+  - "*"
+  gateways:
+  - istio-ingressgateway
+  http:
+  - match:
+    - uri: # HTTP
+        prefix: /greet-dotnet
+    - uri: # GRPC
+        prefix: /dotnet_service.Greeter
+    route:
+    - destination:
+        port:
+          number: 82
+        host: dotnet-service.default.svc.cluster.local
+    corsPolicy:
+      allowOrigins:
+      - regex: ".*"
+      allowMethods:
+      - POST
+      - GET
+      allowHeaders:
+      - Authorization
+      - User-Agent
+      - Content-Type
+      - Content-Transfer-Encoding
+      - X-Accept-Content-Transfer-Encoding
+      - X-Accept-Response-Streaming
+      - X-User-Agent
+      - X-Grpc-Web
+      exposeHeaders:
+      - grpc-status
+      - grpc-message
+      - grpc-encoding
+      - grpc-accept-encoding
+      - grpc-timeout
+
+  - match:
+    - uri: # HTTP
+        prefix: /greet-go
+    - uri: # GRPC
+        prefix: /go_service.Greeter
+    route:
+    - destination:
+        port:
+          number: 81
+        host: go-service.default.svc.cluster.local
+    corsPolicy:
+      allowOrigins:
+      - regex: ".*"
+      allowMethods:
+      - POST
+      - GET
+      allowHeaders:
+      - Authorization
+      - User-Agent
+      - Content-Type
+      - Content-Transfer-Encoding
+      - X-Accept-Content-Transfer-Encoding
+      - X-Accept-Response-Streaming
+      - X-User-Agent
+      - X-Grpc-Web
+      exposeHeaders:
+      - grpc-status
+      - grpc-message
+      - grpc-encoding
+      - grpc-accept-encoding
+      - grpc-timeout
+
+---
+
+apiVersion: networking.istio.io/v1
+kind: DestinationRule
+metadata:
+  name: go-service-destination
+spec:
+  host: go-service.default.svc.cluster.local
+  trafficPolicy:
+    loadBalancer:
+      simple: LEAST_CONN
+    tls:
+      mode: ISTIO_MUTUAL
+
+---
+
+apiVersion: networking.istio.io/v1
+kind: DestinationRule
+metadata:
+  name: dotnet-service-destination
+spec:
+  host: dotnet-service.default.svc.cluster.local
+  trafficPolicy:
+    loadBalancer:
+      simple: LEAST_CONN
+    tls:
+      mode: ISTIO_MUTUAL

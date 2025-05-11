@@ -12,3 +12,7 @@ curl -X POST -d '{"msg": "Hello dotnet service via HTTP/1.1"}' -H "Content-Type:
 # HTTP2
 curl --http2-prior-knowledge -X POST -d '{"msg": "Hello go service via HTTP/2"}' -H "Content-Type:application/json" http://${HOST}:80/greet-go/hello
 curl --http2-prior-knowledge -X POST -d '{"msg": "Hello dotnet service via HTTP/2"}' -H "Content-Type:application/json" http://${HOST}:80/greet-dotnet/hello
+
+# gRPC
+grpcurl -d '{"msg": "Hello go service gRPC"}' ${HOST}:80 go_service.Greeter/SayHello -insecure
+grpcurl -d '{"msg": "Hello dotnet service gRPC"}' ${HOST}:80 dotnet_service.Greeter/SayHello -insecure

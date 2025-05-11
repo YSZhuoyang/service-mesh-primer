@@ -10,6 +10,7 @@ import (
 	"go-service/util"
 
 	"google.golang.org/grpc"
+	"google.golang.org/grpc/reflection"
 )
 
 const (
@@ -27,6 +28,7 @@ func main() {
 
 	log.Printf("Start gRPC server listening at port: %d \n", port)
 
+	reflection.Register(grpcServer)
 	err = grpcServer.Serve(connection)
 	util.CheckError(err)
 }
