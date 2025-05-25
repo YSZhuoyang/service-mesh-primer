@@ -2,9 +2,9 @@
 # kind: Gateway
 # metadata:
 #   name: istio-ingressgateway
-#   # namespace: app-ingress
-#   # annotations:
-#   #   networking.istio.io/service-type: ClusterIP
+#   namespace: istio-system
+#   annotations:
+#     networking.istio.io/service-type: ClusterIP
 # spec:
 #   gatewayClassName: istio
 #   listeners:

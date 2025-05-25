@@ -9,15 +9,15 @@ A demo to bootstrap a tiny service mesh with istio which supports:
 - Handling Http/1.1, Http/2 and gRPC
 - Securing services with Istio sidecar [mTLS](https://istio.io/latest/docs/concepts/security/#mutual-tls-authentication)
 
-                     gateway             sidecar     service1
-      http(JSON)/grpc +--+                 +--+  grpc  +--+
-      --------------->|  |---------------->|  |------->|  |
-                      +--+        |        +--+        +--+
-                                  |
-                                  |      sidecar     service2
-                                  |        +--+  grpc  +--+
-                                  -------->|  |------->|  |
-                                           +--+        +--+
+                     gateway     waypoint         service1
+      http(JSON)/grpc +--+         +--+       grpc  +--+
+      --------------->|  |-------->|  |------------>|  |
+                      +--+         +--+    |        +--+
+                                           |
+                                           |      service2
+                                           |  grpc  +--+
+                                           |------->|  |
+                                                    +--+
 
 ## Build
 
@@ -36,18 +36,19 @@ A demo to bootstrap a tiny service mesh with istio which supports:
        curl -L https://istio.io/downloadIstio | ISTIO_VERSION=1.26.0 sh -
        cd istio-1.26.0 && export PATH=$PWD/bin:$PATH
 
-2. Generate contract descriptor mounted to istio envoy sidecars (for gRPC transcoding):
+2. Generate contract descriptor mounted to istio envoy gateway (for gRPC transcoding):
 
-       kubectl create configmap proto-descriptor --from-file=contracts/desc.pb
+       kubectl create namespace istio-system
+       kubectl create configmap proto-descriptor --from-file=contracts/desc.pb -n istio-system
 
 3. Install kube gateway api:
 
-       <!-- kubectl apply -f https://github.com/kubernetes-sigs/gateway-api/releases/download/v1.3.0/standard-install.yaml -->
-       kubectl apply -f https://github.com/kubernetes-sigs/gateway-api/releases/download/v1.3.0/experimental-install.yaml
+       kubectl apply -f https://github.com/kubernetes-sigs/gateway-api/releases/download/v1.3.0/standard-install.yaml
+       <!-- kubectl apply -f https://github.com/kubernetes-sigs/gateway-api/releases/download/v1.3.0/experimental-install.yaml -->
 
 4. Launch istio & services:
 
-       istioctl install -f kube/istio/istio-operator.yaml --skip-confirmation
+       istioctl install -f kube/istio/istio-operator.yaml -y
        <!-- Add all services in default namespace into ambient mesh -->
        kubectl label namespace default istio.io/dataplane-mode=ambient
        <!-- Enroll all services in default namespace to use a waypoint, any requests using the ambient data plane mode, to any service running in this namespace, will be routed through the waypoint for L7 processing and policy enforcement -->
@@ -84,8 +85,8 @@ A demo to bootstrap a tiny service mesh with istio which supports:
       kubectl label namespace default istio.io/dataplane-mode-
       istioctl uninstall -y --purge
       kubectl delete namespace istio-system
-      <!-- kubectl delete -f https://github.com/kubernetes-sigs/gateway-api/releases/download/v1.3.0/standard-install.yaml -->
-      kubectl delete -f https://github.com/kubernetes-sigs/gateway-api/releases/download/v1.3.0/experimental-install.yaml
+      kubectl delete -f https://github.com/kubernetes-sigs/gateway-api/releases/download/v1.3.0/standard-install.yaml
+      <!-- kubectl delete -f https://github.com/kubernetes-sigs/gateway-api/releases/download/v1.3.0/experimental-install.yaml -->
       kubectl delete deployment --all
       kubectl delete svc dotnet-service go-service
       kubectl delete configmap proto-descriptor

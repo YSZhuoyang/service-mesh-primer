@@ -19,15 +19,13 @@ spec:
               cpu: 500m
               memory: 512Mi
           # volumes:
-          #   - name: proto-descriptor
-          #     volumeSource:
-          #       configMap:
-          #         localObjectReference:
-          #           name: proto-descriptor
-          #         items:
-          #           - key: desc.pb
-          #             path: desc.pb
+          #   - name: proto-descriptor-vol
+          #     configMap:
+          #       name: proto-descriptor
+          #       items:
+          #         - key: desc.pb
+          #           path: desc.pb
           # volumeMounts:
-          #   - name: proto-descriptor
+          #   - name: proto-descriptor-vol
           #     readOnly: true
           #     mountPath: "/etc/envoy"

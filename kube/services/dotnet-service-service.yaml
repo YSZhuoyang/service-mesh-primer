@@ -9,5 +9,6 @@ spec:
   - name: grpc-web-82
     port: 82
     targetPort: 8080
+    appProtocol: grpc-web
   selector:
     app: dotnet-service

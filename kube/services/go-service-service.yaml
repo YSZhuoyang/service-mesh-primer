@@ -9,5 +9,6 @@ spec:
   - name: grpc-web-81
     port: 81
     targetPort: 8080
+    appProtocol: grpc-web
   selector:
     app: go-service
