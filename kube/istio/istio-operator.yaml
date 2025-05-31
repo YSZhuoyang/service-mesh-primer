@@ -18,14 +18,22 @@ spec:
             limits:
               cpu: 500m
               memory: 512Mi
-          # volumes:
-          #   - name: proto-descriptor-vol
-          #     configMap:
-          #       name: proto-descriptor
-          #       items:
-          #         - key: desc.pb
-          #           path: desc.pb
-          # volumeMounts:
-          #   - name: proto-descriptor-vol
-          #     readOnly: true
-          #     mountPath: "/etc/envoy"
+          overlays:
+            - apiVersion: apps/v1
+              kind: Deployment
+              name: istio-ingressgateway # The actual name of the ingress gateway deployment
+              patches:
+                - path: spec.template.spec.volumes[-1] # Append to the existing list of volumes
+                  value:
+                    name: proto-descriptor-vol
+                    configMap:
+                      name: proto-descriptor
+                      items:
+                        - key: desc.pb
+                          path: desc.pb
+                # Assuming the primary Envoy container is at index 0
+                - path: spec.template.spec.containers[0].volumeMounts[-1] # Append to the existing list of volume mounts
+                  value:
+                    name: proto-descriptor-vol
+                    readOnly: true
+                    mountPath: "/etc/envoy"
