@@ -7,17 +7,17 @@ A demo to bootstrap a tiny service mesh with istio which supports:
 - Transcoding HTTP+JSON into gRPC+Protobuf
 - Server push, streaming data to clients
 - Handling Http/1.1, Http/2 and gRPC
-- Securing services with Istio sidecar [mTLS](https://istio.io/latest/docs/concepts/security/#mutual-tls-authentication)
+- Securing services with [mTLS](https://istio.io/latest/docs/concepts/security/#mutual-tls-authentication)
 
-                     gateway     waypoint         service1
-      http(JSON)/grpc +--+         +--+       grpc  +--+
-      --------------->|  |-------->|  |------------>|  |
-                      +--+         +--+    |        +--+
-                                           |
-                                           |      service2
-                                           |  grpc  +--+
-                                           |------->|  |
-                                                    +--+
+                      gateway     waypoint       service1
+      http(JSON)/grpc  +--+   grpc   +--+    grpc  +--+
+      ---------------->|  |--------->|  |--------->|  |
+                       +--+          +--+    |     +--+
+                                             |
+                                             |   service2
+                                             |     +--+
+                                             ----->|  |
+                                             grpc  +--+
 
 ## Build
 
