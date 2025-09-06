@@ -33,8 +33,8 @@ A demo to bootstrap a tiny service mesh with istio which supports:
 
 1. Install Istio:
 
-       curl -L https://istio.io/downloadIstio | ISTIO_VERSION=1.26.1 sh -
-       cd istio-1.26.1 && export PATH=$PWD/bin:$PATH
+       curl -L https://istio.io/downloadIstio | ISTIO_VERSION=1.27.1 sh -
+       cd istio-1.27.1 && export PATH=$PWD/bin:$PATH
 
 2. Generate contract descriptor mounted to istio envoy gateway (for gRPC transcoding):
 

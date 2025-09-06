@@ -1,8 +1,8 @@
 
 GRPC_WEB_PLATFORM=darwin-aarch64
-GRPC_WEB_VERSION=1.5.0
+GRPC_WEB_VERSION=2.0.1
 JS_PROTOC_PLATFORM=osx-aarch_64
-JS_PROTOC_VERSION=3.21.4
+JS_PROTOC_VERSION=4.0.0
 
 
 ifeq (${OS}, DEBIAN)
@@ -13,9 +13,9 @@ endif
 get-protoc-gen-js:
 	wget https://github.com/protocolbuffers/protobuf-javascript/releases/download/v${JS_PROTOC_VERSION}/protobuf-javascript-${JS_PROTOC_VERSION}-${JS_PROTOC_PLATFORM}.zip --no-check-certificate
 	unzip protobuf-javascript-${JS_PROTOC_VERSION}-${JS_PROTOC_PLATFORM}.zip -d ./protoc-js
-	mv -f ./protoc-js/bin/protoc-gen-js .
-	rm -r ./protoc-js
-	rm protobuf-javascript-${JS_PROTOC_VERSION}-${JS_PROTOC_PLATFORM}.zip
+	mv -f ./protoc-js/protobuf-javascript-${JS_PROTOC_VERSION}-${JS_PROTOC_PLATFORM}/bin/protoc-gen-js .
+	rm -r -f ./protoc-js
+	rm -f protobuf-javascript-${JS_PROTOC_VERSION}-${JS_PROTOC_PLATFORM}.zip
 
 get-protoc-gen-web:
 	wget https://github.com/grpc/grpc-web/releases/download/${GRPC_WEB_VERSION}/protoc-gen-grpc-web-${GRPC_WEB_VERSION}-${GRPC_WEB_PLATFORM} --no-check-certificate
