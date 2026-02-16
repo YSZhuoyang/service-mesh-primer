@@ -1,5 +1,5 @@
-// For format details, see https://aka.ms/devcontainer.json. For config options, see the README at:
-// https://github.com/microsoft/vscode-dev-containers/tree/v0.245.2/containers/go
+// For format details, see https://aka.ms/devcontainer.json. For config options, see the
+// README at: https://github.com/devcontainers/templates/tree/main/src/go .
 {
 	"name": "Service-Mesh-Primer",
 	"build": {
@@ -8,19 +8,30 @@
 			// Update the VARIANT arg to pick a version of Go: 1, 1.19, 1.18
 			// Append -bullseye or -buster to pin to an OS version.
 			// Use -bullseye variants on local arm64/Apple Silicon.
-			"VARIANT": "1"
+			"VARIANT": "1-bookworm"
 		}
 	},
 	"runArgs": [ "--init", "--cap-add=SYS_PTRACE", "--security-opt", "seccomp=unconfined" ],
-	// "mounts": [
-	// 	// Connect host Docker daemon with Docker CLI in container to use the Docker CLI from inside the container. See https://aka.ms/vscode-remote/samples/docker-from-docker.
-	// 	// "source=/var/run/docker.sock,target=/var/run/docker-host.sock,type=bind",
-	// 	// Connect to host local kube server
-	// 	"source=${env:HOME}${env:USERPROFILE}/.kube,target=/usr/local/share/kube-localhost,type=bind"
-	// ],
-	// "remoteEnv": {
-	// 	"SYNC_LOCALHOST_KUBECONFIG": "true"
-	// },
+	"features": {
+		"ghcr.io/devcontainers/features/docker-outside-of-docker:1": {},
+		"ghcr.io/devcontainers/features/dotnet:2": {
+			"version": "10.0"
+		},
+		"ghcr.io/devcontainers/features/kubectl-helm-minikube:1": {
+			"minikube": "none",
+			"helm": "none"
+		},
+		"ghcr.io/devcontainers-extra/features/protoc:1": {}
+	},
+
+	// Features to add to the dev container. More info: https://containers.dev/features.
+	// "features": {},
+
+	// Use 'forwardPorts' to make a list of ports inside the container available locally.
+	// "forwardPorts": [],
+
+	// Use 'postCreateCommand' to run commands after the container is created.
+	// "postCreateCommand": "go version",
 
 	// Configure tool-specific properties.
 	"customizations": {
@@ -30,8 +41,7 @@
 			"settings": { 
 				"terminal.integrated.defaultProfile.linux": "bash",
 				"go.toolsManagement.checkForUpdates": "local",
-				"go.useLanguageServer": true,
-				"go.gopath": "/go"
+				"go.useLanguageServer": true
 			},
 			
 			// Add the IDs of extensions you want installed when the container is created.
@@ -50,25 +60,8 @@
 				"visualstudioexptteam.vscodeintellicode"
 			]
 		}
-	},
-
-	// Use 'forwardPorts' to make a list of ports inside the container available locally.
-	// "forwardPorts": [],
-
-	// Use 'postCreateCommand' to run commands after the container is created.
-	// "postCreateCommand": "go version",
-
-	// Comment out to connect as root instead. More info: https://aka.ms/vscode-remote/containers/non-root.
-	"remoteUser": "vscode",
-	"features": {
-		"ghcr.io/devcontainers-contrib/features/protoc:1": {},
-		"ghcr.io/devcontainers/features/docker-outside-of-docker:1": {},
-		"ghcr.io/devcontainers/features/kubectl-helm-minikube:1": {
-			"minikube": "none",
-			"helm": "none"
-		},
-		"ghcr.io/devcontainers/features/dotnet:2": {
-			"version": "8.0"
-		}
 	}
+
+	// Uncomment to connect as root instead. More info: https://aka.ms/dev-containers-non-root.
+	// "remoteUser": "root"
 }

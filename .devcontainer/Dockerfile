@@ -1,7 +1,7 @@
 # See here for image contents: https://github.com/microsoft/vscode-dev-containers/tree/v0.245.2/containers/go/.devcontainer/base.Dockerfile
 
 # [Choice] Go version (use -bullseye variants on local arm64/Apple Silicon): 1, 1.19, 1.18, 1-bullseye, 1.19-bullseye, 1.18-bullseye, 1-buster, 1.19-buster, 1.18-buster
-ARG VARIANT="1"
+ARG VARIANT="1-bookworm"
 FROM mcr.microsoft.com/devcontainers/go:${VARIANT}
 
 # Avoid warnings by switching to noninteractive
@@ -29,7 +29,7 @@ RUN curl -fsSL https://deb.nodesource.com/setup_lts.x | bash - \
     && apt install -y nodejs
 
 # Install istioctl
-ARG ISTIO_VERSION=1.26.1
+ARG ISTIO_VERSION=1.28.3
 RUN cd /usr && curl -L https://istio.io/downloadIstio | ISTIO_VERSION=${ISTIO_VERSION} sh -
 ENV PATH=$PATH:/usr/istio-${ISTIO_VERSION}/bin
 
