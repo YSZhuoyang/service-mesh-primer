@@ -12,6 +12,13 @@
 		}
 	},
 	"runArgs": [ "--init", "--cap-add=SYS_PTRACE", "--security-opt", "seccomp=unconfined" ],
+	"mounts": [
+		"source=${localEnv:HOME}/.kube,target=/usr/local/share/kube-localhost,type=bind,readonly"
+	],
+	"remoteEnv": {
+		"SYNC_LOCALHOST_KUBECONFIG": "true"
+	},
+	// Features to add to the dev container. More info: https://containers.dev/features.
 	"features": {
 		"ghcr.io/devcontainers/features/docker-outside-of-docker:1": {},
 		"ghcr.io/devcontainers/features/dotnet:2": {
@@ -21,11 +28,14 @@
 			"minikube": "none",
 			"helm": "none"
 		},
+		"ghcr.io/devcontainers/features/node:1": {
+			"version": "lts",
+			"globalPackages": [
+				"@google/gemini-cli"
+			]
+		},
 		"ghcr.io/devcontainers-extra/features/protoc:1": {}
 	},
-
-	// Features to add to the dev container. More info: https://containers.dev/features.
-	// "features": {},
 
 	// Use 'forwardPorts' to make a list of ports inside the container available locally.
 	// "forwardPorts": [],

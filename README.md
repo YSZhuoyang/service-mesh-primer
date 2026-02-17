@@ -43,6 +43,7 @@ A demo to bootstrap a tiny service mesh with istio which supports:
 
 3. Install kube gateway api:
 
+       <!-- Run below with flag if size exceeds limit: --server-side -->
        kubectl apply -f https://github.com/kubernetes-sigs/gateway-api/releases/download/v1.4.1/standard-install.yaml
        <!-- kubectl apply -f https://github.com/kubernetes-sigs/gateway-api/releases/download/v1.4.1/experimental-install.yaml -->
 

@@ -21,6 +21,11 @@ ARG ISTIO_VERSION=1.29.0
 RUN cd /usr && curl -L https://istio.io/downloadIstio | ISTIO_VERSION=${ISTIO_VERSION} sh -
 ENV PATH=$PATH:/usr/istio-${ISTIO_VERSION}/bin
 
+# Copy the kube config sync script
+COPY copy-kube-config.sh /usr/local/share/copy-kube-config.sh
+RUN chmod +x /usr/local/share/copy-kube-config.sh \
+    && echo "source /usr/local/share/copy-kube-config.sh" >> /home/vscode/.bashrc
+
 # Upgrade and clean up
 RUN apt upgrade -y && apt autoremove -y --purge && apt autoclean
 
