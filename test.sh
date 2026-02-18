@@ -1,9 +1,17 @@
 #!/bin/bash
 
+# Default to localhost as most port-forwards run in the local environment
 HOST=127.0.0.1
-if [ "$(uname)" = "Linux" ]; then # Debian container
-    HOST=host.docker.internal
+
+# Only use host.docker.internal if we are in a container and 127.0.0.1:80 is not responding 
+# (meaning the port-forward is likely on the host machine).
+if ! curl -s --connect-timeout 1 http://127.0.0.1:80/ > /dev/null; then
+    if getent hosts host.docker.internal > /dev/null; then
+        HOST=host.docker.internal
+    fi
 fi
+
+echo "Using HOST: ${HOST}"
 
 # HTTP1.1
 curl -X POST -d '{"msg": "Hello go service via HTTP/1.1"}' -H "Content-Type:application/json" http://${HOST}:80/greet-go/hello

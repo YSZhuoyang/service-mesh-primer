@@ -29,10 +29,7 @@
 			"helm": "none"
 		},
 		"ghcr.io/devcontainers/features/node:1": {
-			"version": "lts",
-			"globalPackages": [
-				"@google/gemini-cli"
-			]
+			"version": "lts"
 		},
 		"ghcr.io/devcontainers-extra/features/protoc:1": {}
 	},
@@ -63,7 +60,7 @@
 		}
 	},
 	// Use 'postCreateCommand' to run commands after the container is created.
-	"postCreateCommand": "npm install -g @google/gemini-cli"
+	"postCreateCommand": "npm install -g npm @google/gemini-cli"
 
 	// Use 'forwardPorts' to make a list of ports inside the container available locally.
 	// "forwardPorts": [],

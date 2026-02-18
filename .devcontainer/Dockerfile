@@ -12,6 +12,11 @@ RUN apt update \
     && apt -y install --no-install-recommends apt-utils unzip dialog 2>&1 \
     && apt -y install git iproute2 procps lsb-release make software-properties-common gnupg
 
+# Install grpcurl
+RUN wget https://github.com/fullstorydev/grpcurl/releases/download/v1.9.3/grpcurl_1.9.3_linux_arm64.tar.gz \
+    && tar -xvf grpcurl_1.9.3_linux_arm64.tar.gz -C /usr/local/bin \
+    && rm grpcurl_1.9.3_linux_arm64.tar.gz
+
 # Install Nodejs TLS
 RUN curl -fsSL https://deb.nodesource.com/setup_lts.x | bash - \
     && apt install -y nodejs

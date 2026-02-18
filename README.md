@@ -1,6 +1,6 @@
 # Service Mesh Primer
 
-[![Open in Visual Studio Code](https://open.vscode.dev/badges/open-in-vscode.svg)](https://open.vscode.dev/YSZhuoyang/service-mesh-primer)
+[![Open in Visual Studio Code](https://img.shields.io/badge/Open%20in-VS%20Code-007ACC?logo=visual-studio-code)](https://vscode.dev/github/YSZhuoyang/service-mesh-primer)
 
 A demo to bootstrap a tiny service mesh with istio which supports:
 

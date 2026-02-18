@@ -8,7 +8,7 @@ client:
 	cd web-client && \
 	make get && \
 	make gen && \
-	yarn build
+	yarn && yarn build
 
 all:
 	make services
