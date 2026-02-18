@@ -1,0 +1,37 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: mesh-gateway
+  namespace: default
+spec:
+  type: ClusterIP
+  ports:
+  - name: grpc
+    port: 80
+    targetPort: 80
+
+---
+
+apiVersion: gateway.networking.k8s.io/v1
+kind: GRPCRoute
+metadata:
+  name: grpc-router
+  namespace: default
+spec:
+  parentRefs:
+  - name: mesh-gateway
+    kind: Service
+    group: ""
+  rules:
+  - matches:
+    - method:
+        service: go_service.Greeter
+    backendRefs:
+    - name: go-service
+      port: 81
+  - matches:
+    - method:
+        service: dotnet_service.Greeter
+    backendRefs:
+    - name: dotnet-service
+      port: 82

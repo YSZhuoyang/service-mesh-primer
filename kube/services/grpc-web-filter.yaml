@@ -1,7 +1,7 @@
 apiVersion: networking.istio.io/v1alpha3
 kind: EnvoyFilter
 metadata:
-  name: grpc-transcoder
+  name: grpc-web-filter
   namespace: istio-system
 spec:
   workloadSelector:
@@ -20,13 +20,6 @@ spec:
     patch:
       operation: INSERT_BEFORE
       value:
-        name: envoy.filters.http.grpc_json_transcoder
+        name: envoy.filters.http.grpc_web
         typed_config:
-          "@type": type.googleapis.com/envoy.extensions.filters.http.grpc_json_transcoder.v3.GrpcJsonTranscoder
-          proto_descriptor: /etc/envoy/desc.pb
-          services:
-          - go_service.Greeter
-          - dotnet_service.Greeter
-          print_options:
-            add_whitespace: true
-            always_print_primitive_fields: true
+          "@type": type.googleapis.com/envoy.extensions.filters.http.grpc_web.v3.GrpcWeb

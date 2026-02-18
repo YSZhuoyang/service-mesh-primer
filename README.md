@@ -44,8 +44,8 @@ A demo to bootstrap a tiny service mesh with istio which supports:
 3. Install kube gateway api:
 
        <!-- Run below with flag if size exceeds limit: --server-side -->
-       kubectl apply -f https://github.com/kubernetes-sigs/gateway-api/releases/download/v1.4.1/standard-install.yaml
-       <!-- kubectl apply -f https://github.com/kubernetes-sigs/gateway-api/releases/download/v1.4.1/experimental-install.yaml -->
+       <!-- kubectl apply -f https://github.com/kubernetes-sigs/gateway-api/releases/download/v1.4.1/standard-install.yaml -->
+       kubectl apply --server-side -f https://github.com/kubernetes-sigs/gateway-api/releases/download/v1.4.1/experimental-install.yaml
 
 4. Launch istio & services:
 
@@ -56,6 +56,8 @@ A demo to bootstrap a tiny service mesh with istio which supports:
        <!-- https://istio.io/latest/docs/ambient/usage/waypoint/#useawaypoint -->
        istioctl waypoint apply -n default --enroll-namespace
        kubectl apply -f ./kube/services
+       <!-- Use tunnel to access API gateway e.g.: -->
+       kubectl port-forward -n istio-system svc/istio-ingressgateway-istio 80:80
 
 ## Test
 
@@ -76,6 +78,9 @@ A demo to bootstrap a tiny service mesh with istio which supports:
 
 - Test server streaming with a web client:
 
+      # In Dev Container, run:
+      cd web-client && python3 -m http.server 3000 --directory public
+      # Otherwise run:
       cd web-client/public
       # open `index.html` in a browser and click `Get Live Data` button.
 
@@ -86,8 +91,8 @@ A demo to bootstrap a tiny service mesh with istio which supports:
       kubectl label namespace default istio.io/dataplane-mode-
       istioctl uninstall -y --purge
       kubectl delete namespace istio-system
-      kubectl delete -f https://github.com/kubernetes-sigs/gateway-api/releases/download/v1.4.1/standard-install.yaml
-      <!-- kubectl delete -f https://github.com/kubernetes-sigs/gateway-api/releases/download/v1.4.1/experimental-install.yaml -->
+      <!-- kubectl delete -f https://github.com/kubernetes-sigs/gateway-api/releases/download/v1.4.1/standard-install.yaml -->
+      kubectl delete -f https://github.com/kubernetes-sigs/gateway-api/releases/download/v1.4.1/experimental-install.yaml
       kubectl delete deployment --all
       kubectl delete svc dotnet-service go-service
       kubectl delete configmap proto-descriptor
