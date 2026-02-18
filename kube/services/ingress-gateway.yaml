@@ -30,13 +30,13 @@ spec:
   - matches:
     - path:
         type: PathPrefix
-        value: /greet-go/hello
+        value: /greet-go/
     - path:
         type: PathPrefix
-        value: /go_service.Greeter/SayHello
+        value: /go_service.Greeter/
     - path:
         type: PathPrefix
-        value: /go_service.Greeter/GetLiveData
+        value: /grpc.reflection.v1.ServerReflection/
     backendRefs:
     - name: go-service
       port: 81
@@ -67,10 +67,10 @@ spec:
   - matches:
     - path:
         type: PathPrefix
-        value: /greet-dotnet/hello
+        value: /greet-dotnet/
     - path:
         type: PathPrefix
-        value: /dotnet_service.Greeter/SayHello
+        value: /dotnet_service.Greeter/
     backendRefs:
     - name: dotnet-service
       port: 82
