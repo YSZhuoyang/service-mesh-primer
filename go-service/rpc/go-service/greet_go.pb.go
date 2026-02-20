@@ -4,7 +4,7 @@
 // 	protoc        v7.34.0--rc2
 // source: greet_go.proto
 
-package rpc
+package go_service
 
 import (
 	_ "google.golang.org/genproto/googleapis/api/annotations"
@@ -206,7 +206,7 @@ const file_greet_go_proto_rawDesc = "" +
 	"\x04data\x18\x01 \x01(\x05R\x04data2\xab\x01\n" +
 	"\aGreeter\x12U\n" +
 	"\bSayHello\x12\x18.go_service.HelloRequest\x1a\x16.go_service.HelloReply\"\x17\x82\xd3\xe4\x93\x02\x11\"\x0f/greet-go/hello\x12I\n" +
-	"\vGetLiveData\x12\x1b.go_service.LiveDataRequest\x1a\x19.go_service.LiveDataReply\"\x000\x01B\x10Z\x0ego-service/rpcb\x06proto3"
+	"\vGetLiveData\x12\x1b.go_service.LiveDataRequest\x1a\x19.go_service.LiveDataReply\"\x000\x01B\x1bZ\x19go-service/rpc/go-serviceb\x06proto3"
 
 var (
 	file_greet_go_proto_rawDescOnce sync.Once

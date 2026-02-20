@@ -2,9 +2,9 @@
 // versions:
 // - protoc-gen-go-grpc v1.6.1
 // - protoc             v7.34.0--rc2
-// source: greet_go.proto
+// source: greet_dotnet.proto
 
-package rpc
+package dotnet_service
 
 import (
 	context "context"
@@ -19,8 +19,7 @@ import (
 const _ = grpc.SupportPackageIsVersion9
 
 const (
-	Greeter_SayHello_FullMethodName    = "/go_service.Greeter/SayHello"
-	Greeter_GetLiveData_FullMethodName = "/go_service.Greeter/GetLiveData"
+	Greeter_SayHello_FullMethodName = "/dotnet_service.Greeter/SayHello"
 )
 
 // GreeterClient is the client API for Greeter service.
@@ -28,7 +27,6 @@ const (
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type GreeterClient interface {
 	SayHello(ctx context.Context, in *HelloRequest, opts ...grpc.CallOption) (*HelloReply, error)
-	GetLiveData(ctx context.Context, in *LiveDataRequest, opts ...grpc.CallOption) (grpc.ServerStreamingClient[LiveDataReply], error)
 }
 
 type greeterClient struct {
@@ -49,31 +47,11 @@ func (c *greeterClient) SayHello(ctx context.Context, in *HelloRequest, opts ...
 	return out, nil
 }
 
-func (c *greeterClient) GetLiveData(ctx context.Context, in *LiveDataRequest, opts ...grpc.CallOption) (grpc.ServerStreamingClient[LiveDataReply], error) {
-	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	stream, err := c.cc.NewStream(ctx, &Greeter_ServiceDesc.Streams[0], Greeter_GetLiveData_FullMethodName, cOpts...)
-	if err != nil {
-		return nil, err
-	}
-	x := &grpc.GenericClientStream[LiveDataRequest, LiveDataReply]{ClientStream: stream}
-	if err := x.ClientStream.SendMsg(in); err != nil {
-		return nil, err
-	}
-	if err := x.ClientStream.CloseSend(); err != nil {
-		return nil, err
-	}
-	return x, nil
-}
-
-// This type alias is provided for backwards compatibility with existing code that references the prior non-generic stream type by name.
-type Greeter_GetLiveDataClient = grpc.ServerStreamingClient[LiveDataReply]
-
 // GreeterServer is the server API for Greeter service.
 // All implementations must embed UnimplementedGreeterServer
 // for forward compatibility.
 type GreeterServer interface {
 	SayHello(context.Context, *HelloRequest) (*HelloReply, error)
-	GetLiveData(*LiveDataRequest, grpc.ServerStreamingServer[LiveDataReply]) error
 	mustEmbedUnimplementedGreeterServer()
 }
 
@@ -86,9 +64,6 @@ type UnimplementedGreeterServer struct{}
 
 func (UnimplementedGreeterServer) SayHello(context.Context, *HelloRequest) (*HelloReply, error) {
 	return nil, status.Error(codes.Unimplemented, "method SayHello not implemented")
-}
-func (UnimplementedGreeterServer) GetLiveData(*LiveDataRequest, grpc.ServerStreamingServer[LiveDataReply]) error {
-	return status.Error(codes.Unimplemented, "method GetLiveData not implemented")
 }
 func (UnimplementedGreeterServer) mustEmbedUnimplementedGreeterServer() {}
 func (UnimplementedGreeterServer) testEmbeddedByValue()                 {}
@@ -129,22 +104,11 @@ func _Greeter_SayHello_Handler(srv interface{}, ctx context.Context, dec func(in
 	return interceptor(ctx, in, info, handler)
 }
 
-func _Greeter_GetLiveData_Handler(srv interface{}, stream grpc.ServerStream) error {
-	m := new(LiveDataRequest)
-	if err := stream.RecvMsg(m); err != nil {
-		return err
-	}
-	return srv.(GreeterServer).GetLiveData(m, &grpc.GenericServerStream[LiveDataRequest, LiveDataReply]{ServerStream: stream})
-}
-
-// This type alias is provided for backwards compatibility with existing code that references the prior non-generic stream type by name.
-type Greeter_GetLiveDataServer = grpc.ServerStreamingServer[LiveDataReply]
-
 // Greeter_ServiceDesc is the grpc.ServiceDesc for Greeter service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
 var Greeter_ServiceDesc = grpc.ServiceDesc{
-	ServiceName: "go_service.Greeter",
+	ServiceName: "dotnet_service.Greeter",
 	HandlerType: (*GreeterServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{
@@ -152,12 +116,6 @@ var Greeter_ServiceDesc = grpc.ServiceDesc{
 			Handler:    _Greeter_SayHello_Handler,
 		},
 	},
-	Streams: []grpc.StreamDesc{
-		{
-			StreamName:    "GetLiveData",
-			Handler:       _Greeter_GetLiveData_Handler,
-			ServerStreams: true,
-		},
-	},
-	Metadata: "greet_go.proto",
+	Streams:  []grpc.StreamDesc{},
+	Metadata: "greet_dotnet.proto",
 }

@@ -3,10 +3,18 @@ package server
 import (
 	"context"
 
-	"go-service/rpc"
+	dotnet_service "go-service/rpc/dotnet-service"
+	go_service "go-service/rpc/go-service"
 )
 
 // SayHello - Scrape Bing news meta data
-func (*Service) SayHello(ctx context.Context, req *rpc.HelloRequest) (*rpc.HelloReply, error) {
-	return &rpc.HelloReply{Msg: "Reply from go service: " + req.GetMsg()}, nil
+func (s *Service) SayHello(ctx context.Context, req *go_service.HelloRequest) (*go_service.HelloReply, error) {
+	resp, err := s.DotnetClient.SayHello(ctx, &dotnet_service.HelloRequest{
+		Msg: req.GetMsg(),
+	})
+	if err != nil {
+		return nil, err
+	}
+
+	return &go_service.HelloReply{Msg: "Reply from go service calling dotnet service:  " + resp.GetMsg()}, nil
 }

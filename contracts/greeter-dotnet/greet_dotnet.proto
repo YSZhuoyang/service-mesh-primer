@@ -2,6 +2,8 @@ syntax = "proto3";
 
 package dotnet_service;
 
+option go_package = "go-service/rpc/dotnet-service";
+
 import "google/api/annotations.proto";
 
 service Greeter {
