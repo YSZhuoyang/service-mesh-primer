@@ -57,7 +57,7 @@ A demo to bootstrap a tiny service mesh with istio which supports:
        istioctl waypoint apply -n default --enroll-namespace
        kubectl apply -f ./kube/services
        <!-- Use tunnel to access API gateway e.g.: -->
-       kubectl port-forward -n istio-system svc/istio-ingressgateway-istio 80:80
+       kubectl port-forward -n istio-system svc/istio-ingressgateway-istio 8080:80
 
 ## Test
 

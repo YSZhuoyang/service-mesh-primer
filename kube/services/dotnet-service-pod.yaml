@@ -17,7 +17,7 @@ spec:
       containers:
       - image: dotnet-service:latest
         name: dotnet-service
-        imagePullPolicy: Never
+        imagePullPolicy: Always
         ports:
         - containerPort: 8080
         resources:

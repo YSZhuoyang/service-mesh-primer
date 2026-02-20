@@ -8,7 +8,6 @@ spec:
   ports:
   - name: grpc
     port: 80
-    targetPort: 80
 
 ---
 
