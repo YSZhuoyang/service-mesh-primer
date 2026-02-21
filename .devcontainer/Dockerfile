@@ -17,10 +17,6 @@ RUN wget https://github.com/fullstorydev/grpcurl/releases/download/v1.9.3/grpcur
     && tar -xvf grpcurl_1.9.3_linux_arm64.tar.gz -C /usr/local/bin \
     && rm grpcurl_1.9.3_linux_arm64.tar.gz
 
-# Install Nodejs TLS
-RUN curl -fsSL https://deb.nodesource.com/setup_lts.x | bash - \
-    && apt install -y nodejs
-
 # Install istioctl
 ARG ISTIO_VERSION=1.29.0
 RUN cd /usr && curl -L https://istio.io/downloadIstio | ISTIO_VERSION=${ISTIO_VERSION} sh -
