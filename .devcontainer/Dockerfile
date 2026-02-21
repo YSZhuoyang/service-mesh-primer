@@ -19,7 +19,8 @@ RUN wget https://github.com/fullstorydev/grpcurl/releases/download/v1.9.3/grpcur
 
 # Install istioctl
 ARG ISTIO_VERSION=1.29.0
-RUN cd /usr && curl -L https://istio.io/downloadIstio | ISTIO_VERSION=${ISTIO_VERSION} sh -
+RUN cd /usr && curl -L https://istio.io/downloadIstio | ISTIO_VERSION=${ISTIO_VERSION} sh - \
+    && chmod -R +rX /usr/istio-${ISTIO_VERSION}
 ENV PATH=$PATH:/usr/istio-${ISTIO_VERSION}/bin
 
 # Copy the kube config sync script
