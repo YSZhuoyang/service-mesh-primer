@@ -31,33 +31,34 @@ A demo to bootstrap a tiny service mesh with istio which supports:
 
 ## Deploy locally on Kubernetes with [Istio](https://istio.io/)
 
-1. Install Istio:
+1. Download Istio:
 
        curl -L https://istio.io/downloadIstio | ISTIO_VERSION=1.29.0 sh -
        cd istio-1.29.0 && export PATH=$PWD/bin:$PATH
 
 2. Generate contract descriptor mounted to istio envoy gateway (for gRPC transcoding):
 
-       kubectl create namespace istio-system
-       kubectl create configmap proto-descriptor --from-file=contracts/desc.pb -n istio-system
+       kubectl create configmap proto-descriptor --from-file=contracts/desc.pb
 
 3. Install kube gateway api:
 
        <!-- Run below with flag if size exceeds limit: --server-side -->
-       <!-- kubectl apply -f https://github.com/kubernetes-sigs/gateway-api/releases/download/v1.4.1/standard-install.yaml -->
+       <!-- kubectl apply --server-side -f https://github.com/kubernetes-sigs/gateway-api/releases/download/v1.4.1/standard-install.yaml -->
        kubectl apply --server-side -f https://github.com/kubernetes-sigs/gateway-api/releases/download/v1.4.1/experimental-install.yaml
 
 4. Launch istio & services:
 
+       kubectl create namespace istio-system
        istioctl install -f kube/istio/istio-operator.yaml -y
        <!-- Add all services in default namespace into ambient mesh -->
        kubectl label namespace default istio.io/dataplane-mode=ambient
        <!-- Enroll all services in default namespace to use a waypoint, any requests using the ambient data plane mode, to any service running in this namespace, will be routed through the waypoint for L7 processing and policy enforcement -->
        <!-- https://istio.io/latest/docs/ambient/usage/waypoint/#useawaypoint -->
        istioctl waypoint apply -n default --enroll-namespace
-       kubectl apply -f ./kube/services
+       kubectl apply --server-side -f ./kube/services-stage-1
+       kubectl apply --server-side -f ./kube/services-stage-2
        <!-- Use tunnel to access API gateway e.g.: -->
-       kubectl port-forward -n istio-system svc/istio-ingressgateway-istio 8080:80
+       kubectl port-forward svc/istio-ingressgateway-istio 8080:80
 
 ## Test
 

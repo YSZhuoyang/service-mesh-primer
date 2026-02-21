@@ -1,7 +1,9 @@
 import { LiveDataRequest } from './greeter-go/greet_go_pb';
 import { GreeterClient } from './greeter-go/greet_go_grpc_web_pb';
 
-const greeterClient = new GreeterClient('http://127.0.0.1:8080');
+const greeterClient = new GreeterClient('http://' + window.location.hostname + ':8080');
+
+console.log("URL: " + window.location.hostname)
 
 const getLiveData = () => {
     const req = new LiveDataRequest();

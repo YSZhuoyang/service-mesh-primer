@@ -6,9 +6,9 @@ metadata:
   name: go-service
 spec:
   ports:
-  - name: grpc-web-81
+  - name: grpc-81
     port: 81
     targetPort: 8080
-    appProtocol: grpc-web
+    appProtocol: grpc
   selector:
     app: go-service
