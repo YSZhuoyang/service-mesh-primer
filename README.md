@@ -97,11 +97,9 @@ A demo to bootstrap a tiny service mesh with istio which supports:
 - Test server streaming with a web client:
 
     ```bash
-    # In Dev Container, run:
+    # If in Dev Container, run:
     cd web-client && python3 -m http.server 3000 --directory public
-    # Otherwise run:
-    cd web-client/public
-    # open `index.html` in a browser and click `Get Live Data` button.
+    # open `web-client/public/index.html` in a browser and click `Get Live Data` button.
     ```
 
 - Cleanup
