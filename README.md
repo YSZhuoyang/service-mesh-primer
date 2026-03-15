@@ -38,8 +38,8 @@ A demo to bootstrap a tiny service mesh with istio which supports:
 1. Optional: Download Istio (skip if using dev container):
 
     ```bash
-    curl -L https://istio.io/downloadIstio | ISTIO_VERSION=1.29.0 sh -
-    cd istio-1.29.0 && export PATH=$PWD/bin:$PATH
+    curl -L https://istio.io/downloadIstio | ISTIO_VERSION=1.29.1 sh -
+    cd istio-1.29.1 && export PATH=$PWD/bin:$PATH
     ```
 
 2. Generate contract descriptor mounted to istio envoy gateway (for gRPC transcoding):
@@ -52,8 +52,8 @@ A demo to bootstrap a tiny service mesh with istio which supports:
 
     ```bash
     # Run below with flag if size exceeds limit: --server-side
-    # kubectl apply --server-side -f https://github.com/kubernetes-sigs/gateway-api/releases/download/v1.4.1/standard-install.yaml
-    kubectl apply --server-side -f https://github.com/kubernetes-sigs/gateway-api/releases/download/v1.4.1/experimental-install.yaml
+    kubectl apply --server-side -f https://github.com/kubernetes-sigs/gateway-api/releases/download/v1.5.1/standard-install.yaml
+    # kubectl apply --server-side -f https://github.com/kubernetes-sigs/gateway-api/releases/download/v1.5.1/experimental-install.yaml
     ```
 
 4. Launch istio & services:
@@ -110,8 +110,8 @@ A demo to bootstrap a tiny service mesh with istio which supports:
     kubectl label namespace default istio.io/dataplane-mode-
     istioctl uninstall -y --purge
     kubectl delete namespace istio-system
-    # kubectl delete -f https://github.com/kubernetes-sigs/gateway-api/releases/download/v1.4.1/standard-install.yaml
-    kubectl delete -f https://github.com/kubernetes-sigs/gateway-api/releases/download/v1.4.1/experimental-install.yaml
+    kubectl delete -f https://github.com/kubernetes-sigs/gateway-api/releases/download/v1.5.1/standard-install.yaml
+    # kubectl delete -f https://github.com/kubernetes-sigs/gateway-api/releases/download/v1.5.1/experimental-install.yaml
     kubectl delete deployment --all
     kubectl delete svc dotnet-service go-service
     kubectl delete configmap proto-descriptor
