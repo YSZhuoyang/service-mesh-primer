@@ -8,7 +8,7 @@
 			// Update the VARIANT arg to pick a version of Go: 1, 1.19, 1.18
 			// Append -bullseye or -buster to pin to an OS version.
 			// Use -bullseye variants on local arm64/Apple Silicon.
-			"VARIANT": "1-bookworm"
+			"VARIANT": "1-trixie"
 		}
 	},
 	"runArgs": [ "--init", "--cap-add=SYS_PTRACE", "--security-opt", "seccomp=unconfined" ],
@@ -20,7 +20,9 @@
 	},
 	// Features to add to the dev container. More info: https://containers.dev/features.
 	"features": {
-		"ghcr.io/devcontainers/features/docker-outside-of-docker:1": {},
+		"ghcr.io/devcontainers/features/docker-outside-of-docker:1": {
+			"moby": false
+		},
 		"ghcr.io/devcontainers/features/dotnet:2": {
 			"version": "10.0"
 		},
@@ -55,7 +57,8 @@
 				"ms-vscode.makefile-tools",
 				"redhat.vscode-yaml",
 				"DrBlury.protobuf-vsc",
-				"google.geminicodeassist"
+				"google.geminicodeassist",
+				"google.gemini-cli-vscode-ide-companion"
 			]
 		}
 	},
