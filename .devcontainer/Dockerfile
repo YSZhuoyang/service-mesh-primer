@@ -1,7 +1,7 @@
 # See here for image contents: https://github.com/microsoft/vscode-dev-containers/tree/v0.245.2/containers/go/.devcontainer/base.Dockerfile
 
 # [Choice] Go version (use -bullseye variants on local arm64/Apple Silicon): 1, 1.19, 1-bullseye, 1.19-bullseye
-ARG VARIANT="1-trixie"
+ARG VARIANT="1.26-trixie"
 FROM mcr.microsoft.com/devcontainers/go:${VARIANT}
 
 # Avoid warnings by switching to noninteractive
@@ -29,7 +29,7 @@ RUN wget https://github.com/fullstorydev/grpcurl/releases/download/v1.9.3/grpcur
     && rm grpcurl_1.9.3_linux_arm64.tar.gz
 
 # Install istioctl
-ARG ISTIO_VERSION=1.29.1
+ARG ISTIO_VERSION=1.29.2
 RUN cd /usr && curl -L https://istio.io/downloadIstio | ISTIO_VERSION=${ISTIO_VERSION} sh - \
     && chmod -R +rX /usr/istio-${ISTIO_VERSION}
 ENV PATH=$PATH:/usr/istio-${ISTIO_VERSION}/bin
