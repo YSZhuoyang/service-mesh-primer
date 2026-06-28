@@ -38,8 +38,8 @@ A demo to bootstrap a tiny service mesh with istio which supports:
 1. Optional: Download Istio (skip if using dev container):
 
     ```bash
-    curl -L https://istio.io/downloadIstio | ISTIO_VERSION=1.29.2 sh -
-    cd istio-1.29.2 && export PATH=$PWD/bin:$PATH
+    curl -L https://istio.io/downloadIstio | ISTIO_VERSION=1.30.2 sh -
+    cd istio-1.30.2 && export PATH=$PWD/bin:$PATH
     ```
 
 2. Generate contract descriptor mounted to istio envoy gateway (for gRPC transcoding):
@@ -84,9 +84,9 @@ A demo to bootstrap a tiny service mesh with istio which supports:
 - Test Grafana & Jaeger dashboard:
 
     ```bash
-    kubectl apply -f https://raw.githubusercontent.com/istio/istio/release-1.29/samples/addons/jaeger.yaml
-    kubectl apply -f https://raw.githubusercontent.com/istio/istio/release-1.29/samples/addons/prometheus.yaml
-    kubectl apply -f https://raw.githubusercontent.com/istio/istio/release-1.29/samples/addons/grafana.yaml
+    kubectl apply -f https://raw.githubusercontent.com/istio/istio/release-1.30/samples/addons/jaeger.yaml
+    kubectl apply -f https://raw.githubusercontent.com/istio/istio/release-1.30/samples/addons/prometheus.yaml
+    kubectl apply -f https://raw.githubusercontent.com/istio/istio/release-1.30/samples/addons/grafana.yaml
 
     for i in `seq 1 250`; do ./test.sh; done; # The default Jaeger sampling rate is 1%
 
