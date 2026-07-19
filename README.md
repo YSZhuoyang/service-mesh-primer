@@ -2,22 +2,22 @@
 
 [![Open in Visual Studio Code](https://img.shields.io/badge/Open%20in-VS%20Code-007ACC?logo=visual-studio-code)](https://vscode.dev/github/YSZhuoyang/service-mesh-primer)
 
-A demo to bootstrap a tiny service mesh with istio which supports:
+A demo to bootstrap a tiny service mesh with Istio Ambient Mesh which supports:
 
-- Transcoding HTTP+JSON into gRPC+Protobuf
-- Server push, streaming data to clients
-- Handling Http/1.1, Http/2 and gRPC
-- Securing services with [mTLS](https://istio.io/latest/docs/concepts/security/#mutual-tls-authentication)
+- Transcoding HTTP+JSON into gRPC+Protobuf (at the Waypoint/Gateway)
+- gRPC-Web Server streaming
+- Handling HTTP/1.1, HTTP/2, and gRPC
+- Securing services transparently with [mTLS](https://istio.io/latest/docs/concepts/security/#mutual-tls-authentication) via ztunnel
 
-                      gateway     waypoint       service1
-      http(JSON)/grpc  +--+          +--+    grpc  +--+
-      ---------------->|  |--------->|  |<-------->|  |
-                       +--+          +--+    |     +--+
-                                             |
-                                             |   service2
-                                             |     +--+
-                                             ----->|  |
-                                             grpc  +--+
+                      gateway          waypoint                  service1
+      http(JSON)/grpc  +--+             +--+               grpc    +--+
+      ---------------->|  |---(mTLS)--->|  |---(mTLS)------------->|  |
+                       +--+  (ztunnel)  +--+  (ztunnel)      |     +--+
+                                                             |
+                                                             |   service2
+                                                             |     +--+
+                                                             ----->|  |
+                                                             grpc  +--+
 
 ## Build
 
