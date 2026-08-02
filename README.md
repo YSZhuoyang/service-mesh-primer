@@ -99,7 +99,7 @@ A demo to bootstrap a tiny service mesh with Istio Ambient Mesh which supports:
     ```bash
     # If in Dev Container, run:
     cd web-client && python3 -m http.server 3000 --directory public
-    # open `web-client/public/index.html` in a browser and click `Get Live Data` button.
+    # open http://0.0.0.0:3000 in a browser and click `Get Live Data` button.
     ```
 
 - Cleanup
