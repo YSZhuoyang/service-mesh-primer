@@ -3,9 +3,10 @@ kind: EnvoyFilter
 metadata:
   name: grpc-transcoder
 spec:
-  workloadSelector:
-    labels:
-      gateway.networking.k8s.io/gateway-name: istio-ingressgateway
+  targetRefs:
+  - kind: Gateway
+    group: gateway.networking.k8s.io
+    name: istio-ingressgateway
   configPatches:
   - applyTo: HTTP_FILTER
     match:
