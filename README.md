@@ -38,8 +38,8 @@ A demo to bootstrap a tiny service mesh with Istio Ambient Mesh which supports:
 1. Optional: Download Istio (skip if using dev container):
 
     ```bash
-    curl -L https://istio.io/downloadIstio | ISTIO_VERSION=1.30.3 sh -
-    cd istio-1.30.3 && export PATH=$PWD/bin:$PATH
+    curl -L https://istio.io/downloadIstio | ISTIO_VERSION=1.30.4 sh -
+    cd istio-1.30.4 && export PATH=$PWD/bin:$PATH
     ```
 
 2. Generate contract descriptor mounted to istio envoy gateway (for gRPC transcoding):
