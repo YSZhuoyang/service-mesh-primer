@@ -32,12 +32,5 @@ gen:
 		--js_out=import_style=commonjs:./src \
 		--grpc-web_out=import_style=commonjs,mode=grpcwebtext:./src
 
-	# Remove imports for annotation which is unused from generated files (waiting for official fix)
-ifeq ($(OS), DEBIAN)
-	ls -1 ./src/greeter-go/*.js | xargs sed -i '/annotations_pb/d'
-else
-	ls -1 ./src/greeter-go/*.js | xargs sed -i "" '/annotations_pb/d'
-endif
-
 clean:
-	rm -f ./src/**/*_pb.js
+	rm -rf ./src/google ./src/greeter-go

@@ -20,6 +20,7 @@ const grpc = {};
 grpc.web = require('grpc-web');
 
 
+var google_api_annotations_pb = require('../google/api/annotations_pb.js')
 const proto = {};
 proto.go_service = require('./greet_go_pb.js');
 

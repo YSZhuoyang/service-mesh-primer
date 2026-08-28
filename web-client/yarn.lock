@@ -512,10 +512,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"grpc-web@npm:2.1.0":
-  version: 2.1.0
-  resolution: "grpc-web@npm:2.1.0"
-  checksum: 10c0/c6c68edea6c838ec43fa623f5c9c03d04189d176daaa5d156337641d32350f864d605b5b8ffa4d3ea197fb071bda922fec1bfbbfb49e56df5fd444d6204b9d55
+"grpc-web@npm:2.1.1":
+  version: 2.1.1
+  resolution: "grpc-web@npm:2.1.1"
+  checksum: 10c0/972548074f778eb78ecc5ec4b3cb30182e7c68dd7648c51e11a8a91ed9faa8e544b1377d95876e0d5bcdd5b6df78131cd808823c1d55cfa31f508f0d5ebc5147
   languageName: node
   linkType: hard
 
@@ -935,7 +935,7 @@ __metadata:
   resolution: "web-client@workspace:."
   dependencies:
     google-protobuf: "npm:^4.0.2"
-    grpc-web: "npm:2.1.0"
+    grpc-web: "npm:2.1.1"
     webpack: "npm:^5.109.2"
     webpack-cli: "npm:^7.2.2"
   languageName: unknown
