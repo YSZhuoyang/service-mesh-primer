@@ -1,7 +1,7 @@
 # See here for image contents: https://github.com/microsoft/vscode-dev-containers/tree/v0.245.2/containers/go/.devcontainer/base.Dockerfile
 
 # [Choice] Go version (use -bullseye variants on local arm64/Apple Silicon): 1, 1.19, 1-bullseye, 1.19-bullseye
-ARG VARIANT="1.26-trixie"
+ARG VARIANT="1.27-trixie"
 FROM mcr.microsoft.com/devcontainers/go:${VARIANT}
 
 # Avoid warnings by switching to noninteractive
