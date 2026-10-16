@@ -24,12 +24,12 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     && rm -rf /var/lib/apt/lists/*
 
 # Install grpcurl
-RUN wget https://github.com/fullstorydev/grpcurl/releases/download/v1.9.3/grpcurl_1.9.3_linux_arm64.tar.gz \
-    && tar -xvf grpcurl_1.9.3_linux_arm64.tar.gz -C /usr/local/bin \
-    && rm grpcurl_1.9.3_linux_arm64.tar.gz
+RUN wget https://github.com/fullstorydev/grpcurl/releases/download/v1.9.4/grpcurl_1.9.4_linux_arm64.tar.gz \
+    && tar -xvf grpcurl_1.9.4_linux_arm64.tar.gz -C /usr/local/bin \
+    && rm grpcurl_1.9.4_linux_arm64.tar.gz
 
 # Install istioctl
-ARG ISTIO_VERSION=1.30.4
+ARG ISTIO_VERSION=1.31.2
 RUN cd /usr && curl -L https://istio.io/downloadIstio | ISTIO_VERSION=${ISTIO_VERSION} sh - \
     && chmod -R +rX /usr/istio-${ISTIO_VERSION}
 ENV PATH=$PATH:/usr/istio-${ISTIO_VERSION}/bin
